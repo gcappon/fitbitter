@@ -1,6 +1,3 @@
-
-import 'dart:convert';
-
 import '../utils/formats.dart';
 
 import 'fitbitData.dart';

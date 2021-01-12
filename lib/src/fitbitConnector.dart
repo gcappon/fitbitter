@@ -34,8 +34,7 @@ class FitbitConnector {
     final String authorizationHeader = stringToBase64.encode("$clientID:$clientSecret");  
 
     // Post refresh query to Fitbit API
-    try {
-      response = await dio.post(
+    response = await dio.post(
         'https://api.fitbit.com/oauth2/token',
         data:
             'client_id=$clientID&grant_type=refresh_token&refresh_token=${GetIt.instance<SharedPreferences>().getString('fitbitRefreshToken')}',
@@ -56,21 +55,16 @@ class FitbitConnector {
           .setString('fitbitAccessToken', accessToken);
       GetIt.instance<SharedPreferences>()
           .setString('fitbitRefreshToken', refreshToken);
-    } catch (e) {
-      print(e);
-    } // catch
   }
 
   /// Method that check if the current token is still valid to be used 
   /// by the Fitbit APIs OAuth or it is expired.
+  //@protected
   static Future<bool> isTokenValid() async{
 
     // Instantiate Dio and its Response 
     Dio dio = Dio();
     Response response;
-
-    // Encode the accessToken
-    final String encodedRedirectUri = Uri.encodeFull(GetIt.instance<SharedPreferences>().getString("fitbitAccessToken"));
 
     //Get the response
     response = await dio.post(

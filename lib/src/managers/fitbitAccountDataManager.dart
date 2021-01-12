@@ -27,27 +27,24 @@ class FitbitAccountDataManager extends FitbitDataManager {
     Dio dio = Dio();
     Response response;
 
-    // get the fitbit profile data
-    response = await dio.get(
-      'https://api.fitbit.com/1/user/$userID/profile.json',
-      options: Options(
-        contentType: Headers.formUrlEncodedContentType,
-        headers: {
-          'Authorization':
-              'Bearer ${GetIt.instance<SharedPreferences>().getString("fitbitAccessToken")}',
-        },
-      ),
-    );
-
-    // TODO: manage exception
-    // TODO: read headers
-    response.headers['fitbit-rate-limit-remaining'][0]; // The number of calls remaining before hitting the rate limit.
-    response.headers['fitbit-rate-limit-limit'][0]; // The quota number of calls.
-    response.headers['fitbit-rate-limit-reset'][0]; // The number of seconds until the rate limit resets.
+    try {
+      // get the fitbit profile data
+      response = await dio.get(
+        'https://api.fitbit.com/1/user/$userID/profile.json',
+        options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+          headers: {
+            'Authorization':
+                'Bearer ${GetIt.instance<SharedPreferences>().getString("fitbitAccessToken")}',
+          },
+        ),
+      );
+    } on DioError catch (e) {
+      FitbitDataManager.manageError(e);
+    }// try - catch
 
     print(
         "Fitbitter.FitbitAccountDataManager.fetch: ${response.data}"); // for debugging
-
 
     return FitbitAccountData.fromJson(json: response.data['user']);
   } // fetch
