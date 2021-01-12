@@ -1,0 +1,29 @@
+name: fitbitter
+description: A new Flutter package project.
+version: 0.0.1
+author:
+homepage:
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_web_auth: ^0.2.4 #used to implement oauth 2.0
+  dio: ^3.0.9 #better web browser
+  # ----- GETIT
+  get_it: ^4.0.2
+  # -----
+    
+  # ----- SHAREDPREFERENCES
+  shared_preferences: ^0.5.8
+  # -----
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
