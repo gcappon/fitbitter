@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../urls/fitbitAPIURL.dart';
+import '../urls/fitbitAuthAPIURL.dart';
 
 import '../fitbitConnector.dart';
 
@@ -17,10 +22,13 @@ class FitbitAccountDataManager extends FitbitDataManager {
         );
 
   @override
-  Future<FitbitData> fetch(String userID) async {
+  Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
     //check if the access token is stil valid, if not refresh it
     if (!await FitbitConnector.isTokenValid()) {
-      await FitbitConnector.refreshToken(clientID, clientSecret);
+      await FitbitConnector.refreshToken(
+          userID: fitbitUrl.userID,
+          clientID: clientID,
+          clientSecret: clientSecret);
     } // if
 
     // Instantiate Dio and its Response
@@ -30,7 +38,7 @@ class FitbitAccountDataManager extends FitbitDataManager {
     try {
       // get the fitbit profile data
       response = await dio.get(
-        'https://api.fitbit.com/1/user/$userID/profile.json',
+        fitbitUrl.url,
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
           headers: {
@@ -43,10 +51,15 @@ class FitbitAccountDataManager extends FitbitDataManager {
       FitbitDataManager.manageError(e);
     }// try - catch
 
+    final decodedResponse =
+        response.data is String ? jsonDecode(response.data) : response.data;
     print(
-        "Fitbitter.FitbitAccountDataManager.fetch: ${response.data}"); // for debugging
+        "Fitbitter.FitbitAccountDataManager.fetch: $decodedResponse"); // for debugging
 
-    return FitbitAccountData.fromJson(json: response.data['user']);
+    List<FitbitData> ret = List<FitbitData>();
+    ret.add(FitbitAccountData.fromJson(json: decodedResponse['user']));
+    return ret;
+
   } // fetch
 
 } // FitbitAccountDataManager
