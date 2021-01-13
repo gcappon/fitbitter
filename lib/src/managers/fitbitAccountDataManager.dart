@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../urls/fitbitAPIURL.dart';
-import '../urls/fitbitAuthAPIURL.dart';
 
 import '../fitbitConnector.dart';
 
