@@ -1,11 +1,4 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sleep_monitor/fitbitter/src/urls/fitbitAPIURL.dart';
-
-import '../fitbitConnector.dart';
+import '../urls/fitbitAPIURL.dart';
 
 import '../data/fitbitData.dart';
 import '../data/fitbitSleepData.dart';
@@ -13,55 +6,27 @@ import '../data/fitbitSleepData.dart';
 import '../managers/fitbitDataManager.dart';
 
 class FitbitSleepDataManager extends FitbitDataManager {
-  FitbitSleepDataManager({String clientID, String clientSecret})
+  FitbitSleepDataManager({String clientID, String clientSecret, bool printLogs = false})
       : super(
-          clientID: clientID,
-          clientSecret: clientSecret,
-        );
+            clientID: clientID,
+            clientSecret: clientSecret,
+            printLogs: printLogs);
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
-    //check if the access token is stil valid, if not refresh it
-    if (!await FitbitConnector.isTokenValid()) {
-      await FitbitConnector.refreshToken(
-          userID: fitbitUrl.userID,
-          clientID: clientID,
-          clientSecret: clientSecret);
-    } // if
 
-    // Instantiate Dio and its Response
-    Dio dio = Dio();
-    Response response;
+    // Get the response
+    final response = await getResponse(fitbitUrl);
 
-    try {
-      // get the fitbit sleep data
-      response = await dio.get(
-        fitbitUrl.url,
-        options: Options(
-          contentType: Headers.formUrlEncodedContentType,
-          followRedirects: false,
-          receiveDataWhenStatusError: true,
-          validateStatus: (status) {
-            return true;
-          },
-          headers: {
-            'Authorization':
-                'Bearer ${GetIt.instance<SharedPreferences>().getString('fitbitAccessToken') ?? ''}',
-          },
-        ),
-      );
-    } on DioError catch (e) {
-      FitbitDataManager.manageError(e);
-    } // try - catch
+    // Debugging
+    if (printLogs) {
+      print(
+          "Fitbitter.FitbitSleepDataManager.fetch: $response"); 
+    }// if
 
-    final decodedResponse =
-        response.data is String ? jsonDecode(response.data) : response.data;
-
-    print(
-        "Fitbitter.FitbitSleepDataManager.fetch: $decodedResponse"); // for debugging
+    //Extract data and return them
     List<FitbitSleepData> sleepDataPoints =
-        _extractFitbitSleepData(decodedResponse, fitbitUrl.userID);
-
+        _extractFitbitSleepData(response, fitbitUrl.userID);
     return sleepDataPoints;
   } // fetch
 

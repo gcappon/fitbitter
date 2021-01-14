@@ -15,7 +15,7 @@ class FitbitHeartAPIURL extends FitbitAPIURL {
   factory FitbitHeartAPIURL.dayWithUserID({String userID, DateTime date}){
     String dateStr = Formats.onlyDayDateFormatTicks.format(date);
     return FitbitHeartAPIURL(
-      url: 'https://api.fitbit.com/1/user/$userID/activities/heart/date/$dateStr/1d.json',
+      url: '${_getBaseURL(userID)}/date/$dateStr/1d.json',
       userID: userID,
     );
   }// FitbitHeartAPIURL.dayWithUserID
@@ -26,7 +26,7 @@ class FitbitHeartAPIURL extends FitbitAPIURL {
     String startDateStr = Formats.onlyDayDateFormatTicks.format(startDate);
     String endDateStr = Formats.onlyDayDateFormatTicks.format(endDate);
     return FitbitHeartAPIURL(
-      url: 'https://api.fitbit.com/1/user/$userID/activities/heart/date/$startDateStr/$endDateStr.json',
+      url: '${_getBaseURL(userID)}/date/$startDateStr/$endDateStr.json',
       userID: userID,
     );
   }// FitbitHeartAPIURL.dateRangeWithUserID
@@ -36,7 +36,7 @@ class FitbitHeartAPIURL extends FitbitAPIURL {
   factory FitbitHeartAPIURL.weekWithUserID({String userID, DateTime baseDate}){
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitHeartAPIURL(
-      url: 'https://api.fitbit.com/1/user/$userID/activities/heart/date/$dateStr/1w.json',
+      url: '${_getBaseURL(userID)}/date/$dateStr/1w.json',
       userID: userID,
     );
   }// FitbitHeartAPIURL.weekWithUserID
@@ -46,9 +46,13 @@ class FitbitHeartAPIURL extends FitbitAPIURL {
   factory FitbitHeartAPIURL.monthWithUserID({String userID, DateTime baseDate}){
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitHeartAPIURL(
-      url: 'https://api.fitbit.com/1/user/$userID/activities/heart/date/$dateStr/1m.json',
+      url: '${_getBaseURL(userID)}/date/$dateStr/1m.json',
       userID: userID,
     );
   }// FitbitHeartAPIURL.monthWithUserID
 
+  static String _getBaseURL(String userID){
+    return 'https://api.fitbit.com/1/user/$userID/activities/heart';
+  }// _getBaseURL
+  
 }// FitbitHeartAPIURL

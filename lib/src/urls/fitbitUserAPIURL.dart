@@ -10,7 +10,12 @@ class FitbitUserAPIURL extends FitbitAPIURL {
 
   /// factory constructor
   factory FitbitUserAPIURL.withUserID({String userID}) => FitbitUserAPIURL(
-      url: 'https://api.fitbit.com/1/user/$userID/profile.json',
+      url: '${_getBaseURL()}/$userID/profile.json',
       userID: userID,
     );
+  
+  static String _getBaseURL(){
+    return 'https://api.fitbit.com/1/user';
+  }// _getBaseURL
+
 } // FitbitUserAPIURL

@@ -30,7 +30,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
     final String authorizationHeader = stringToBase64.encode("$clientID:$clientSecret"); 
 
     return FitbitAuthAPIURL(
-      url: 'https://api.fitbit.com/oauth2/token',
+      url: '${_getBaseURL()}/token',
       userID: userID,
       data: 'client_id=$clientID&grant_type=refresh_token&refresh_token=${GetIt.instance<SharedPreferences>().getString('fitbitRefreshToken')}',
       authorizationHeader: 'Basic $authorizationHeader',
@@ -67,7 +67,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
 
     return FitbitAuthAPIURL(
       userID: userID,
-      url: 'https://api.fitbit.com/oauth2/token',
+      url: '${_getBaseURL()}/token',
       data: 'client_id=$clientID&grant_type=authorization_code&code=$code&redirect_uri=$encodedRedirectUri',
       authorizationHeader: 'Basic $authorizationHeader',
     );
@@ -84,7 +84,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
 
     return FitbitAuthAPIURL(
       userID: null,
-      url: 'https://api.fitbit.com/oauth2/revoke',
+      url: '${_getBaseURL()}/revoke',
       data: 'token=${GetIt.instance<SharedPreferences>().getString('fitbitRefreshToken')}',
       authorizationHeader: 'Basic $authorizationHeader',
     );
@@ -103,5 +103,9 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
     );
 
   }// FitbitAuthAPIURL.isTokenValid
+
+  static String _getBaseURL(){
+    return 'https://api.fitbit.com/oauth2';
+  }// _getBaseURL
 
 } // FitbitAuthAPIURL

@@ -4,8 +4,6 @@ import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'dart:convert';
-
 import './urls/fitbitAuthAPIURL.dart';
 
 /// [FitbitConnector] is a class that is in charge of managing the connection authorization
@@ -24,7 +22,7 @@ class FitbitConnector {
 
   /// Method that refresh the Fitbit access token
   static Future<void> refreshToken(
-      {String userID, String clientID, String clientSecret}) async {
+      {String userID, String clientID, String clientSecret, bool printLogs = false}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -44,8 +42,12 @@ class FitbitConnector {
         },
       ),
     );
-    print(
-        "Fitbitter.FitbitConnector.refreshFitbitToken: ${response.data}"); // for debugging
+
+    // Debugging
+    if(printLogs){
+      print(
+        "Fitbitter.FitbitConnector.refreshFitbitToken: ${response.data}");
+    } // if
 
     // Overwrite the tokens into the shared preferences
     final accessToken = response.data['access_token'] as String;
@@ -54,12 +56,12 @@ class FitbitConnector {
         .setString('fitbitAccessToken', accessToken);
     GetIt.instance<SharedPreferences>()
         .setString('fitbitRefreshToken', refreshToken);
-  }
+  } // refreshToken
 
   /// Method that check if the current token is still valid to be used
   /// by the Fitbit APIs OAuth or it is expired.
   //@protected
-  static Future<bool> isTokenValid() async {
+  static Future<bool> isTokenValid({bool printLogs = false}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -84,8 +86,11 @@ class FitbitConnector {
       }
     }
 
-    print(
-        "Fitbitter.FitbitConnector.isTokenValid: ${response.data}"); // for debugging
+    // Debugging
+    if(printLogs){
+      print(
+        "Fitbitter.FitbitConnector.isTokenValid: ${response.data}");
+    }// printLogs
 
     // get token status and return it
     return response.data['active'] as bool;
@@ -93,8 +98,8 @@ class FitbitConnector {
 
   /// Method that implements the OAuth 2.0 and gets (and retain) the
   /// access and refresh tokens from Fitbit APIs.
-  static Future<String> authorize(BuildContext context, String clientID,
-      String clientSecret, String redirectUri, String callbackUrlScheme) async {
+  static Future<String> authorize({BuildContext context, String clientID,
+      String clientSecret, String redirectUri, String callbackUrlScheme, bool printLogs = false}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -131,8 +136,12 @@ class FitbitConnector {
           },
         ),
       );
-      print(
-          "Fitbitter.FitbitConnector.authorize: ${response.data}"); // for debugging
+
+      // Debugging
+      if(printLogs){
+        print(
+          "Fitbitter.FitbitConnector.authorize: ${response.data}");
+      }// if
 
       // Save authorization tokens
       final accessToken = response.data['access_token'] as String;
@@ -152,7 +161,7 @@ class FitbitConnector {
 
   /// Method that revoke the current access and refresh tokens and
   /// deletes them from the SharedPrefrences.
-  static Future<void> unauthorize(String clientID, String clientSecret) async {
+  static Future<void> unauthorize({String clientID, String clientSecret, bool printLogs = false}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -175,9 +184,13 @@ class FitbitConnector {
           },
         ),
       );
-      print(
-          "Fitbitter.FitbitConnector.unauthorize: ${response.data}"); // for debugging
 
+      // Debugging
+      if(printLogs){
+        print(
+          "Fitbitter.FitbitConnector.unauthorize: ${response.data}"); 
+      }// if
+      
       // Remove the tokens from shared preferences
       GetIt.instance<SharedPreferences>().remove('fitbitAccessToken');
       GetIt.instance<SharedPreferences>().remove('fitbitRefreshToken');

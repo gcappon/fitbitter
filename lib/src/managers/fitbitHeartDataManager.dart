@@ -1,14 +1,6 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../utils/formats.dart';
 
 import '../urls/fitbitAPIURL.dart';
-
-import '../fitbitConnector.dart';
 
 import '../data/fitbitData.dart';
 import '../data/fitbitHeartData.dart';
@@ -16,49 +8,26 @@ import '../data/fitbitHeartData.dart';
 import '../managers/fitbitDataManager.dart';
 
 class FitbitHeartDataManager extends FitbitDataManager {
-  FitbitHeartDataManager({String clientID, String clientSecret})
+  FitbitHeartDataManager({String clientID, String clientSecret, bool printLogs = false})
       : super(
           clientID: clientID,
           clientSecret: clientSecret,
+          printLogs: printLogs,
         );
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
-    //check if the access token is stil valid, if not refresh it
-    if (!await FitbitConnector.isTokenValid()) {
-      await FitbitConnector.refreshToken(
-          userID: fitbitUrl.userID,
-          clientID: clientID,
-          clientSecret: clientSecret);
-    } // if
+    // Get the response
+    final response = await getResponse(fitbitUrl);
 
-    // Instantiate Dio and its Response
-    Dio dio = Dio();
-    Response response;
+    // Debugging
+    if (printLogs) {
+      print(
+          "Fitbitter.FitbitAccountDataManager.fetch: $response");
+    }// if
 
-    try {
-      // get the fitbit profile data
-      response = await dio.get(
-        fitbitUrl.url,
-        options: Options(
-          contentType: Headers.formUrlEncodedContentType,
-          headers: {
-            'Authorization':
-                'Bearer ${GetIt.instance<SharedPreferences>().getString("fitbitAccessToken")}',
-          },
-        ),
-      );
-    } on DioError catch (e) {
-      FitbitDataManager.manageError(e);
-    } // try - catch
-
-    final decodedResponse =
-        response.data is String ? jsonDecode(response.data) : response.data;
-    print(
-        "Fitbitter.FitbitAccountDataManager.fetch: $decodedResponse"); // for debugging
-
-    List<FitbitData> ret =
-        _extractFitbitHeartData(decodedResponse, fitbitUrl.userID);
+    //Extract data and return them
+    List<FitbitData> ret = _extractFitbitHeartData(response, fitbitUrl.userID);
     return ret;
   } // fetch
 
@@ -73,19 +42,23 @@ class FitbitHeartDataManager extends FitbitDataManager {
         dateOfMonitoring:
             Formats.onlyDayDateFormatTicks.parse(data[record]['dateTime']),
         caloriesOutOfRange: data[record]['value']['heartRateZones'][0]
-            ['caloriesOut'].toDouble(),
+                ['caloriesOut']
+            .toDouble(),
         minimumOutOfRange: data[record]['value']['heartRateZones'][0]['min'],
         minutesOutOfRange: data[record]['value']['heartRateZones'][0]
             ['minutes'],
         caloriesFatBurn: data[record]['value']['heartRateZones'][1]
-            ['caloriesOut'].toDouble(),
+                ['caloriesOut']
+            .toDouble(),
         minimumFatBurn: data[record]['value']['heartRateZones'][1]['min'],
         minutesFatBurn: data[record]['value']['heartRateZones'][1]['minutes'],
         caloriesCardio: data[record]['value']['heartRateZones'][2]
-            ['caloriesOut'].toDouble(),
+                ['caloriesOut']
+            .toDouble(),
         minimumCardio: data[record]['value']['heartRateZones'][2]['min'],
         minutesCardio: data[record]['value']['heartRateZones'][2]['minutes'],
-        caloriesPeak: data[record]['value']['heartRateZones'][3]['caloriesOut'].toDouble(),
+        caloriesPeak: data[record]['value']['heartRateZones'][3]['caloriesOut']
+            .toDouble(),
         minimumPeak: data[record]['value']['heartRateZones'][3]['min'],
         minutesPeak: data[record]['value']['heartRateZones'][3]['minutes'],
         restingHeartRate: data[record]['value']['restingHeartRate'],

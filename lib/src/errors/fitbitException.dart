@@ -1,4 +1,4 @@
-enum FitbitErrorType {
+enum FitbitExceptionType {
   /// It occurs when the Fitbit API resource is not found
   NOT_FOUND,
 
@@ -16,14 +16,17 @@ enum FitbitErrorType {
   
   /// Default error type.
   DEFAULT,
+
+  /// When the requested resource does not exist
+  UNEXISTENT_FITBIT_REQUEST,
 }
 
-abstract class FitbitError implements Exception{
+abstract class FitbitException implements Exception{
 
   String message;
-  FitbitErrorType type; 
+  FitbitExceptionType type; 
   
-  FitbitError({this.message = '', this.type = FitbitErrorType.DEFAULT});
+  FitbitException({this.message = '', this.type = FitbitExceptionType.DEFAULT});
 
   String toString();
 

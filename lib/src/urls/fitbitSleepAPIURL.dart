@@ -15,7 +15,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
   factory FitbitSleepAPIURL.withUserIDAndDay({String userID, DateTime date}){
     String dateStr = Formats.onlyDayDateFormatTicks.format(date);
     return FitbitSleepAPIURL(
-      url: 'https://api.fitbit.com/1.2/user/$userID/sleep/date/$dateStr.json',
+      url: '${_getBaseURL(userID)}/date/$dateStr.json',
       userID: userID,
     );
   }// FitbitSleepAPIURL.withUserIDAndDay
@@ -26,7 +26,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
     String startDateStr = Formats.onlyDayDateFormatTicks.format(startDate);
     String endDateStr = Formats.onlyDayDateFormatTicks.format(endDate);
     return FitbitSleepAPIURL(
-      url: 'https://api.fitbit.com/1.2/user/$userID/sleep/date/$startDateStr/$endDateStr.json',
+      url: '${_getBaseURL(userID)}/date/$startDateStr/$endDateStr.json',
       userID: userID,
     );
   }// FitbitSleepAPIURL.withUserIDAndDateRange
@@ -38,7 +38,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
   factory FitbitSleepAPIURL.listWithUserIDAndBeforeDate({String userID, DateTime beforeDate, int limit}){
     String beforeDateStr = Formats.onlyDayDateFormatTicks.format(beforeDate);
     return FitbitSleepAPIURL(
-      url: 'https://api.fitbit.com/1.2/user/$userID/sleep/list.json?beforeDate=$beforeDateStr&sort=desc&offset=0&limit=$limit',
+      url: '${_getBaseURL(userID)}/list.json?beforeDate=$beforeDateStr&sort=desc&offset=0&limit=$limit',
       userID: userID,
     );
   }// FitbitSleepAPIURL.listWithUserIDAndBeforeDate
@@ -50,10 +50,12 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
   factory FitbitSleepAPIURL.listWithUserIDAndAfterDate({String userID, DateTime afterDate, int limit}){
     String afterDateStr = Formats.onlyDayDateFormatTicks.format(afterDate);
     return FitbitSleepAPIURL(
-      url: 'https://api.fitbit.com/1.2/user/$userID/sleep/list.json?beforeDate=$afterDateStr&sort=asc&offset=0&limit=$limit',
+      url: '${_getBaseURL(userID)}/list.json?beforeDate=$afterDateStr&sort=asc&offset=0&limit=$limit',
       userID: userID,
     );
   }// FitbitSleepAPIURL.listWithUserIDAndAfterDate
 
-
+  static String _getBaseURL(String userID){
+    return 'https://api.fitbit.com/1.2/user/$userID/sleep';
+  }// _getBaseURL
 } // FitbitSleepAPIURL
