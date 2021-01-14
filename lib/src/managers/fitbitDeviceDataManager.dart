@@ -1,14 +1,5 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sleep_monitor/fitbitter/src/data/fitbitActivityData.dart';
+import 'package:logger/logger.dart';
 import 'package:sleep_monitor/fitbitter/src/data/fitbitDeviceData.dart';
-import 'package:sleep_monitor/fitbitter/src/urls/fitbitActivityAPIURL.dart';
-import 'package:sleep_monitor/fitbitter/src/urls/fitbitActivityTimeseriesAPIURL.dart';
-
-import '../utils/formats.dart';
 
 import '../urls/fitbitAPIURL.dart';
 
@@ -19,8 +10,7 @@ import '../managers/fitbitDataManager.dart';
 class FitbitDeviceDataManager extends FitbitDataManager {
 
   /// Default constructor
-  FitbitDeviceDataManager({String clientID, String clientSecret, bool printLogs = false}){
-    this.printLogs = printLogs;
+  FitbitDeviceDataManager({String clientID, String clientSecret}){
     this.clientID = clientID;
     this.clientSecret = clientSecret;
   }// FitbitDeviceDataManager
@@ -32,10 +22,8 @@ class FitbitDeviceDataManager extends FitbitDataManager {
     final response = await getResponse(fitbitUrl);
 
     // Debugging
-    if(printLogs){
-    print(
-        "Fitbitter.FitbitDeviceDataManager.fetch: $response");
-    } // if
+    final logger = Logger();
+    logger.i('$response');
 
     //Extract data and return them
     List<FitbitData> ret =

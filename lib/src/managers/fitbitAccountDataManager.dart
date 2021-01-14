@@ -1,3 +1,5 @@
+import 'package:logger/logger.dart';
+
 import '../urls/fitbitAPIURL.dart';
 
 import '../data/fitbitData.dart';
@@ -7,11 +9,10 @@ import '../managers/fitbitDataManager.dart';
 
 class FitbitAccountDataManager extends FitbitDataManager {
   FitbitAccountDataManager(
-      {String clientID, String clientSecret, bool printLogs = false})
+      {String clientID, String clientSecret})
       : super(
           clientID: clientID,
           clientSecret: clientSecret,
-          printLogs: printLogs,
         );
 
   @override
@@ -21,10 +22,8 @@ class FitbitAccountDataManager extends FitbitDataManager {
     final response = await getResponse(fitbitUrl);
 
     // Debugging
-    if (printLogs) {
-      print(
-          "Fitbitter.FitbitAccountDataManager.fetch: $response");
-    } // if 
+    final logger = Logger();
+    logger.i('$response');
 
     //Extract data and return them
     List<FitbitData> ret = List<FitbitData>();

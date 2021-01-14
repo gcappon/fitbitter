@@ -1,3 +1,5 @@
+import 'package:logger/logger.dart';
+
 import '../urls/fitbitActivityTimeseriesAPIURL.dart';
 
 import '../errors/fitbitUnexistentFitbitResourceException.dart';
@@ -16,10 +18,9 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
 
   /// Default constructor
   FitbitActivityTimeseriesDataManager(
-      {String clientID, String clientSecret, bool printLogs = false, String type}) {
+      {String clientID, String clientSecret, String type}) {
     this.clientID = clientID;
     this.clientSecret = clientSecret;
-    this.printLogs = printLogs;
     this.type = type;
   } // FitbitActivityTimeseriesDataManager
 
@@ -33,9 +34,8 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
     final response = await getResponse(fitbitUrl);
 
     // Debugging
-    if (printLogs) {
-      print("Fitbitter.FitbitActivityTimeseriesDataManager.fetch: $response");
-    } // if
+    final logger = Logger();
+    logger.i('$response');
 
     //Extract data and return them
     List<FitbitData> ret =
@@ -62,45 +62,15 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
   } // _extractFitbitActivityTimeseriesData
 
   String _getDataField() {
-    switch (type) {
-      case 'activityCalories':
-        return 'activities-activityCalories';
-        break;
-      case 'calories':
-        return 'activities-calories';
-        break;
-      case 'caloriesBMR':
-        return 'activities-caloriesBMR';
-        break;
-      case 'distance':
-        return 'activities-distance';
-        break;
-      case 'floors':
-        return 'activities-floors';
-        break;
-      case 'elevation':
-        return 'activities-elevation';
-        break;
-      case 'minutesSedentary':
-        return 'activities-minutesSedentary';
-        break;
-      case 'minutesLightlyActive':
-        return 'activities-minutesLightlyActive';
-        break;
-      case 'minutesFairlyActive':
-        return 'activities-minutesFairlyActive';
-        break;
-      case 'minutesVeryActive':
-        return 'activities-minutesVeryActive';
-        break;
-      case 'steps':
-        return 'activities-steps';
-        break;
-      default:
-        throw FitbitUnaexistentFitbitResourceException(
-            message: 'The specified resource is not existent.');
-        break;
-    }
+
+    final validTypes = ['activityCalories','calories','caloriesBMR','distance','floors','elevation','minutesSedentary','minutesLightlyActive','minutesFairlyActive','minutesVeryActive','steps'];
+
+    if(validTypes.contains(type))
+      return 'activities-' + type;
+    else {
+      throw FitbitUnaexistentFitbitResourceException(message: 'The specified resource is not existent.');
+    } // else
+        
   } // _getDataField
 
 } // FitbitActivityTimeseriesDataManager

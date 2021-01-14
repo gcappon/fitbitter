@@ -1,3 +1,5 @@
+import 'package:logger/logger.dart';
+
 import '../urls/fitbitAPIURL.dart';
 
 import '../data/fitbitData.dart';
@@ -6,11 +8,10 @@ import '../data/fitbitSleepData.dart';
 import '../managers/fitbitDataManager.dart';
 
 class FitbitSleepDataManager extends FitbitDataManager {
-  FitbitSleepDataManager({String clientID, String clientSecret, bool printLogs = false})
+  FitbitSleepDataManager({String clientID, String clientSecret})
       : super(
             clientID: clientID,
-            clientSecret: clientSecret,
-            printLogs: printLogs);
+            clientSecret: clientSecret);
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
@@ -19,10 +20,8 @@ class FitbitSleepDataManager extends FitbitDataManager {
     final response = await getResponse(fitbitUrl);
 
     // Debugging
-    if (printLogs) {
-      print(
-          "Fitbitter.FitbitSleepDataManager.fetch: $response"); 
-    }// if
+    final logger = Logger();
+    logger.i('$response');
 
     //Extract data and return them
     List<FitbitSleepData> sleepDataPoints =

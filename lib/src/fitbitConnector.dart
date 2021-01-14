@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import './urls/fitbitAuthAPIURL.dart';
@@ -22,7 +23,9 @@ class FitbitConnector {
 
   /// Method that refresh the Fitbit access token
   static Future<void> refreshToken(
-      {String userID, String clientID, String clientSecret, bool printLogs = false}) async {
+      {String userID,
+      String clientID,
+      String clientSecret}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -44,10 +47,8 @@ class FitbitConnector {
     );
 
     // Debugging
-    if(printLogs){
-      print(
-        "Fitbitter.FitbitConnector.refreshFitbitToken: ${response.data}");
-    } // if
+    final logger = Logger();
+    logger.i('$response');
 
     // Overwrite the tokens into the shared preferences
     final accessToken = response.data['access_token'] as String;
@@ -61,7 +62,7 @@ class FitbitConnector {
   /// Method that check if the current token is still valid to be used
   /// by the Fitbit APIs OAuth or it is expired.
   //@protected
-  static Future<bool> isTokenValid({bool printLogs = false}) async {
+  static Future<bool> isTokenValid() async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -87,10 +88,8 @@ class FitbitConnector {
     }
 
     // Debugging
-    if(printLogs){
-      print(
-        "Fitbitter.FitbitConnector.isTokenValid: ${response.data}");
-    }// printLogs
+    final logger = Logger();
+    logger.i('$response');
 
     // get token status and return it
     return response.data['active'] as bool;
@@ -98,8 +97,12 @@ class FitbitConnector {
 
   /// Method that implements the OAuth 2.0 and gets (and retain) the
   /// access and refresh tokens from Fitbit APIs.
-  static Future<String> authorize({BuildContext context, String clientID,
-      String clientSecret, String redirectUri, String callbackUrlScheme, bool printLogs = false}) async {
+  static Future<String> authorize(
+      {BuildContext context,
+      String clientID,
+      String clientSecret,
+      String redirectUri,
+      String callbackUrlScheme}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -138,10 +141,8 @@ class FitbitConnector {
       );
 
       // Debugging
-      if(printLogs){
-        print(
-          "Fitbitter.FitbitConnector.authorize: ${response.data}");
-      }// if
+      final logger = Logger();
+      logger.i('$response');
 
       // Save authorization tokens
       final accessToken = response.data['access_token'] as String;
@@ -161,7 +162,8 @@ class FitbitConnector {
 
   /// Method that revoke the current access and refresh tokens and
   /// deletes them from the SharedPrefrences.
-  static Future<void> unauthorize({String clientID, String clientSecret, bool printLogs = false}) async {
+  static Future<void> unauthorize(
+      {String clientID, String clientSecret}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -186,11 +188,9 @@ class FitbitConnector {
       );
 
       // Debugging
-      if(printLogs){
-        print(
-          "Fitbitter.FitbitConnector.unauthorize: ${response.data}"); 
-      }// if
-      
+      final logger = Logger();
+      logger.i('$response');
+
       // Remove the tokens from shared preferences
       GetIt.instance<SharedPreferences>().remove('fitbitAccessToken');
       GetIt.instance<SharedPreferences>().remove('fitbitRefreshToken');
@@ -200,3 +200,4 @@ class FitbitConnector {
   } //unauthorize
 
 } // FitbitConnector
+

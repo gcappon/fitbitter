@@ -20,10 +20,9 @@ abstract class FitbitDataManager {
   
   String clientID;
   String clientSecret;
-  bool printLogs;
 
   /// Default constructor
-  FitbitDataManager({this.clientID, this.clientSecret, this.printLogs = false});
+  FitbitDataManager({this.clientID, this.clientSecret});
 
   /// Method that fetches data from the Fitbit API.
   Future<List<FitbitData>> fetch(FitbitAPIURL url);
@@ -62,12 +61,11 @@ abstract class FitbitDataManager {
 
   Future<void> _checkAccessToken(FitbitAPIURL fitbitUrl) async{
     //check if the access token is stil valid, if not refresh it
-    if (!await FitbitConnector.isTokenValid(printLogs: printLogs)) {
+    if (!await FitbitConnector.isTokenValid()) {
       await FitbitConnector.refreshToken(
           userID: fitbitUrl.userID,
           clientID: clientID,
-          clientSecret: clientSecret,
-          printLogs: printLogs);
+          clientSecret: clientSecret);
     } // if
   }//_checkAccessToken
 
