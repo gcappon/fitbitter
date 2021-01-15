@@ -1,23 +1,24 @@
 import 'package:logger/logger.dart';
-import 'package:sleep_monitor/fitbitter/src/data/fitbitDeviceData.dart';
 
-import '../urls/fitbitAPIURL.dart';
+import 'package:fitbitter/src/data/fitbitDeviceData.dart';
 
-import '../data/fitbitData.dart';
+import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
-import '../managers/fitbitDataManager.dart';
+import 'package:fitbitter/src/data/fitbitData.dart';
 
+import 'package:fitbitter/src/managers/fitbitDataManager.dart';
+
+/// [FitbitDeviceDataManager] is a class the manages the requests related to
+/// [FitbitDeviceData].
 class FitbitDeviceDataManager extends FitbitDataManager {
-
   /// Default constructor
-  FitbitDeviceDataManager({String clientID, String clientSecret}){
+  FitbitDeviceDataManager({String clientID, String clientSecret}) {
     this.clientID = clientID;
     this.clientSecret = clientSecret;
-  }// FitbitDeviceDataManager
+  } // FitbitDeviceDataManager
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
-
     // Get the response
     final response = await getResponse(fitbitUrl);
 
@@ -26,16 +27,16 @@ class FitbitDeviceDataManager extends FitbitDataManager {
     logger.i('$response');
 
     //Extract data and return them
-    List<FitbitData> ret =
-        _extractFitbitDeviceData(response, fitbitUrl.userID);
+    List<FitbitData> ret = _extractFitbitDeviceData(response, fitbitUrl.userID);
     return ret;
   } // fetch
 
+  /// A private method that extracts [FitbitDeviceData] from the given response.
   List<FitbitDeviceData> _extractFitbitDeviceData(
       dynamic response, String userID) {
-
     final data = response;
-    List<FitbitDeviceData> deviceDatapoints = List<FitbitDeviceData>();
+    List<FitbitDeviceData> deviceDatapoints =
+        List<FitbitDeviceData>.empty(growable: true);
 
     for (var record = 0; record < data.length; record++) {
       deviceDatapoints.add(FitbitDeviceData(
@@ -49,6 +50,5 @@ class FitbitDeviceDataManager extends FitbitDataManager {
     } // for entry
     return deviceDatapoints;
   } // _extractFitbitDeviceData
-
 
 } // FitbitDeviceDataManager

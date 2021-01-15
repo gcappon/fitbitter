@@ -3,22 +3,26 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sleep_monitor/fitbitter/src/urls/fitbitAPIURL.dart';
 
-import '../errors/fitbitRateLimitExceededException.dart';
-import '../errors/fitbitUnauthorizedException.dart';
-import '../errors/fitbitNotFoundException.dart';
-import '../errors/fitbitBadRequestException.dart';
-import '../errors/fitbitForbiddenException.dart';
+import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
-import '../data/fitbitData.dart';
+import 'package:fitbitter/src/errors/fitbitRateLimitExceededException.dart';
+import 'package:fitbitter/src/errors/fitbitUnauthorizedException.dart';
+import 'package:fitbitter/src/errors/fitbitNotFoundException.dart';
+import 'package:fitbitter/src/errors/fitbitBadRequestException.dart';
+import 'package:fitbitter/src/errors/fitbitForbiddenException.dart';
 
-import '../fitbitConnector.dart';
-import '../urls/fitbitAPIURL.dart';
+import 'package:fitbitter/src/data/fitbitData.dart';
 
+import 'package:fitbitter/src/fitbitConnector.dart';
+
+/// [FitbitDataManager] is an abstract class the manages the requests related to
+/// [FitbitData].
 abstract class FitbitDataManager {
-  
+  /// The client id.
   String clientID;
+
+  /// The client secret id.
   String clientSecret;
 
   /// Default constructor
@@ -27,11 +31,11 @@ abstract class FitbitDataManager {
   /// Method that fetches data from the Fitbit API.
   Future<List<FitbitData>> fetch(FitbitAPIURL url);
 
-  Future<dynamic> getResponse(FitbitAPIURL fitbitUrl) async{
-
+  /// Method the obtains the response from the given [FitbitAPIURL].
+  Future<dynamic> getResponse(FitbitAPIURL fitbitUrl) async {
     //Check access token
     await _checkAccessToken(fitbitUrl);
-    
+
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -54,12 +58,13 @@ abstract class FitbitDataManager {
 
     final decodedResponse =
         response.data is String ? jsonDecode(response.data) : response.data;
-        
+
     Future<dynamic> ret = Future.value(decodedResponse);
     return ret;
-  }//getResponse
+  } //getResponse
 
-  Future<void> _checkAccessToken(FitbitAPIURL fitbitUrl) async{
+  /// Method that check the validity of the current access token.
+  Future<void> _checkAccessToken(FitbitAPIURL fitbitUrl) async {
     //check if the access token is stil valid, if not refresh it
     if (!await FitbitConnector.isTokenValid()) {
       await FitbitConnector.refreshToken(
@@ -67,9 +72,9 @@ abstract class FitbitDataManager {
           clientID: clientID,
           clientSecret: clientSecret);
     } // if
-  }//_checkAccessToken
+  } //_checkAccessToken
 
-  /// Static method that manages errors that could return from the Fitbit API.
+  /// Method that manages errors that could return from the Fitbit API.
   static void manageError(DioError e) {
     switch (e.response.statusCode) {
       case 200:

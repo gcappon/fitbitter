@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import './urls/fitbitAuthAPIURL.dart';
+import 'package:fitbitter/src/urls/fitbitAuthAPIURL.dart';
 
 /// [FitbitConnector] is a class that is in charge of managing the connection authorization
 ///  between the app and Fitbit APIs.
@@ -16,16 +16,18 @@ import './urls/fitbitAuthAPIURL.dart';
 /// (see [FitbitConnector.isTokenValid] for more details).
 
 class FitbitConnector {
-  // FitbitConnector is a Singleton
+  /// [FitbitConnector] Singleton instance.
   static final FitbitConnector _instance = FitbitConnector._internal();
+
+  /// Public factory constructor of [FitbitConector].
   factory FitbitConnector() => _instance;
+
+  /// [FitbitConnector] internal constructor used to implement the Singleton pattern.
   FitbitConnector._internal();
 
-  /// Method that refresh the Fitbit access token
+  /// Method that refreshes the Fitbit access token.
   static Future<void> refreshToken(
-      {String userID,
-      String clientID,
-      String clientSecret}) async {
+      {String userID, String clientID, String clientSecret}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -59,9 +61,8 @@ class FitbitConnector {
         .setString('fitbitRefreshToken', refreshToken);
   } // refreshToken
 
-  /// Method that check if the current token is still valid to be used
+  /// Method that checks if the current token is still valid to be used
   /// by the Fitbit APIs OAuth or it is expired.
-  //@protected
   static Future<bool> isTokenValid() async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
@@ -95,8 +96,8 @@ class FitbitConnector {
     return response.data['active'] as bool;
   } // isTokenValid
 
-  /// Method that implements the OAuth 2.0 and gets (and retain) the
-  /// access and refresh tokens from Fitbit APIs.
+  /// Method that implements the OAuth 2.0 protocol and gets (and retain)
+  /// in the [SharedPreferences] the access and refresh tokens from Fitbit APIs.
   static Future<String> authorize(
       {BuildContext context,
       String clientID,
@@ -160,8 +161,8 @@ class FitbitConnector {
     return userID;
   } // authorize
 
-  /// Method that revoke the current access and refresh tokens and
-  /// deletes them from the SharedPrefrences.
+  /// Method that revokes the current access, refreshes tokens and
+  /// deletes them from the [SharedPreferences].
   static Future<void> unauthorize(
       {String clientID, String clientSecret}) async {
     // Instantiate Dio and its Response
@@ -197,7 +198,6 @@ class FitbitConnector {
     } catch (e) {
       print(e);
     } // catch
-  } //unauthorize
+  } // unauthorize
 
 } // FitbitConnector
-

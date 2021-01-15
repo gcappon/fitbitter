@@ -1,6 +1,9 @@
-import 'fitbitException.dart';
+import 'package:fitbitter/src/errors/fitbitException.dart';
 
+/// [FitbitNotFoundException] is a class that implements the
+/// [FitbitExceptionType.NOT_FOUND] exception.
 class FitbitNotFoundException extends FitbitException {
+  /// Default [FitbitNotFoundException] constructor.
   FitbitNotFoundException({
     FitbitExceptionType type,
     String message,
@@ -9,5 +12,5 @@ class FitbitNotFoundException extends FitbitException {
   @override
   String toString() {
     return 'FitbitNotFoundException [$type]: $message';
-  }// toString
-}// FitbitAPINotFoundException
+  } // toString
+} // FitbitAPINotFoundException

@@ -1,16 +1,17 @@
 import 'package:logger/logger.dart';
 
-import '../urls/fitbitAPIURL.dart';
+import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
-import '../data/fitbitData.dart';
-import '../data/fitbitActivityData.dart';
+import 'package:fitbitter/src/data/fitbitData.dart';
+import 'package:fitbitter/src/data/fitbitActivityData.dart';
 
-import '../managers/fitbitDataManager.dart';
+import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 
+/// [FitbitActivityDataManager] is a class the manages the requests related to
+/// [FitbitActivityData].
 class FitbitActivityDataManager extends FitbitDataManager {
-  /// Default constructor
-  FitbitActivityDataManager(
-      {String clientID, String clientSecret}) {
+  /// Default [FitbitActivityDataManager] constructor.
+  FitbitActivityDataManager({String clientID, String clientSecret}) {
     this.clientID = clientID;
     this.clientSecret = clientSecret;
   } // FitbitActivityDataManager
@@ -33,7 +34,8 @@ class FitbitActivityDataManager extends FitbitDataManager {
   List<FitbitActivityData> _extractFitbitActivityData(
       dynamic response, String userID) {
     final data = response['activities'];
-    List<FitbitActivityData> activityDatapoints = List<FitbitActivityData>();
+    List<FitbitActivityData> activityDatapoints =
+        List<FitbitActivityData>.empty(growable: true);
 
     for (var record = 0; record < data.length; record++) {
       activityDatapoints.add(FitbitActivityData(

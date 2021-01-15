@@ -1,15 +1,17 @@
 import 'package:logger/logger.dart';
 
-import '../urls/fitbitAPIURL.dart';
+import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
-import '../data/fitbitData.dart';
-import '../data/fitbitAccountData.dart';
+import 'package:fitbitter/src/data/fitbitData.dart';
+import 'package:fitbitter/src/data/fitbitAccountData.dart';
 
-import '../managers/fitbitDataManager.dart';
+import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 
+/// [FitbitAccountDataManager] is a class the manages the requests related to
+/// [FitbitAccountData].
 class FitbitAccountDataManager extends FitbitDataManager {
-  FitbitAccountDataManager(
-      {String clientID, String clientSecret})
+  /// Default [FitbitAccountDataManager] constructor.
+  FitbitAccountDataManager({String clientID, String clientSecret})
       : super(
           clientID: clientID,
           clientSecret: clientSecret,
@@ -17,7 +19,6 @@ class FitbitAccountDataManager extends FitbitDataManager {
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
-
     // Get the response
     final response = await getResponse(fitbitUrl);
 
@@ -26,7 +27,7 @@ class FitbitAccountDataManager extends FitbitDataManager {
     logger.i('$response');
 
     //Extract data and return them
-    List<FitbitData> ret = List<FitbitData>();
+    List<FitbitData> ret = List<FitbitData>.empty(growable: true);
     ret.add(FitbitAccountData.fromJson(json: response['user']));
     return ret;
   } // fetch

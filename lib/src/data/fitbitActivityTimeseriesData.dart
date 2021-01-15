@@ -1,40 +1,50 @@
-import '../utils/formats.dart';
+import 'package:fitbitter/src/utils/formats.dart';
 
-import 'fitbitData.dart';
+import 'package:fitbitter/src/data/fitbitData.dart';
 
+/// [FitbitActivityTimeseriesData] is a class implementing the data model of the
+/// physical activity timeseries data.
 class FitbitActivityTimeseriesData implements FitbitData {
+  /// The user encoded id.
   String encodedId;
 
+  /// The date of monitoring of the data.
   DateTime dateOfMonitoring;
+
+  /// The type of the activity timeseries data.
   String type;
+
+  /// The value of the data.
   double value;
-  
-  FitbitActivityTimeseriesData(
-      {this.encodedId,
-      this.dateOfMonitoring,
-      this.type,
-      this.value,
-      });
+
+  /// Default [FitbitActivityTimeseriesData] constructor.
+  FitbitActivityTimeseriesData({
+    this.encodedId,
+    this.dateOfMonitoring,
+    this.type,
+    this.value,
+  });
 
   /// Generates a [FitbitActivityTimeseriesData] obtained from a json.
-  factory FitbitActivityTimeseriesData.fromJson({Map<String, dynamic> json}){
+  factory FitbitActivityTimeseriesData.fromJson({Map<String, dynamic> json}) {
     return FitbitActivityTimeseriesData(
       encodedId: json['encodedId'],
-      dateOfMonitoring: Formats.onlyDayDateFormatTicks.parse(json['dateOfMonitoring']),
+      dateOfMonitoring:
+          Formats.onlyDayDateFormatTicks.parse(json['dateOfMonitoring']),
       type: json['type'],
       value: json['value'],
     );
-  }// fromJson
+  } // fromJson
 
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
       'encodedId': encodedId,
       'dateOfMonitoring': dateOfMonitoring,
-      'type' : type,
+      'type': type,
       'value': value,
     };
-  }// toJson
+  } // toJson
 
   @override
   String toString() {
@@ -45,5 +55,6 @@ class FitbitActivityTimeseriesData implements FitbitData {
           ..write('value: $value, ')
           ..write(')'))
         .toString();
-  }// toString
-}// FitbitActivityTimeseriesData
+  } // toString
+
+} // FitbitActivityTimeseriesData

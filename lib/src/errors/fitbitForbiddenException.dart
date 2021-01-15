@@ -1,6 +1,9 @@
-import 'fitbitException.dart';
+import 'package:fitbitter/src/errors/fitbitException.dart';
 
+/// [FitbitForbiddenException] is a class that implements the
+/// [FitbitExceptionType.FORBIDDEN] exception.
 class FitbitForbiddenException extends FitbitException {
+  /// Default [FitbitForbiddenException] constructor.
   FitbitForbiddenException({
     FitbitExceptionType type,
     String message,
@@ -9,5 +12,5 @@ class FitbitForbiddenException extends FitbitException {
   @override
   String toString() {
     return 'FitbitForbiddenException [$type]: $message';
-  }// toString
-}// FitbitForbiddenException
+  } // toString
+} // FitbitForbiddenException

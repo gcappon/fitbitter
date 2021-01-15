@@ -1,21 +1,20 @@
 import 'package:logger/logger.dart';
 
-import '../urls/fitbitAPIURL.dart';
+import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
-import '../data/fitbitData.dart';
-import '../data/fitbitSleepData.dart';
+import 'package:fitbitter/src/data/fitbitData.dart';
+import 'package:fitbitter/src/data/fitbitSleepData.dart';
 
-import '../managers/fitbitDataManager.dart';
+import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 
+/// [FitbitSleepDataManager] is a class the manages the requests related to
+/// [FitbitSleepData].
 class FitbitSleepDataManager extends FitbitDataManager {
   FitbitSleepDataManager({String clientID, String clientSecret})
-      : super(
-            clientID: clientID,
-            clientSecret: clientSecret);
+      : super(clientID: clientID, clientSecret: clientSecret);
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
-
     // Get the response
     final response = await getResponse(fitbitUrl);
 
@@ -29,12 +28,15 @@ class FitbitSleepDataManager extends FitbitDataManager {
     return sleepDataPoints;
   } // fetch
 
+  /// A private method that extracts [FitbitSleepData] from the given response.
   List<FitbitSleepData> _extractFitbitSleepData(
       dynamic response, String userId) {
     final nRecords = response["sleep"].length;
-    List<FitbitSleepData> sleepDataPoints = List<FitbitSleepData>();
+    List<FitbitSleepData> sleepDataPoints =
+        List<FitbitSleepData>.empty(growable: true);
     for (var record = 0; record < nRecords; record++) {
-      List<FitbitSleepData> daySleepDataPoints = List<FitbitSleepData>();
+      List<FitbitSleepData> daySleepDataPoints =
+          List<FitbitSleepData>.empty(growable: true);
 
       final data = response["sleep"][record]["levels"]["data"];
       final shortData = response["sleep"][record]["levels"]["shortData"];

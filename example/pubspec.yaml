@@ -1,0 +1,57 @@
+name: fitbitter_example
+description: A simple app that demonstrates the use of fitbitter.
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ------- FITBITTER 
+  fitbitter:
+    path: ../
+  # --------------------
+    
+  # ----- SHAREDPREFERENCES
+  shared_preferences: ^0.5.12+1
+  # -----
+
+  # ----- PROVIDER
+  provider: ^4.3.2
+  # -----
+
+  # ----- GETIT
+  get_it: ^5.0.4
+  # -----
+
+  # ----- MDIICONS (for more icons)
+  material_design_icons_flutter: 
+  # -----
+
+  # ----- MOOR (for databases)
+  moor: # use the latest version
+  sqlite3_flutter_libs: # Also use the latest version.
+  path_provider:
+  path:
+  # -----
+
+  cupertino_icons: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  # ----- MOOR 
+  moor_generator: # use the latest version
+  build_runner: 
+  # ----- 
+
+# The following section is specific to Flutter.
+flutter:
+  uses-material-design: true
+

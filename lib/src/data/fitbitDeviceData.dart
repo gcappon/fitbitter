@@ -1,28 +1,40 @@
-import '../utils/formats.dart';
+import 'package:fitbitter/src/utils/formats.dart';
 
-import 'fitbitData.dart';
+import 'package:fitbitter/src/data/fitbitData.dart';
 
+/// [FitbitDevicesData] is a class implementing the data model of the
+/// user devices data.
 class FitbitDeviceData implements FitbitData {
+  /// The user encoded id.
   String encodedId;
 
+  /// The device id.
   String deviceId;
+
+  /// The current battery level of the device.
   String batteryLevel;
+
+  /// The version of the device.
   String deviceVersion;
+
+  /// The type of the device.
   String type;
 
+  /// The date when the device was synched the last time.
   DateTime lastSyncTime;
-  
-  FitbitDeviceData(
-      {this.encodedId,
-      this.batteryLevel,
-      this.deviceId,
-      this.deviceVersion,
-      this.lastSyncTime,
-      this.type,
-      });
+
+  /// Default [FitbitDeviceData] constructor.
+  FitbitDeviceData({
+    this.encodedId,
+    this.batteryLevel,
+    this.deviceId,
+    this.deviceVersion,
+    this.lastSyncTime,
+    this.type,
+  });
 
   /// Generates a [FitbitDeviceData] obtained from a json.
-  factory FitbitDeviceData.fromJson({Map<String, dynamic> json}){
+  factory FitbitDeviceData.fromJson({Map<String, dynamic> json}) {
     return FitbitDeviceData(
       encodedId: json['encodedId'],
       batteryLevel: json['batteryLevel'],
@@ -31,7 +43,7 @@ class FitbitDeviceData implements FitbitData {
       lastSyncTime: Formats.onlyDayDateFormatTicks.parse(json['lastSyncTime']),
       type: json['type'],
     );
-  }// fromJson
+  } // fromJson
 
   @override
   String toString() {
@@ -44,8 +56,8 @@ class FitbitDeviceData implements FitbitData {
           ..write('type: $type, ')
           ..write(')'))
         .toString();
-  }// toString
-  
+  } // toString
+
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
@@ -56,6 +68,6 @@ class FitbitDeviceData implements FitbitData {
       'lastSyncTime': lastSyncTime,
       'type': type,
     };
-  }// toJson
+  } // toJson
 
-}// FitbitDeviceData
+} // FitbitDeviceData

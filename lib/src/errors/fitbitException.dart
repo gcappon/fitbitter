@@ -1,3 +1,4 @@
+/// An enumerator defining the possible types of [FitbitException].
 enum FitbitExceptionType {
   /// It occurs when the Fitbit API resource is not found
   NOT_FOUND,
@@ -13,21 +14,26 @@ enum FitbitExceptionType {
 
   /// When the rate limit is exceeded.
   RATE_LIMIT_EXCEEDED,
-  
+
   /// Default error type.
   DEFAULT,
 
   /// When the requested resource does not exist
   UNEXISTENT_FITBIT_REQUEST,
-}
+} // FitbitExceptionType
 
-abstract class FitbitException implements Exception{
-
+/// [FitbitException] is an abstract class defining an [Exception] that
+/// can be thrown by fitbitter.
+abstract class FitbitException implements Exception {
+  /// The [FitbitException] method.
   String message;
-  FitbitExceptionType type; 
-  
+
+  /// The type of the [FitbitException].
+  FitbitExceptionType type;
+
+  /// Default [FitbitException] constructor.
   FitbitException({this.message = '', this.type = FitbitExceptionType.DEFAULT});
 
+  /// Returns the string representation of this object.
   String toString();
-
-}
+} // FitbitException

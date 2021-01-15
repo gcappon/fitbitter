@@ -1,9 +1,12 @@
-import 'fitbitAPIURL.dart';
-import '../utils/formats.dart';
+import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
+import 'package:fitbitter/src/utils/formats.dart';
+
+/// [FitbitHeartAPIURL] is a class that expresses multiple factory
+/// constructors to be used to generate Fitbit Web APIs urls to fetch
+/// [FitbitHeartData].
 class FitbitHeartAPIURL extends FitbitAPIURL {
-
-  /// Default constructor
+  /// Default [FitbitHeartAPIURL] constructor.
   FitbitHeartAPIURL({String url, String userID})
       : super(
           url: url,
@@ -12,47 +15,50 @@ class FitbitHeartAPIURL extends FitbitAPIURL {
 
   /// Generates a [FitbitHeartAPIURL] to get [FitbitHeartData] of a specific day [date]
   /// and a given user [userID].
-  factory FitbitHeartAPIURL.dayWithUserID({String userID, DateTime date}){
+  factory FitbitHeartAPIURL.dayWithUserID({String userID, DateTime date}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(date);
     return FitbitHeartAPIURL(
       url: '${_getBaseURL(userID)}/date/$dateStr/1d.json',
       userID: userID,
     );
-  }// FitbitHeartAPIURL.dayWithUserID
+  } // FitbitHeartAPIURL.dayWithUserID
 
   /// Generates a [FitbitHeartAPIURL] to get [FitbitHeartData] of a specific date range
   /// between [startDate] and [endDate] of a given user [userID].
-  factory FitbitHeartAPIURL.dateRangeWithUserID({String userID, DateTime startDate, DateTime endDate}){
+  factory FitbitHeartAPIURL.dateRangeWithUserID(
+      {String userID, DateTime startDate, DateTime endDate}) {
     String startDateStr = Formats.onlyDayDateFormatTicks.format(startDate);
     String endDateStr = Formats.onlyDayDateFormatTicks.format(endDate);
     return FitbitHeartAPIURL(
       url: '${_getBaseURL(userID)}/date/$startDateStr/$endDateStr.json',
       userID: userID,
     );
-  }// FitbitHeartAPIURL.dateRangeWithUserID
+  } // FitbitHeartAPIURL.dateRangeWithUserID
 
   /// Generates a [FitbitHeartAPIURL] to get [FitbitHeartData] of a specific week
   /// ending in [baseDate].
-  factory FitbitHeartAPIURL.weekWithUserID({String userID, DateTime baseDate}){
+  factory FitbitHeartAPIURL.weekWithUserID({String userID, DateTime baseDate}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitHeartAPIURL(
       url: '${_getBaseURL(userID)}/date/$dateStr/1w.json',
       userID: userID,
     );
-  }// FitbitHeartAPIURL.weekWithUserID
+  } // FitbitHeartAPIURL.weekWithUserID
 
   /// Generates a [FitbitHeartAPIURL] to get [FitbitHeartData] of a specific month
   /// ending in [baseDate].
-  factory FitbitHeartAPIURL.monthWithUserID({String userID, DateTime baseDate}){
+  factory FitbitHeartAPIURL.monthWithUserID(
+      {String userID, DateTime baseDate}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitHeartAPIURL(
       url: '${_getBaseURL(userID)}/date/$dateStr/1m.json',
       userID: userID,
     );
-  }// FitbitHeartAPIURL.monthWithUserID
+  } // FitbitHeartAPIURL.monthWithUserID
 
-  static String _getBaseURL(String userID){
+  /// A private method that generates the base url of a [FitbitHeartAPIURL].
+  static String _getBaseURL(String userID) {
     return 'https://api.fitbit.com/1/user/$userID/activities/heart';
-  }// _getBaseURL
-  
-}// FitbitHeartAPIURL
+  } // _getBaseURL
+
+} // FitbitHeartAPIURL

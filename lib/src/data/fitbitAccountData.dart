@@ -1,108 +1,198 @@
-import '../utils/formats.dart';
+import 'package:fitbitter/src/utils/formats.dart';
 
-import 'fitbitData.dart';
+import 'package:fitbitter/src/data/fitbitData.dart';
 
+/// [FitbitAccountData] is a class implementing the data model of the
+/// user account data.
 class FitbitAccountData implements FitbitData {
+  /// The Fitbit user id.
   String encodedId;
 
+  /// The user's age.
   int age;
+
+  /// A flag the tells if the user is an ambassador.
   bool ambassador;
+
+  /// A flag the tells if the stride is automatically computed.
   bool autoStrideEnabled;
+
+  /// The user's average daily steps.
   int averageDailySteps;
+
+  /// An url pointing to the user avatar image.
   String avatar;
+
+  /// An url pointing to the user avatar image (150px).
   String avatar150;
+
+  /// An url pointing to the user avatar image (640px).
   String avatar640;
+
+  /// A flag the tells if the user is using the challeges (beta) feature.
   bool challegesBeta;
+
+  /// The clock display format used by the user.
   String clockDisplayFormat;
+
+  /// A flag the tells if the user is a corporate user.
   bool corporate;
+
+  /// A flag the tells if the user is a corporate user admin.
   bool corporateAdmin;
+
+  /// The user birth date.
   DateTime dateOfBirth;
+
+  /// The user's name.
   String displayName;
+
+  /// The user's name settings.
   String displayNameSetting;
+
+  /// The user's first name.
   String firstName;
+
+  /// The user's food locale.
   String foodsLocale;
+
+  /// The user's full name.
   String fullName;
+
+  /// The user's gender.
   String gender;
+
+  /// The glucose unit used by the user.
   String glucoseUnit;
+
+  /// The user's height.
   double height;
+
+  /// The unit used by the user for the height.
   String heightUnit;
+
+  /// A flag the tells if the bug report is enabled.
   bool isBugReportEnabled;
+
+  /// A flag the tells if the user is a child.
   bool isChild;
+
+  /// A flag the tells if the stride is a coach.
   bool isCoach;
+
+  /// The user's language locale.
   String languageLocale;
+
+  /// The user's last name.
   String lastName;
+
+  /// A flag the tells if the legal terms acceptance is required.
   bool legalTermsAcceptRequired;
+
+  /// The user's locale.
   String locale;
+
+  /// The date when the user subscribed to Fitbit.
   DateTime memberSince;
+
+  /// A flag the tells if the mfa is enabled.
   bool mfaEnabled;
+
+  /// The user's offset from UTC.
   int offsetFromUTCMillis;
+
+  /// A flag the tells if the user is an sdk developer.
   bool sdkDeveloper;
+
+  /// The user's sleep tracking.
   String sleepTracking;
+
+  /// The user's start day of week.
   String startDayOfWeek;
+
+  /// The user's stride length while running.
   double strideLengthRunning;
+
+  /// The user's stride length while running type.
   String strideLengthRunningType;
+
+  /// The user's stride length while walking.
   double strideLengthWalking;
+
+  /// The user's stride length while walking type.
   String strideLengthWalkingType;
+
+  /// The unit used by the user while swimming.
   String swimUnit;
+
+  /// The user's timezone.
   String timezone;
+
+  /// The unit used by the user while swimming.
   String waterUnit;
+
+  /// The unit used by the user to log water.
   String waterUnitName;
+
+  /// The user's weight.
   double weight;
+
+  /// The unit used by the user for the weight.
   String weightUnit;
   //TODO: map 'features' field
   //TODO: map 'topBadges' field
-  
 
-  FitbitAccountData(
-      {this.encodedId,
-      this.age,
-      this.ambassador,
-      this.autoStrideEnabled,
-      this.avatar,
-      this.avatar150,
-      this.avatar640,
-      this.averageDailySteps,
-      this.challegesBeta,
-      this.clockDisplayFormat,
-      this.corporate,
-      this.corporateAdmin,
-      this.dateOfBirth,
-      this.displayName,
-      this.displayNameSetting,
-      this.firstName,
-      this.foodsLocale,
-      this.fullName,
-      this.gender,
-      this.glucoseUnit,
-      this.height,
-      this.heightUnit,
-      this.isBugReportEnabled,
-      this.isChild,
-      this.isCoach,
-      this.languageLocale,
-      this.lastName,
-      this.legalTermsAcceptRequired,
-      this.locale,
-      this.memberSince,
-      this.mfaEnabled,
-      this.offsetFromUTCMillis,
-      this.sdkDeveloper,
-      this.sleepTracking,
-      this.startDayOfWeek,
-      this.strideLengthRunning,
-      this.strideLengthRunningType,
-      this.strideLengthWalking,
-      this.strideLengthWalkingType,
-      this.swimUnit,
-      this.timezone,
-      this.waterUnit,
-      this.waterUnitName,
-      this.weight,
-      this.weightUnit,
-      });
+  /// Default [FitbitAccountData] constructor.
+  FitbitAccountData({
+    this.encodedId,
+    this.age,
+    this.ambassador,
+    this.autoStrideEnabled,
+    this.avatar,
+    this.avatar150,
+    this.avatar640,
+    this.averageDailySteps,
+    this.challegesBeta,
+    this.clockDisplayFormat,
+    this.corporate,
+    this.corporateAdmin,
+    this.dateOfBirth,
+    this.displayName,
+    this.displayNameSetting,
+    this.firstName,
+    this.foodsLocale,
+    this.fullName,
+    this.gender,
+    this.glucoseUnit,
+    this.height,
+    this.heightUnit,
+    this.isBugReportEnabled,
+    this.isChild,
+    this.isCoach,
+    this.languageLocale,
+    this.lastName,
+    this.legalTermsAcceptRequired,
+    this.locale,
+    this.memberSince,
+    this.mfaEnabled,
+    this.offsetFromUTCMillis,
+    this.sdkDeveloper,
+    this.sleepTracking,
+    this.startDayOfWeek,
+    this.strideLengthRunning,
+    this.strideLengthRunningType,
+    this.strideLengthWalking,
+    this.strideLengthWalkingType,
+    this.swimUnit,
+    this.timezone,
+    this.waterUnit,
+    this.waterUnitName,
+    this.weight,
+    this.weightUnit,
+  });
 
   /// Generates a [FitbitAccountData] obtained from a json.
-  factory FitbitAccountData.fromJson({Map<String, dynamic> json}){
+  factory FitbitAccountData.fromJson({Map<String, dynamic> json}) {
     return FitbitAccountData(
       encodedId: json['encodedId'],
       age: json['age'],
@@ -149,7 +239,7 @@ class FitbitAccountData implements FitbitData {
       weight: json['weight'],
       weightUnit: json['weightUnit'],
     );
-  }// fromJson
+  } // fromJson
 
   @override
   String toString() {
@@ -183,7 +273,6 @@ class FitbitAccountData implements FitbitData {
           ..write('lastName: $lastName, ')
           ..write('legalTermsAcceptRequired: $legalTermsAcceptRequired, ')
           ..write('locale: $locale, ')
-
           ..write('memberSince: $memberSince, ')
           ..write('mfaEnabled: $mfaEnabled, ')
           ..write('offsetFromUTCMillis: $offsetFromUTCMillis, ')
@@ -202,8 +291,8 @@ class FitbitAccountData implements FitbitData {
           ..write('weightUnit: $weightUnit, ')
           ..write(')'))
         .toString();
-  }// toString
-  
+  } // toString
+
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
@@ -249,7 +338,6 @@ class FitbitAccountData implements FitbitData {
       'weight': weight,
       'weightUnit': weightUnit,
     };
-  }// toJson
+  } // toJson
 
-
-}// FitbitAccountData
+} // FitbitAccountData

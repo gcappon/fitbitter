@@ -1,6 +1,9 @@
-import 'fitbitException.dart';
+import 'package:fitbitter/src/errors/fitbitException.dart';
 
+/// [FitbitRateLimitExceededException] is a class that implements the
+/// [FitbitExceptionType.RATE_LIMIT_EXCEEDED] exception.
 class FitbitRateLimitExceededException extends FitbitException {
+  /// Default [FitbitRateLimitExceededException] constructor.
   FitbitRateLimitExceededException({
     FitbitExceptionType type,
     String message,
@@ -9,5 +12,5 @@ class FitbitRateLimitExceededException extends FitbitException {
   @override
   String toString() {
     return 'FitbitRateLimitExceededException [$type]: $message';
-  }// toString
-}// FitbitRateLimitExceededException
+  } // toString
+} // FitbitRateLimitExceededException

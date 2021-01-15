@@ -1,6 +1,9 @@
-import 'fitbitException.dart';
+import 'package:fitbitter/src/errors/fitbitException.dart';
 
+/// [FitbitUnauthorizedException] is a class that implements the
+/// [FitbitExceptionType.UNAUTHORIZED] exception.
 class FitbitUnauthorizedException extends FitbitException {
+  /// Default [FitbitUnauthorizedException] constructor.
   FitbitUnauthorizedException({
     FitbitExceptionType type,
     String message,
@@ -9,5 +12,5 @@ class FitbitUnauthorizedException extends FitbitException {
   @override
   String toString() {
     return 'FitbitUnauthorizedException [$type]: $message';
-  }// toString
-}// FitbitUnauthorizedException
+  } // toString
+} // FitbitUnauthorizedException

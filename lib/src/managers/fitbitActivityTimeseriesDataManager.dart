@@ -1,22 +1,25 @@
 import 'package:logger/logger.dart';
 
-import '../urls/fitbitActivityTimeseriesAPIURL.dart';
+import 'package:fitbitter/src/urls/fitbitActivityTimeseriesAPIURL.dart';
 
-import '../errors/fitbitUnexistentFitbitResourceException.dart';
+import 'package:fitbitter/src/errors/fitbitUnexistentFitbitResourceException.dart';
 
-import '../utils/formats.dart';
+import 'package:fitbitter/src/utils/formats.dart';
 
-import '../urls/fitbitAPIURL.dart';
+import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
-import '../data/fitbitData.dart';
-import '../data/fitbitActivityTimeseriesData.dart';
+import 'package:fitbitter/src/data/fitbitData.dart';
+import 'package:fitbitter/src/data/fitbitActivityTimeseriesData.dart';
 
-import '../managers/fitbitDataManager.dart';
+import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 
+/// [FitbitActivityTimeseriesDataManager] is a class the manages the requests related to
+/// [FitbitActivityTimeseriesData].
 class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
+  /// The type of activity timeseries data.
   String type;
 
-  /// Default constructor
+  /// Default [FitbitActivityTimeseriesDataManager] constructor.
   FitbitActivityTimeseriesDataManager(
       {String clientID, String clientSecret, String type}) {
     this.clientID = clientID;
@@ -43,11 +46,12 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
     return ret;
   } // fetch
 
+  /// A private method that extracts [FitbitActivityTimeseriesData] from the given response.
   List<FitbitActivityTimeseriesData> _extractFitbitActivityTimeseriesData(
       dynamic response, String userId) {
     final data = response[_getDataField()];
     List<FitbitActivityTimeseriesData> atDatapoints =
-        List<FitbitActivityTimeseriesData>();
+        List<FitbitActivityTimeseriesData>.empty(growable: true);
 
     for (var record = 0; record < data.length; record++) {
       atDatapoints.add(FitbitActivityTimeseriesData(
@@ -61,16 +65,28 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
     return atDatapoints;
   } // _extractFitbitActivityTimeseriesData
 
+  /// A private method that returns the data field name of the response.
   String _getDataField() {
+    final validTypes = [
+      'activityCalories',
+      'calories',
+      'caloriesBMR',
+      'distance',
+      'floors',
+      'elevation',
+      'minutesSedentary',
+      'minutesLightlyActive',
+      'minutesFairlyActive',
+      'minutesVeryActive',
+      'steps'
+    ];
 
-    final validTypes = ['activityCalories','calories','caloriesBMR','distance','floors','elevation','minutesSedentary','minutesLightlyActive','minutesFairlyActive','minutesVeryActive','steps'];
-
-    if(validTypes.contains(type))
+    if (validTypes.contains(type))
       return 'activities-' + type;
     else {
-      throw FitbitUnaexistentFitbitResourceException(message: 'The specified resource is not existent.');
+      throw FitbitUnaexistentFitbitResourceException(
+          message: 'The specified resource is not existent.');
     } // else
-        
   } // _getDataField
 
 } // FitbitActivityTimeseriesDataManager
