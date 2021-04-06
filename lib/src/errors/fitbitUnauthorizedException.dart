@@ -5,8 +5,8 @@ import 'package:fitbitter/src/errors/fitbitException.dart';
 class FitbitUnauthorizedException extends FitbitException {
   /// Default [FitbitUnauthorizedException] constructor.
   FitbitUnauthorizedException({
-    FitbitExceptionType type,
-    String message,
+    FitbitExceptionType? type,
+    String? message,
   }) : super(type: FitbitExceptionType.UNAUTHORIZED, message: message);
 
   @override

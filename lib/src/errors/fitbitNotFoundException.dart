@@ -5,8 +5,8 @@ import 'package:fitbitter/src/errors/fitbitException.dart';
 class FitbitNotFoundException extends FitbitException {
   /// Default [FitbitNotFoundException] constructor.
   FitbitNotFoundException({
-    FitbitExceptionType type,
-    String message,
+    FitbitExceptionType? type,
+    String? message,
   }) : super(type: FitbitExceptionType.NOT_FOUND, message: message);
 
   @override

@@ -1,6 +1,7 @@
-## [1.0.0-dev.3] - 2021/01/15
+## [1.0.0-dev.4] - 2021/01/15
 
 Formatted according to `flutter format .`.
+Added an example Flutter app.
 
 ## [1.0.0-dev.3] - 2021/01/15
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,7 +17,7 @@ class FitbitSettingsScreen extends StatefulWidget {
 } // FitbitSettingsScreen
 
 class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
-  FitbitAccount fitbitAccount;
+  FitbitAccount? fitbitAccount;
 
   @override
   void initState() {
@@ -30,15 +29,16 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
   Widget build(BuildContext context) {
     print("${FitbitSettingsScreen.routeName} built"); //for debugging
 
-    return StreamProvider<FitbitAccount>(
+    return StreamProvider<FitbitAccount?>(
       initialData: null,
+      catchError: (_,err) => null,
       create: (context) =>
           GetIt.instance<MyDatabase>().fitbitAccountsDao.watchFitbitAccount(),
       child: Scaffold(
         appBar: _buildAppBar(context),
         body: _buildPage(context, fitbitAccount),
         floatingActionButton:
-            Consumer<FitbitAccount>(builder: (context, fitbitAccount, child) {
+            Consumer<FitbitAccount?>(builder: (context, fitbitAccount, child) {
           return fitbitAccount == null
               ? _buildFloatingActionButton(false)
               : _buildFloatingActionButton(true);
@@ -62,11 +62,12 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
     );
   } // build
 
-  Widget _buildAppBar(BuildContext context) {
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      leading: FlatButton(
+      leading: TextButton(
         child: Icon(
           Icons.arrow_back,
+          color: Theme.of(context).accentColor,
         ),
         onPressed: () => toHomepage(context),
       ),
@@ -74,14 +75,14 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
     );
   } //buildAppBar
 
-  Widget _buildPage(BuildContext context, FitbitAccount fitbitAccount) {
+  Widget _buildPage(BuildContext context, FitbitAccount? fitbitAccount) {
     return SafeArea(
       child: Center(
         child: Padding(
           padding:
               const EdgeInsets.only(top: 25, bottom: 8, left: 20, right: 20),
           child:
-              Consumer<FitbitAccount>(builder: (context, fitbitAccount, child) {
+              Consumer<FitbitAccount?>(builder: (context, fitbitAccount, child) {
             return fitbitAccount == null
                 ? Text(
                     "Tap the button below to authorize ${Strings.appName} to connect to Fitbit services.")
@@ -99,7 +100,7 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
       elevation: 2,
       backgroundColor: Theme.of(context).errorColor,
       child: Icon(
-        MdiIcons.accountCancel,
+        Icons.cancel,
       ),
       onPressed: () async {
         // send the unauthorization request
@@ -121,12 +122,12 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
     Widget fabConnect = FloatingActionButton(
         elevation: 2,
         child: Icon(
-          MdiIcons.account,
+          Icons.account_circle,
         ),
         onPressed: () async {
           //FitbitConnector.test();
           // authorize the app using Fitbitter
-          String id = await FitbitConnector.authorize(
+          String? id = await FitbitConnector.authorize(
               context: context,
               clientID: Strings.fitbitClientID,
               clientSecret: Strings.fitbitClientSecret,
@@ -139,19 +140,19 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
                   clientSecret: Strings.fitbitClientSecret);
           final fitbitAccountDatas = await fitbitAccountDataManager
               .fetch(FitbitUserAPIURL.withUserID(userID: id));
-          FitbitAccountData fitbitAccountData = fitbitAccountDatas[0];
+          FitbitAccountData fitbitAccountData = fitbitAccountDatas[0] as FitbitAccountData;
 
           // insert user data within the database
           await GetIt.instance<MyDatabase>()
               .fitbitAccountsDao
               .insertFitbitAccount(FitbitAccount(
-                id: fitbitAccountData.encodedId,
-                displayName: fitbitAccountData.displayName,
-                birthDate: fitbitAccountData.dateOfBirth,
-                gender: fitbitAccountData.gender,
-                height: fitbitAccountData.height,
-                weight: fitbitAccountData.weight,
-                avatar150: fitbitAccountData.avatar150,
+                id: fitbitAccountData.encodedId!,
+                displayName: fitbitAccountData.displayName!,
+                birthDate: fitbitAccountData.dateOfBirth!,
+                gender: fitbitAccountData.gender!,
+                height: fitbitAccountData.height!,
+                weight: fitbitAccountData.weight!,
+                avatar150: fitbitAccountData.avatar150!,
                 createdAt: DateTime.now(),
                 updatedAt: DateTime.now(),
                 deletedAt: null,
@@ -220,7 +221,7 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
             //Height
             ListTile(
               leading: Icon(
-                MdiIcons.humanMaleHeight,
+                Icons.height,
                 color: Theme.of(context).accentColor,
               ),
               title: Column(
@@ -241,7 +242,7 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
             //Weight
             ListTile(
               leading: Icon(
-                MdiIcons.weight,
+                Icons.linear_scale,
                 color: Theme.of(context).accentColor,
               ),
               title: Column(

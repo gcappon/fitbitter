@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_web_auth (0.2.4):
+  - flutter_web_auth (0.3.0):
     - Flutter
   - path_provider (0.0.1):
     - Flutter
@@ -49,8 +49,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqlite3_flutter_libs/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_web_auth: b7465086188ce4413d7e8b23622583784b9007a7
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_web_auth: ede89bf8107b021cf16e769756d267d84d24e88b
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqlite3: 8f7d2078ae27778699a622a94b853285793422a2
@@ -58,4 +58,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

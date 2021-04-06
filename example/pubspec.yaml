@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -18,23 +18,19 @@ dependencies:
   # --------------------
     
   # ----- SHAREDPREFERENCES
-  shared_preferences: ^0.5.12+1
+  shared_preferences: ^2.0.5
   # -----
 
   # ----- PROVIDER
-  provider: ^4.3.2
+  provider: ^5.0.0
   # -----
 
   # ----- GETIT
-  get_it: ^5.0.4
-  # -----
-
-  # ----- MDIICONS (for more icons)
-  material_design_icons_flutter: 
+  get_it: ^6.0.0
   # -----
 
   # ----- MOOR (for databases)
-  moor: # use the latest version
+  moor: ^4.2.1 # use the latest version
   sqlite3_flutter_libs: # Also use the latest version.
   path_provider:
   path:

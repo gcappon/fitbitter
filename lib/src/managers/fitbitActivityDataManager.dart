@@ -11,7 +11,7 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitActivityData].
 class FitbitActivityDataManager extends FitbitDataManager {
   /// Default [FitbitActivityDataManager] constructor.
-  FitbitActivityDataManager({String clientID, String clientSecret}) {
+  FitbitActivityDataManager({String? clientID, String? clientSecret}) {
     this.clientID = clientID;
     this.clientSecret = clientSecret;
   } // FitbitActivityDataManager
@@ -32,7 +32,7 @@ class FitbitActivityDataManager extends FitbitDataManager {
   } // fetch
 
   List<FitbitActivityData> _extractFitbitActivityData(
-      dynamic response, String userID) {
+      dynamic response, String? userID) {
     final data = response['activities'];
     List<FitbitActivityData> activityDatapoints =
         List<FitbitActivityData>.empty(growable: true);

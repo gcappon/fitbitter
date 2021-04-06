@@ -12,7 +12,7 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitHeartDataManager] is a class the manages the requests related to
 /// [FitbitHeartData].
 class FitbitHeartDataManager extends FitbitDataManager {
-  FitbitHeartDataManager({String clientID, String clientSecret})
+  FitbitHeartDataManager({String? clientID, String? clientSecret})
       : super(
           clientID: clientID,
           clientSecret: clientSecret,
@@ -34,7 +34,7 @@ class FitbitHeartDataManager extends FitbitDataManager {
 
   /// A private method that extracts [FitbitHeartData] from the given response.
   List<FitbitHeartData> _extractFitbitHeartData(
-      dynamic response, String userId) {
+      dynamic response, String? userId) {
     final data = response['activities-heart'];
     List<FitbitHeartData> heartDataPoints =
         List<FitbitHeartData>.empty(growable: true);

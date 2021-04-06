@@ -10,7 +10,7 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitSleepDataManager] is a class the manages the requests related to
 /// [FitbitSleepData].
 class FitbitSleepDataManager extends FitbitDataManager {
-  FitbitSleepDataManager({String clientID, String clientSecret})
+  FitbitSleepDataManager({String? clientID, String? clientSecret})
       : super(clientID: clientID, clientSecret: clientSecret);
 
   @override
@@ -30,7 +30,7 @@ class FitbitSleepDataManager extends FitbitDataManager {
 
   /// A private method that extracts [FitbitSleepData] from the given response.
   List<FitbitSleepData> _extractFitbitSleepData(
-      dynamic response, String userId) {
+      dynamic response, String? userId) {
     final nRecords = response["sleep"].length;
     List<FitbitSleepData> sleepDataPoints =
         List<FitbitSleepData>.empty(growable: true);
@@ -49,7 +49,7 @@ class FitbitSleepDataManager extends FitbitDataManager {
 
       for (var d = 0; d < nData; d++) {
         final DateTime entryDateTime = DateTime.parse(data[d]["dateTime"]);
-        final String level = data[d]["level"];
+        final String? level = data[d]["level"];
         final int seconds = data[d]["seconds"];
         for (var e = 0; e < (seconds ~/ 30); e++) {
           daySleepDataPoints.add(FitbitSleepData(
@@ -65,7 +65,7 @@ class FitbitSleepDataManager extends FitbitDataManager {
       for (var sd = 0; sd < nShortData; sd++) {
         final DateTime entryDateTime =
             DateTime.parse(shortData[sd]["dateTime"]);
-        final String level = shortData[sd]["level"];
+        final String? level = shortData[sd]["level"];
         final int seconds = shortData[sd]["seconds"];
         for (var e = 0; e < (seconds ~/ 30); e++) {
           FitbitSleepData newSDP = FitbitSleepData(
@@ -76,8 +76,8 @@ class FitbitSleepDataManager extends FitbitDataManager {
             level: level,
             dateOfSleep: dateOfSleep,
           );
-          final idx = newSDP.entryDateTime
-                  .difference(daySleepDataPoints[0].entryDateTime)
+          final idx = newSDP.entryDateTime!
+                  .difference(daySleepDataPoints[0].entryDateTime!)
                   .inSeconds ~/
               30;
 

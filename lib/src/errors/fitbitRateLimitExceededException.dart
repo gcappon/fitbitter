@@ -5,8 +5,8 @@ import 'package:fitbitter/src/errors/fitbitException.dart';
 class FitbitRateLimitExceededException extends FitbitException {
   /// Default [FitbitRateLimitExceededException] constructor.
   FitbitRateLimitExceededException({
-    FitbitExceptionType type,
-    String message,
+    FitbitExceptionType? type,
+    String? message,
   }) : super(type: FitbitExceptionType.RATE_LIMIT_EXCEEDED, message: message);
 
   @override

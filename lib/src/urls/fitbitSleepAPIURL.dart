@@ -7,7 +7,7 @@ import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 /// [FitbitSleepData].
 class FitbitSleepAPIURL extends FitbitAPIURL {
   /// Default [FitbitSleepAPIURL] constructor.
-  FitbitSleepAPIURL({String url, String userID})
+  FitbitSleepAPIURL({String? url, String? userID})
       : super(
           url: url,
           userID: userID,
@@ -15,7 +15,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
 
   /// Generates a [FitbitSleepAPIURL] to get [FitbitSleepData] of a specific day [date]
   /// and a given user [userID].
-  factory FitbitSleepAPIURL.withUserIDAndDay({String userID, DateTime date}) {
+  factory FitbitSleepAPIURL.withUserIDAndDay({String? userID, required DateTime date}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(date);
     return FitbitSleepAPIURL(
       url: '${_getBaseURL(userID)}/date/$dateStr.json',
@@ -26,7 +26,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
   /// Generates a [FitbitSleepAPIURL] to get [FitbitSleepData] of a specific date range
   /// between [startDate] and [endDate] of a given user [userID].
   factory FitbitSleepAPIURL.withUserIDAndDateRange(
-      {String userID, DateTime startDate, DateTime endDate}) {
+      {String? userID, required DateTime startDate, required DateTime endDate}) {
     String startDateStr = Formats.onlyDayDateFormatTicks.format(startDate);
     String endDateStr = Formats.onlyDayDateFormatTicks.format(endDate);
     return FitbitSleepAPIURL(
@@ -39,7 +39,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
   /// before a given day [date]. Maximum [limit] sleep logs are returned.
   /// The resulting entries are ordered descending.
   factory FitbitSleepAPIURL.listWithUserIDAndBeforeDate(
-      {String userID, DateTime beforeDate, int limit}) {
+      {String? userID, required DateTime beforeDate, int? limit}) {
     String beforeDateStr = Formats.onlyDayDateFormatTicks.format(beforeDate);
     return FitbitSleepAPIURL(
       url:
@@ -52,7 +52,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
   /// after a given day [date]. Maximum [limit] sleep logs are returned.
   /// The resulting entries are ordered ascending.
   factory FitbitSleepAPIURL.listWithUserIDAndAfterDate(
-      {String userID, DateTime afterDate, int limit}) {
+      {String? userID, required DateTime afterDate, int? limit}) {
     String afterDateStr = Formats.onlyDayDateFormatTicks.format(afterDate);
     return FitbitSleepAPIURL(
       url:
@@ -62,7 +62,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
   } // FitbitSleepAPIURL.listWithUserIDAndAfterDate
 
   /// A private method that generates the base url of a [FitbitSleepAPIURL].
-  static String _getBaseURL(String userID) {
+  static String _getBaseURL(String? userID) {
     return 'https://api.fitbit.com/1.2/user/$userID/sleep';
   } // _getBaseURL
 } // FitbitSleepAPIURL

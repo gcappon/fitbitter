@@ -5,8 +5,8 @@ import 'package:fitbitter/src/errors/fitbitException.dart';
 class FitbitBadRequestException extends FitbitException {
   /// Default [FitbitBadRequestException] constructor.
   FitbitBadRequestException({
-    FitbitExceptionType type,
-    String message,
+    FitbitExceptionType? type,
+    String? message,
   }) : super(type: FitbitExceptionType.BAD_REQUEST, message: message);
 
   @override

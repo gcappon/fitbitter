@@ -6,49 +6,49 @@ import 'package:fitbitter/src/data/fitbitData.dart';
 /// user heart activity data.
 class FitbitHeartData implements FitbitData {
   /// The user encoded id.
-  String encodedId;
+  String? encodedId;
 
   /// The date of monitoring of the data.
-  DateTime dateOfMonitoring;
+  DateTime? dateOfMonitoring;
 
   /// The calories spent out of active range during the [dateOfMonitoring].
-  double caloriesOutOfRange;
+  double? caloriesOutOfRange;
 
   /// The minimum value of the out of active range.
-  int minimumOutOfRange;
+  int? minimumOutOfRange;
 
   /// The minutes spent out of active range during the [dateOfMonitoring].
-  int minutesOutOfRange;
+  int? minutesOutOfRange;
 
   /// The calories spent in the fat burn range during the [dateOfMonitoring].
-  double caloriesFatBurn;
+  double? caloriesFatBurn;
 
   /// The minimum value of the fat burn range.
-  int minimumFatBurn;
+  int? minimumFatBurn;
 
   /// The minutes spent in the fat burn range during the [dateOfMonitoring].
-  int minutesFatBurn;
+  int? minutesFatBurn;
 
   /// The calories spent in the cardio range during the [dateOfMonitoring].
-  double caloriesCardio;
+  double? caloriesCardio;
 
   /// The minimum value of the cardio range.
-  int minimumCardio;
+  int? minimumCardio;
 
   /// The minutes spent in the cardio range during the [dateOfMonitoring].
-  int minutesCardio;
+  int? minutesCardio;
 
   /// The calories spent in the peak range during the [dateOfMonitoring].
-  double caloriesPeak;
+  double? caloriesPeak;
 
   /// The minimum value of the peak range.
-  int minimumPeak;
+  int? minimumPeak;
 
   /// The minutes spent in the peak range during the [dateOfMonitoring].
-  int minutesPeak;
+  int? minutesPeak;
 
   /// The resting heart rate during the [dateOfMonitoring].
-  int restingHeartRate;
+  int? restingHeartRate;
 
   /// Default [FitbitHeartData] constructor.
   FitbitHeartData({
@@ -70,7 +70,7 @@ class FitbitHeartData implements FitbitData {
   });
 
   /// Generates a [FitbitHeartData] obtained from a json.
-  factory FitbitHeartData.fromJson({Map<String, dynamic> json}) {
+  factory FitbitHeartData.fromJson({required Map<String, dynamic> json}) {
     return FitbitHeartData(
       encodedId: json['encodedId'],
       dateOfMonitoring:

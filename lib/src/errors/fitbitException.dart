@@ -26,7 +26,7 @@ enum FitbitExceptionType {
 /// can be thrown by fitbitter.
 abstract class FitbitException implements Exception {
   /// The [FitbitException] method.
-  String message;
+  String? message;
 
   /// The type of the [FitbitException].
   FitbitExceptionType type;

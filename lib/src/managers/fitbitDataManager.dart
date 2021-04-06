@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -20,10 +21,10 @@ import 'package:fitbitter/src/fitbitConnector.dart';
 /// [FitbitData].
 abstract class FitbitDataManager {
   /// The client id.
-  String clientID;
+  String? clientID;
 
   /// The client secret id.
-  String clientSecret;
+  String? clientSecret;
 
   /// Default constructor
   FitbitDataManager({this.clientID, this.clientSecret});
@@ -38,12 +39,12 @@ abstract class FitbitDataManager {
 
     // Instantiate Dio and its Response
     Dio dio = Dio();
-    Response response;
+    late Response response;
 
     try {
       // get the fitbit profile data
       response = await dio.get(
-        fitbitUrl.url,
+        fitbitUrl.url!,
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
           headers: {
@@ -66,7 +67,7 @@ abstract class FitbitDataManager {
   /// Method that check the validity of the current access token.
   Future<void> _checkAccessToken(FitbitAPIURL fitbitUrl) async {
     //check if the access token is stil valid, if not refresh it
-    if (!await FitbitConnector.isTokenValid()) {
+    if (!await (FitbitConnector.isTokenValid())) {
       await FitbitConnector.refreshToken(
           userID: fitbitUrl.userID,
           clientID: clientID,
@@ -76,28 +77,28 @@ abstract class FitbitDataManager {
 
   /// Method that manages errors that could return from the Fitbit API.
   static void manageError(DioError e) {
-    switch (e.response.statusCode) {
+    switch (e.response!.statusCode) {
       case 200:
         break;
       case 400:
         throw FitbitBadRequestException(
-            message: e.response.data['errors'][0]['message']);
+            message: e.response!.data['errors'][0]['message']);
         break;
       case 401:
         throw FitbitUnauthorizedException(
-            message: e.response.data['errors'][0]['message']);
+            message: e.response!.data['errors'][0]['message']);
         break;
       case 403:
         throw FitbitForbiddenException(
-            message: e.response.data['errors'][0]['message']);
+            message: e.response!.data['errors'][0]['message']);
         break;
       case 404:
         throw FitbitNotFoundException(
-            message: e.response.data['errors'][0]['message']);
+            message: e.response!.data['errors'][0]['message']);
         break;
       case 429:
         throw FitbitRateLimitExceededException(
-            message: e.response.data['errors'][0]['message']);
+            message: e.response!.data['errors'][0]['message']);
         break;
     } // switch
   } // manageError

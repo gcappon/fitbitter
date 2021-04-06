@@ -6,16 +6,16 @@ import 'package:fitbitter/src/data/fitbitData.dart';
 /// user sleep data.
 class FitbitSleepData implements FitbitData {
   /// The user encoded id.
-  String encodedId;
+  String? encodedId;
 
   /// The date of when the sleep session begun.
-  DateTime dateOfSleep;
+  DateTime? dateOfSleep;
 
   /// The date of the data entry.
-  DateTime entryDateTime;
+  DateTime? entryDateTime;
 
   /// The level of the sleep data.
-  String level;
+  String? level;
 
   /// Default [FitbitSleepData] constructor.
   FitbitSleepData({
@@ -26,7 +26,7 @@ class FitbitSleepData implements FitbitData {
   });
 
   /// Generates a [FitbitSleepData] obtained from a json.
-  factory FitbitSleepData.fromJson({Map<String, dynamic> json}) {
+  factory FitbitSleepData.fromJson({required Map<String, dynamic> json}) {
     return FitbitSleepData(
       encodedId: json['encodedId'],
       dateOfSleep: Formats.onlyDayDateFormatTicks.parse(json['dateOfSleep']),

@@ -67,13 +67,13 @@ class Style {
   static TextTheme _buildTextTheme(TextTheme base) {
     return base
         .copyWith(
-          headline5: base.headline5.copyWith(
+          headline5: base.headline5!.copyWith(
             fontWeight: FontWeight.w500,
           ),
-          headline6: base.headline6.copyWith(
+          headline6: base.headline6!.copyWith(
             fontSize: 18.0,
           ),
-          caption: base.caption.copyWith(
+          caption: base.caption!.copyWith(
             fontSize: 14.0,
             fontWeight: FontWeight.w400,
           ),

@@ -5,20 +5,20 @@ import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 /// [FitbitDeviceData].
 class FitbitDeviceAPIURL extends FitbitAPIURL {
   /// Default [FitbitDeviceAPIURL] constructor.
-  FitbitDeviceAPIURL({String url, String userID})
+  FitbitDeviceAPIURL({String? url, String? userID})
       : super(
           url: url,
           userID: userID,
         );
 
   /// factory constructor
-  factory FitbitDeviceAPIURL.withUserID({String userID}) => FitbitDeviceAPIURL(
+  factory FitbitDeviceAPIURL.withUserID({String? userID}) => FitbitDeviceAPIURL(
         url: '${_getBaseURL(userID)}.json',
         userID: userID,
       );
 
   /// A private method that generates the base url of a [FitbitDeviceAPIURL].
-  static String _getBaseURL(String userID) {
+  static String _getBaseURL(String? userID) {
     return 'https://api.fitbit.com/1/user/$userID/devices';
   } // _getBaseURL
 

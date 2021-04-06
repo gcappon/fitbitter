@@ -6,139 +6,139 @@ import 'package:fitbitter/src/data/fitbitData.dart';
 /// user account data.
 class FitbitAccountData implements FitbitData {
   /// The Fitbit user id.
-  String encodedId;
+  String? encodedId;
 
   /// The user's age.
-  int age;
+  int? age;
 
   /// A flag the tells if the user is an ambassador.
-  bool ambassador;
+  bool? ambassador;
 
   /// A flag the tells if the stride is automatically computed.
-  bool autoStrideEnabled;
+  bool? autoStrideEnabled;
 
   /// The user's average daily steps.
-  int averageDailySteps;
+  int? averageDailySteps;
 
   /// An url pointing to the user avatar image.
-  String avatar;
+  String? avatar;
 
   /// An url pointing to the user avatar image (150px).
-  String avatar150;
+  String? avatar150;
 
   /// An url pointing to the user avatar image (640px).
-  String avatar640;
+  String? avatar640;
 
   /// A flag the tells if the user is using the challeges (beta) feature.
-  bool challegesBeta;
+  bool? challegesBeta;
 
   /// The clock display format used by the user.
-  String clockDisplayFormat;
+  String? clockDisplayFormat;
 
   /// A flag the tells if the user is a corporate user.
-  bool corporate;
+  bool? corporate;
 
   /// A flag the tells if the user is a corporate user admin.
-  bool corporateAdmin;
+  bool? corporateAdmin;
 
   /// The user birth date.
-  DateTime dateOfBirth;
+  DateTime? dateOfBirth;
 
   /// The user's name.
-  String displayName;
+  String? displayName;
 
   /// The user's name settings.
-  String displayNameSetting;
+  String? displayNameSetting;
 
   /// The user's first name.
-  String firstName;
+  String? firstName;
 
   /// The user's food locale.
-  String foodsLocale;
+  String? foodsLocale;
 
   /// The user's full name.
-  String fullName;
+  String? fullName;
 
   /// The user's gender.
-  String gender;
+  String? gender;
 
   /// The glucose unit used by the user.
-  String glucoseUnit;
+  String? glucoseUnit;
 
   /// The user's height.
-  double height;
+  double? height;
 
   /// The unit used by the user for the height.
-  String heightUnit;
+  String? heightUnit;
 
   /// A flag the tells if the bug report is enabled.
-  bool isBugReportEnabled;
+  bool? isBugReportEnabled;
 
   /// A flag the tells if the user is a child.
-  bool isChild;
+  bool? isChild;
 
   /// A flag the tells if the stride is a coach.
-  bool isCoach;
+  bool? isCoach;
 
   /// The user's language locale.
-  String languageLocale;
+  String? languageLocale;
 
   /// The user's last name.
-  String lastName;
+  String? lastName;
 
   /// A flag the tells if the legal terms acceptance is required.
-  bool legalTermsAcceptRequired;
+  bool? legalTermsAcceptRequired;
 
   /// The user's locale.
-  String locale;
+  String? locale;
 
   /// The date when the user subscribed to Fitbit.
-  DateTime memberSince;
+  DateTime? memberSince;
 
   /// A flag the tells if the mfa is enabled.
-  bool mfaEnabled;
+  bool? mfaEnabled;
 
   /// The user's offset from UTC.
-  int offsetFromUTCMillis;
+  int? offsetFromUTCMillis;
 
   /// A flag the tells if the user is an sdk developer.
-  bool sdkDeveloper;
+  bool? sdkDeveloper;
 
   /// The user's sleep tracking.
-  String sleepTracking;
+  String? sleepTracking;
 
   /// The user's start day of week.
-  String startDayOfWeek;
+  String? startDayOfWeek;
 
   /// The user's stride length while running.
-  double strideLengthRunning;
+  double? strideLengthRunning;
 
   /// The user's stride length while running type.
-  String strideLengthRunningType;
+  String? strideLengthRunningType;
 
   /// The user's stride length while walking.
-  double strideLengthWalking;
+  double? strideLengthWalking;
 
   /// The user's stride length while walking type.
-  String strideLengthWalkingType;
+  String? strideLengthWalkingType;
 
   /// The unit used by the user while swimming.
-  String swimUnit;
+  String? swimUnit;
 
   /// The user's timezone.
-  String timezone;
+  String? timezone;
 
   /// The unit used by the user while swimming.
-  String waterUnit;
+  String? waterUnit;
 
   /// The unit used by the user to log water.
-  String waterUnitName;
+  String? waterUnitName;
 
   /// The user's weight.
-  double weight;
+  double? weight;
 
   /// The unit used by the user for the weight.
-  String weightUnit;
+  String? weightUnit;
   //TODO: map 'features' field
   //TODO: map 'topBadges' field
 
@@ -192,7 +192,7 @@ class FitbitAccountData implements FitbitData {
   });
 
   /// Generates a [FitbitAccountData] obtained from a json.
-  factory FitbitAccountData.fromJson({Map<String, dynamic> json}) {
+  factory FitbitAccountData.fromJson({required Map<String, dynamic> json}) {
     return FitbitAccountData(
       encodedId: json['encodedId'],
       age: json['age'],
@@ -305,7 +305,7 @@ class FitbitAccountData implements FitbitData {
       'avatar150': avatar150,
       'avatar640': avatar640,
       'challegesBeta': challegesBeta,
-      'dateOfBirth': Formats.onlyDayDateFormatTicks.format(dateOfBirth),
+      'dateOfBirth': Formats.onlyDayDateFormatTicks.format(dateOfBirth!),
       'displayName': displayName,
       'displayNameSetting': displayNameSetting,
       'firstName': firstName,
@@ -322,7 +322,7 @@ class FitbitAccountData implements FitbitData {
       'lastName': lastName,
       'legalTermsAcceptRequired': legalTermsAcceptRequired,
       'locale': locale,
-      'memberSince': Formats.onlyDayDateFormatTicks.format(memberSince),
+      'memberSince': Formats.onlyDayDateFormatTicks.format(memberSince!),
       'mfaEnabled': mfaEnabled,
       'offsetFromUTCMillis': offsetFromUTCMillis,
       'sdkDeveloper': sdkDeveloper,

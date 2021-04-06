@@ -5,8 +5,8 @@ import 'package:fitbitter/src/errors/fitbitException.dart';
 class FitbitUnaexistentFitbitResourceException extends FitbitException {
   /// Default [FitbitUnaexistentFitbitResourceException] constructor.
   FitbitUnaexistentFitbitResourceException({
-    FitbitExceptionType type,
-    String message,
+    FitbitExceptionType? type,
+    String? message,
   }) : super(
             type: FitbitExceptionType.UNEXISTENT_FITBIT_REQUEST,
             message: message);

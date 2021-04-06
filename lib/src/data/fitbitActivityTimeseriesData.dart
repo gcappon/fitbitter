@@ -6,16 +6,16 @@ import 'package:fitbitter/src/data/fitbitData.dart';
 /// physical activity timeseries data.
 class FitbitActivityTimeseriesData implements FitbitData {
   /// The user encoded id.
-  String encodedId;
+  String? encodedId;
 
   /// The date of monitoring of the data.
-  DateTime dateOfMonitoring;
+  DateTime? dateOfMonitoring;
 
   /// The type of the activity timeseries data.
-  String type;
+  String? type;
 
   /// The value of the data.
-  double value;
+  double? value;
 
   /// Default [FitbitActivityTimeseriesData] constructor.
   FitbitActivityTimeseriesData({
@@ -26,7 +26,7 @@ class FitbitActivityTimeseriesData implements FitbitData {
   });
 
   /// Generates a [FitbitActivityTimeseriesData] obtained from a json.
-  factory FitbitActivityTimeseriesData.fromJson({Map<String, dynamic> json}) {
+  factory FitbitActivityTimeseriesData.fromJson({required Map<String, dynamic> json}) {
     return FitbitActivityTimeseriesData(
       encodedId: json['encodedId'],
       dateOfMonitoring:

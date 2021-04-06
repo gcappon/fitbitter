@@ -11,7 +11,7 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitAccountData].
 class FitbitAccountDataManager extends FitbitDataManager {
   /// Default [FitbitAccountDataManager] constructor.
-  FitbitAccountDataManager({String clientID, String clientSecret})
+  FitbitAccountDataManager({String? clientID, String? clientSecret})
       : super(
           clientID: clientID,
           clientSecret: clientSecret,

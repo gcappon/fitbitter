@@ -9,14 +9,14 @@ import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 /// be used by [FitbitConnector].
 class FitbitAuthAPIURL extends FitbitAPIURL {
   /// The data to be attached to the url.
-  String data;
+  String? data;
 
   /// The authorization header of the url.
-  String authorizationHeader;
+  String? authorizationHeader;
 
   /// Default [FitbitAuthAPIURL] constructor.
   FitbitAuthAPIURL(
-      {String url, String userID, String data, String authorizationHeader}) {
+      {String? url, String? userID, String? data, String? authorizationHeader}) {
     // super fields
     this.url = url;
     this.userID = userID;
@@ -29,7 +29,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to refresh the access token.
   factory FitbitAuthAPIURL.refreshToken(
-      {String userID, String clientID, String clientSecret}) {
+      {String? userID, String? clientID, String? clientSecret}) {
     // Generate the authorization header
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     final String authorizationHeader =
@@ -47,7 +47,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to get to the fitbit authorization form.
   factory FitbitAuthAPIURL.authorizeForm(
-      {String userID, String redirectUri, String clientID}) {
+      {String? userID, required String redirectUri, String? clientID}) {
     // Encode the redirectUri
     final String encodedRedirectUri = Uri.encodeFull(redirectUri);
 
@@ -63,11 +63,11 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to get the access and refresh tokens.
   factory FitbitAuthAPIURL.authorize(
-      {String userID,
-      String redirectUri,
-      String code,
-      String clientID,
-      String clientSecret}) {
+      {String? userID,
+      required String redirectUri,
+      String? code,
+      String? clientID,
+      String? clientSecret}) {
     // Encode the redirectUri
     final String encodedRedirectUri = Uri.encodeFull(redirectUri);
 
@@ -87,7 +87,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
 
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to revoke the access and refresh tokens.
-  factory FitbitAuthAPIURL.unauthorize({String clientID, String clientSecret}) {
+  factory FitbitAuthAPIURL.unauthorize({String? clientID, String? clientSecret}) {
     // Generate the authorization header
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     final String authorizationHeader =

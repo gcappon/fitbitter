@@ -17,43 +17,43 @@ class FitbitAccount extends DataClass implements Insertable<FitbitAccount> {
   final String avatar150;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final DateTime deletedAt;
+  final DateTime? deletedAt;
   FitbitAccount(
-      {@required this.id,
-      @required this.displayName,
-      @required this.birthDate,
-      @required this.gender,
-      @required this.height,
-      @required this.weight,
-      @required this.avatar150,
-      @required this.createdAt,
-      @required this.updatedAt,
+      {required this.id,
+      required this.displayName,
+      required this.birthDate,
+      required this.gender,
+      required this.height,
+      required this.weight,
+      required this.avatar150,
+      required this.createdAt,
+      required this.updatedAt,
       this.deletedAt});
   factory FitbitAccount.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
+      {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     final stringType = db.typeSystem.forDartType<String>();
     final dateTimeType = db.typeSystem.forDartType<DateTime>();
     final doubleType = db.typeSystem.forDartType<double>();
     return FitbitAccount(
-      id: stringType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      id: stringType.mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       displayName: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}display_name']),
+          .mapFromDatabaseResponse(data['${effectivePrefix}display_name'])!,
       birthDate: dateTimeType
-          .mapFromDatabaseResponse(data['${effectivePrefix}birth_date']),
+          .mapFromDatabaseResponse(data['${effectivePrefix}birth_date'])!,
       gender:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}gender']),
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}gender'])!,
       height:
-          doubleType.mapFromDatabaseResponse(data['${effectivePrefix}height']),
+          doubleType.mapFromDatabaseResponse(data['${effectivePrefix}height'])!,
       weight:
-          doubleType.mapFromDatabaseResponse(data['${effectivePrefix}weight']),
+          doubleType.mapFromDatabaseResponse(data['${effectivePrefix}weight'])!,
       avatar150: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}avatar150']),
+          .mapFromDatabaseResponse(data['${effectivePrefix}avatar150'])!,
       createdAt: dateTimeType
-          .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
+          .mapFromDatabaseResponse(data['${effectivePrefix}created_at'])!,
       updatedAt: dateTimeType
-          .mapFromDatabaseResponse(data['${effectivePrefix}updated_at']),
+          .mapFromDatabaseResponse(data['${effectivePrefix}updated_at'])!,
       deletedAt: dateTimeType
           .mapFromDatabaseResponse(data['${effectivePrefix}deleted_at']),
     );
@@ -61,63 +61,32 @@ class FitbitAccount extends DataClass implements Insertable<FitbitAccount> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['id'] = Variable<String>(id);
-    }
-    if (!nullToAbsent || displayName != null) {
-      map['display_name'] = Variable<String>(displayName);
-    }
-    if (!nullToAbsent || birthDate != null) {
-      map['birth_date'] = Variable<DateTime>(birthDate);
-    }
-    if (!nullToAbsent || gender != null) {
-      map['gender'] = Variable<String>(gender);
-    }
-    if (!nullToAbsent || height != null) {
-      map['height'] = Variable<double>(height);
-    }
-    if (!nullToAbsent || weight != null) {
-      map['weight'] = Variable<double>(weight);
-    }
-    if (!nullToAbsent || avatar150 != null) {
-      map['avatar150'] = Variable<String>(avatar150);
-    }
-    if (!nullToAbsent || createdAt != null) {
-      map['created_at'] = Variable<DateTime>(createdAt);
-    }
-    if (!nullToAbsent || updatedAt != null) {
-      map['updated_at'] = Variable<DateTime>(updatedAt);
-    }
+    map['id'] = Variable<String>(id);
+    map['display_name'] = Variable<String>(displayName);
+    map['birth_date'] = Variable<DateTime>(birthDate);
+    map['gender'] = Variable<String>(gender);
+    map['height'] = Variable<double>(height);
+    map['weight'] = Variable<double>(weight);
+    map['avatar150'] = Variable<String>(avatar150);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     if (!nullToAbsent || deletedAt != null) {
-      map['deleted_at'] = Variable<DateTime>(deletedAt);
+      map['deleted_at'] = Variable<DateTime?>(deletedAt);
     }
     return map;
   }
 
   FitbitAccountsCompanion toCompanion(bool nullToAbsent) {
     return FitbitAccountsCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      displayName: displayName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(displayName),
-      birthDate: birthDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(birthDate),
-      gender:
-          gender == null && nullToAbsent ? const Value.absent() : Value(gender),
-      height:
-          height == null && nullToAbsent ? const Value.absent() : Value(height),
-      weight:
-          weight == null && nullToAbsent ? const Value.absent() : Value(weight),
-      avatar150: avatar150 == null && nullToAbsent
-          ? const Value.absent()
-          : Value(avatar150),
-      createdAt: createdAt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdAt),
-      updatedAt: updatedAt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(updatedAt),
+      id: Value(id),
+      displayName: Value(displayName),
+      birthDate: Value(birthDate),
+      gender: Value(gender),
+      height: Value(height),
+      weight: Value(weight),
+      avatar150: Value(avatar150),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
       deletedAt: deletedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(deletedAt),
@@ -125,7 +94,7 @@ class FitbitAccount extends DataClass implements Insertable<FitbitAccount> {
   }
 
   factory FitbitAccount.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
+      {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return FitbitAccount(
       id: serializer.fromJson<String>(json['id']),
@@ -137,11 +106,11 @@ class FitbitAccount extends DataClass implements Insertable<FitbitAccount> {
       avatar150: serializer.fromJson<String>(json['avatar150']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      deletedAt: serializer.fromJson<DateTime>(json['deletedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
@@ -153,21 +122,21 @@ class FitbitAccount extends DataClass implements Insertable<FitbitAccount> {
       'avatar150': serializer.toJson<String>(avatar150),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'deletedAt': serializer.toJson<DateTime>(deletedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
     };
   }
 
   FitbitAccount copyWith(
-          {String id,
-          String displayName,
-          DateTime birthDate,
-          String gender,
-          double height,
-          double weight,
-          String avatar150,
-          DateTime createdAt,
-          DateTime updatedAt,
-          DateTime deletedAt}) =>
+          {String? id,
+          String? displayName,
+          DateTime? birthDate,
+          String? gender,
+          double? height,
+          double? weight,
+          String? avatar150,
+          DateTime? createdAt,
+          DateTime? updatedAt,
+          DateTime? deletedAt}) =>
       FitbitAccount(
         id: id ?? this.id,
         displayName: displayName ?? this.displayName,
@@ -242,7 +211,7 @@ class FitbitAccountsCompanion extends UpdateCompanion<FitbitAccount> {
   final Value<String> avatar150;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
-  final Value<DateTime> deletedAt;
+  final Value<DateTime?> deletedAt;
   const FitbitAccountsCompanion({
     this.id = const Value.absent(),
     this.displayName = const Value.absent(),
@@ -256,15 +225,15 @@ class FitbitAccountsCompanion extends UpdateCompanion<FitbitAccount> {
     this.deletedAt = const Value.absent(),
   });
   FitbitAccountsCompanion.insert({
-    @required String id,
-    @required String displayName,
-    @required DateTime birthDate,
-    @required String gender,
-    @required double height,
-    @required double weight,
-    @required String avatar150,
-    @required DateTime createdAt,
-    @required DateTime updatedAt,
+    required String id,
+    required String displayName,
+    required DateTime birthDate,
+    required String gender,
+    required double height,
+    required double weight,
+    required String avatar150,
+    required DateTime createdAt,
+    required DateTime updatedAt,
     this.deletedAt = const Value.absent(),
   })  : id = Value(id),
         displayName = Value(displayName),
@@ -276,16 +245,16 @@ class FitbitAccountsCompanion extends UpdateCompanion<FitbitAccount> {
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
   static Insertable<FitbitAccount> custom({
-    Expression<String> id,
-    Expression<String> displayName,
-    Expression<DateTime> birthDate,
-    Expression<String> gender,
-    Expression<double> height,
-    Expression<double> weight,
-    Expression<String> avatar150,
-    Expression<DateTime> createdAt,
-    Expression<DateTime> updatedAt,
-    Expression<DateTime> deletedAt,
+    Expression<String>? id,
+    Expression<String>? displayName,
+    Expression<DateTime>? birthDate,
+    Expression<String>? gender,
+    Expression<double>? height,
+    Expression<double>? weight,
+    Expression<String>? avatar150,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime?>? deletedAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -302,16 +271,16 @@ class FitbitAccountsCompanion extends UpdateCompanion<FitbitAccount> {
   }
 
   FitbitAccountsCompanion copyWith(
-      {Value<String> id,
-      Value<String> displayName,
-      Value<DateTime> birthDate,
-      Value<String> gender,
-      Value<double> height,
-      Value<double> weight,
-      Value<String> avatar150,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<DateTime> deletedAt}) {
+      {Value<String>? id,
+      Value<String>? displayName,
+      Value<DateTime>? birthDate,
+      Value<String>? gender,
+      Value<double>? height,
+      Value<double>? weight,
+      Value<String>? avatar150,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt,
+      Value<DateTime?>? deletedAt}) {
     return FitbitAccountsCompanion(
       id: id ?? this.id,
       displayName: displayName ?? this.displayName,
@@ -357,7 +326,7 @@ class FitbitAccountsCompanion extends UpdateCompanion<FitbitAccount> {
       map['updated_at'] = Variable<DateTime>(updatedAt.value);
     }
     if (deletedAt.present) {
-      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+      map['deleted_at'] = Variable<DateTime?>(deletedAt.value);
     }
     return map;
   }
@@ -383,12 +352,11 @@ class FitbitAccountsCompanion extends UpdateCompanion<FitbitAccount> {
 class $FitbitAccountsTable extends FitbitAccounts
     with TableInfo<$FitbitAccountsTable, FitbitAccount> {
   final GeneratedDatabase _db;
-  final String _alias;
+  final String? _alias;
   $FitbitAccountsTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedTextColumn _id;
   @override
-  GeneratedTextColumn get id => _id ??= _constructId();
+  late final GeneratedTextColumn id = _constructId();
   GeneratedTextColumn _constructId() {
     return GeneratedTextColumn(
       'id',
@@ -399,10 +367,8 @@ class $FitbitAccountsTable extends FitbitAccounts
 
   final VerificationMeta _displayNameMeta =
       const VerificationMeta('displayName');
-  GeneratedTextColumn _displayName;
   @override
-  GeneratedTextColumn get displayName =>
-      _displayName ??= _constructDisplayName();
+  late final GeneratedTextColumn displayName = _constructDisplayName();
   GeneratedTextColumn _constructDisplayName() {
     return GeneratedTextColumn(
       'display_name',
@@ -412,9 +378,8 @@ class $FitbitAccountsTable extends FitbitAccounts
   }
 
   final VerificationMeta _birthDateMeta = const VerificationMeta('birthDate');
-  GeneratedDateTimeColumn _birthDate;
   @override
-  GeneratedDateTimeColumn get birthDate => _birthDate ??= _constructBirthDate();
+  late final GeneratedDateTimeColumn birthDate = _constructBirthDate();
   GeneratedDateTimeColumn _constructBirthDate() {
     return GeneratedDateTimeColumn(
       'birth_date',
@@ -424,9 +389,8 @@ class $FitbitAccountsTable extends FitbitAccounts
   }
 
   final VerificationMeta _genderMeta = const VerificationMeta('gender');
-  GeneratedTextColumn _gender;
   @override
-  GeneratedTextColumn get gender => _gender ??= _constructGender();
+  late final GeneratedTextColumn gender = _constructGender();
   GeneratedTextColumn _constructGender() {
     return GeneratedTextColumn(
       'gender',
@@ -436,9 +400,8 @@ class $FitbitAccountsTable extends FitbitAccounts
   }
 
   final VerificationMeta _heightMeta = const VerificationMeta('height');
-  GeneratedRealColumn _height;
   @override
-  GeneratedRealColumn get height => _height ??= _constructHeight();
+  late final GeneratedRealColumn height = _constructHeight();
   GeneratedRealColumn _constructHeight() {
     return GeneratedRealColumn(
       'height',
@@ -448,9 +411,8 @@ class $FitbitAccountsTable extends FitbitAccounts
   }
 
   final VerificationMeta _weightMeta = const VerificationMeta('weight');
-  GeneratedRealColumn _weight;
   @override
-  GeneratedRealColumn get weight => _weight ??= _constructWeight();
+  late final GeneratedRealColumn weight = _constructWeight();
   GeneratedRealColumn _constructWeight() {
     return GeneratedRealColumn(
       'weight',
@@ -460,9 +422,8 @@ class $FitbitAccountsTable extends FitbitAccounts
   }
 
   final VerificationMeta _avatar150Meta = const VerificationMeta('avatar150');
-  GeneratedTextColumn _avatar150;
   @override
-  GeneratedTextColumn get avatar150 => _avatar150 ??= _constructAvatar150();
+  late final GeneratedTextColumn avatar150 = _constructAvatar150();
   GeneratedTextColumn _constructAvatar150() {
     return GeneratedTextColumn(
       'avatar150',
@@ -472,9 +433,8 @@ class $FitbitAccountsTable extends FitbitAccounts
   }
 
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
-  GeneratedDateTimeColumn _createdAt;
   @override
-  GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
+  late final GeneratedDateTimeColumn createdAt = _constructCreatedAt();
   GeneratedDateTimeColumn _constructCreatedAt() {
     return GeneratedDateTimeColumn(
       'created_at',
@@ -484,9 +444,8 @@ class $FitbitAccountsTable extends FitbitAccounts
   }
 
   final VerificationMeta _updatedAtMeta = const VerificationMeta('updatedAt');
-  GeneratedDateTimeColumn _updatedAt;
   @override
-  GeneratedDateTimeColumn get updatedAt => _updatedAt ??= _constructUpdatedAt();
+  late final GeneratedDateTimeColumn updatedAt = _constructUpdatedAt();
   GeneratedDateTimeColumn _constructUpdatedAt() {
     return GeneratedDateTimeColumn(
       'updated_at',
@@ -496,9 +455,8 @@ class $FitbitAccountsTable extends FitbitAccounts
   }
 
   final VerificationMeta _deletedAtMeta = const VerificationMeta('deletedAt');
-  GeneratedDateTimeColumn _deletedAt;
   @override
-  GeneratedDateTimeColumn get deletedAt => _deletedAt ??= _constructDeletedAt();
+  late final GeneratedDateTimeColumn deletedAt = _constructDeletedAt();
   GeneratedDateTimeColumn _constructDeletedAt() {
     return GeneratedDateTimeColumn(
       'deleted_at',
@@ -532,7 +490,7 @@ class $FitbitAccountsTable extends FitbitAccounts
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     } else if (isInserting) {
       context.missing(_idMeta);
     }
@@ -540,55 +498,55 @@ class $FitbitAccountsTable extends FitbitAccounts
       context.handle(
           _displayNameMeta,
           displayName.isAcceptableOrUnknown(
-              data['display_name'], _displayNameMeta));
+              data['display_name']!, _displayNameMeta));
     } else if (isInserting) {
       context.missing(_displayNameMeta);
     }
     if (data.containsKey('birth_date')) {
       context.handle(_birthDateMeta,
-          birthDate.isAcceptableOrUnknown(data['birth_date'], _birthDateMeta));
+          birthDate.isAcceptableOrUnknown(data['birth_date']!, _birthDateMeta));
     } else if (isInserting) {
       context.missing(_birthDateMeta);
     }
     if (data.containsKey('gender')) {
       context.handle(_genderMeta,
-          gender.isAcceptableOrUnknown(data['gender'], _genderMeta));
+          gender.isAcceptableOrUnknown(data['gender']!, _genderMeta));
     } else if (isInserting) {
       context.missing(_genderMeta);
     }
     if (data.containsKey('height')) {
       context.handle(_heightMeta,
-          height.isAcceptableOrUnknown(data['height'], _heightMeta));
+          height.isAcceptableOrUnknown(data['height']!, _heightMeta));
     } else if (isInserting) {
       context.missing(_heightMeta);
     }
     if (data.containsKey('weight')) {
       context.handle(_weightMeta,
-          weight.isAcceptableOrUnknown(data['weight'], _weightMeta));
+          weight.isAcceptableOrUnknown(data['weight']!, _weightMeta));
     } else if (isInserting) {
       context.missing(_weightMeta);
     }
     if (data.containsKey('avatar150')) {
       context.handle(_avatar150Meta,
-          avatar150.isAcceptableOrUnknown(data['avatar150'], _avatar150Meta));
+          avatar150.isAcceptableOrUnknown(data['avatar150']!, _avatar150Meta));
     } else if (isInserting) {
       context.missing(_avatar150Meta);
     }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
-          createdAt.isAcceptableOrUnknown(data['created_at'], _createdAtMeta));
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
     if (data.containsKey('updated_at')) {
       context.handle(_updatedAtMeta,
-          updatedAt.isAcceptableOrUnknown(data['updated_at'], _updatedAtMeta));
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
     }
     if (data.containsKey('deleted_at')) {
       context.handle(_deletedAtMeta,
-          deletedAt.isAcceptableOrUnknown(data['deleted_at'], _deletedAtMeta));
+          deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
     }
     return context;
   }
@@ -596,7 +554,7 @@ class $FitbitAccountsTable extends FitbitAccounts
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  FitbitAccount map(Map<String, dynamic> data, {String tablePrefix}) {
+  FitbitAccount map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return FitbitAccount.fromData(data, _db, prefix: effectivePrefix);
   }
@@ -609,12 +567,9 @@ class $FitbitAccountsTable extends FitbitAccounts
 
 abstract class _$MyDatabase extends GeneratedDatabase {
   _$MyDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $FitbitAccountsTable _fitbitAccounts;
-  $FitbitAccountsTable get fitbitAccounts =>
-      _fitbitAccounts ??= $FitbitAccountsTable(this);
-  FitbitAccountsDao _fitbitAccountsDao;
-  FitbitAccountsDao get fitbitAccountsDao =>
-      _fitbitAccountsDao ??= FitbitAccountsDao(this as MyDatabase);
+  late final $FitbitAccountsTable fitbitAccounts = $FitbitAccountsTable(this);
+  late final FitbitAccountsDao fitbitAccountsDao =
+      FitbitAccountsDao(this as MyDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override

@@ -5,14 +5,14 @@ import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 /// [FitbitUserData].
 class FitbitUserAPIURL extends FitbitAPIURL {
   /// Default [FitbitUserAPIURL] constructor.
-  FitbitUserAPIURL({String url, String userID})
+  FitbitUserAPIURL({String? url, String? userID})
       : super(
           url: url,
           userID: userID,
         );
 
   /// Generates a [FitbitUserAPIURL] given the [userID].
-  factory FitbitUserAPIURL.withUserID({String userID}) => FitbitUserAPIURL(
+  factory FitbitUserAPIURL.withUserID({String? userID}) => FitbitUserAPIURL(
         url: '${_getBaseURL()}/$userID/profile.json',
         userID: userID,
       );

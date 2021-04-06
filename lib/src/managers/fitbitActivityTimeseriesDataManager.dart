@@ -17,11 +17,11 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitActivityTimeseriesData].
 class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
   /// The type of activity timeseries data.
-  String type;
+  String? type;
 
   /// Default [FitbitActivityTimeseriesDataManager] constructor.
   FitbitActivityTimeseriesDataManager(
-      {String clientID, String clientSecret, String type}) {
+      {String? clientID, String? clientSecret, String? type}) {
     this.clientID = clientID;
     this.clientSecret = clientSecret;
     this.type = type;
@@ -48,7 +48,7 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
 
   /// A private method that extracts [FitbitActivityTimeseriesData] from the given response.
   List<FitbitActivityTimeseriesData> _extractFitbitActivityTimeseriesData(
-      dynamic response, String userId) {
+      dynamic response, String? userId) {
     final data = response[_getDataField()];
     List<FitbitActivityTimeseriesData> atDatapoints =
         List<FitbitActivityTimeseriesData>.empty(growable: true);
@@ -82,7 +82,7 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
     ];
 
     if (validTypes.contains(type))
-      return 'activities-' + type;
+      return 'activities-' + type!;
     else {
       throw FitbitUnaexistentFitbitResourceException(
           message: 'The specified resource is not existent.');

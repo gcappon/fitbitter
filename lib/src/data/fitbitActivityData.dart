@@ -6,40 +6,40 @@ import 'package:fitbitter/src/data/fitbitData.dart';
 /// user's physical activity data.
 class FitbitActivityData implements FitbitData {
   /// The user encoded id.
-  String encodedId;
+  String? encodedId;
 
   /// The activity type id.
-  String activityId;
+  String? activityId;
 
   /// The parent activity type id.
-  String activityParentId;
+  String? activityParentId;
 
   /// The calories spent during the activity.
-  double calories;
+  double? calories;
 
   /// The description of the activity.
-  String description;
+  String? description;
 
   /// The distance spanned during the activity.
-  double distance;
+  double? distance;
 
   /// The duration of the activity.
-  double duration;
+  double? duration;
 
   /// A flag that tells is the activity is the user's favorite.
-  bool isFavorite;
+  bool? isFavorite;
 
   /// The univocal activity id.
-  String logId;
+  String? logId;
 
   /// The name of the activity.
-  String name;
+  String? name;
 
   /// The start date of the activity.
-  DateTime dateOfMonitoring;
+  DateTime? dateOfMonitoring;
 
   /// The start time of the activity.
-  DateTime startTime;
+  DateTime? startTime;
 
   /// Default [FitbitActivityData] constructor.
   FitbitActivityData({
@@ -58,7 +58,7 @@ class FitbitActivityData implements FitbitData {
   });
 
   /// Generates a [FitbitActivityData] obtained from a json.
-  factory FitbitActivityData.fromJson({Map<String, dynamic> json}) {
+  factory FitbitActivityData.fromJson({required Map<String, dynamic> json}) {
     return FitbitActivityData(
       encodedId: json['encodedId'],
       activityId: json['activityId'],

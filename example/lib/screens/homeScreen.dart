@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fitbitter_example/database/database.dart';
 
@@ -22,14 +20,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     print("${HomeScreen.routeName} built"); //for debugging
 
-    return StreamProvider<FitbitAccount>(
+    return StreamProvider<FitbitAccount?>(
       initialData: null,
       create: (context) =>
           GetIt.instance<MyDatabase>().fitbitAccountsDao.watchFitbitAccount(),
+      catchError: (_,err) => null,
       child: Scaffold(
         appBar: buildAppBar(context),
         drawer:
-            Consumer<FitbitAccount>(builder: (context, fitbitAccount, child) {
+            Consumer<FitbitAccount?>(builder: (context, fitbitAccount, child) {
           return buildHomeDrawer(
               context,
               fitbitAccount == null
@@ -42,14 +41,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Consumer<FitbitAccount>(
+                Consumer<FitbitAccount?>(
                     builder: (context, fitbitAccount, child) {
                   return fitbitAccount == null
                       ? Text(
                           'No user logged. To start open the Drawer and tap "Fitbit Account"')
                       : Column(
                           children: [
-                            RaisedButton(
+                            ElevatedButton(
                                 child: Text('Fetch yesterday step data'),
                                 onPressed: () async {
                                   // Instantiate a proper FitbitManager
@@ -89,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   } // build
 
-  Widget buildAppBar(BuildContext context) {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       elevation: 15,
       title: Text(Strings.homeScreenName),

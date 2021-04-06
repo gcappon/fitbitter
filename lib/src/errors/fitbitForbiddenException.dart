@@ -5,8 +5,8 @@ import 'package:fitbitter/src/errors/fitbitException.dart';
 class FitbitForbiddenException extends FitbitException {
   /// Default [FitbitForbiddenException] constructor.
   FitbitForbiddenException({
-    FitbitExceptionType type,
-    String message,
+    FitbitExceptionType? type,
+    String? message,
   }) : super(type: FitbitExceptionType.FORBIDDEN, message: message);
 
   @override

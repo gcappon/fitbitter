@@ -12,7 +12,7 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitDeviceData].
 class FitbitDeviceDataManager extends FitbitDataManager {
   /// Default constructor
-  FitbitDeviceDataManager({String clientID, String clientSecret}) {
+  FitbitDeviceDataManager({String? clientID, String? clientSecret}) {
     this.clientID = clientID;
     this.clientSecret = clientSecret;
   } // FitbitDeviceDataManager
@@ -33,7 +33,7 @@ class FitbitDeviceDataManager extends FitbitDataManager {
 
   /// A private method that extracts [FitbitDeviceData] from the given response.
   List<FitbitDeviceData> _extractFitbitDeviceData(
-      dynamic response, String userID) {
+      dynamic response, String? userID) {
     final data = response;
     List<FitbitDeviceData> deviceDatapoints =
         List<FitbitDeviceData>.empty(growable: true);

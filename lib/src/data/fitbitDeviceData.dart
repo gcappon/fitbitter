@@ -6,22 +6,22 @@ import 'package:fitbitter/src/data/fitbitData.dart';
 /// user devices data.
 class FitbitDeviceData implements FitbitData {
   /// The user encoded id.
-  String encodedId;
+  String? encodedId;
 
   /// The device id.
-  String deviceId;
+  String? deviceId;
 
   /// The current battery level of the device.
-  String batteryLevel;
+  String? batteryLevel;
 
   /// The version of the device.
-  String deviceVersion;
+  String? deviceVersion;
 
   /// The type of the device.
-  String type;
+  String? type;
 
   /// The date when the device was synched the last time.
-  DateTime lastSyncTime;
+  DateTime? lastSyncTime;
 
   /// Default [FitbitDeviceData] constructor.
   FitbitDeviceData({
@@ -34,7 +34,7 @@ class FitbitDeviceData implements FitbitData {
   });
 
   /// Generates a [FitbitDeviceData] obtained from a json.
-  factory FitbitDeviceData.fromJson({Map<String, dynamic> json}) {
+  factory FitbitDeviceData.fromJson({required Map<String, dynamic> json}) {
     return FitbitDeviceData(
       encodedId: json['encodedId'],
       batteryLevel: json['batteryLevel'],

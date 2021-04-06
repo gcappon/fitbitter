@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
@@ -27,7 +29,7 @@ class FitbitConnector {
 
   /// Method that refreshes the Fitbit access token.
   static Future<void> refreshToken(
-      {String userID, String clientID, String clientSecret}) async {
+      {String? userID, String? clientID, String? clientSecret}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -38,7 +40,7 @@ class FitbitConnector {
 
     // Post refresh query to Fitbit API
     response = await dio.post(
-      fitbitUrl.url,
+      fitbitUrl.url!,
       data: fitbitUrl.data,
       options: Options(
         contentType: Headers.formUrlEncodedContentType,
@@ -63,17 +65,17 @@ class FitbitConnector {
 
   /// Method that checks if the current token is still valid to be used
   /// by the Fitbit APIs OAuth or it is expired.
-  static Future<bool> isTokenValid() async {
+  static FutureOr<bool> isTokenValid() async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
-    Response response;
+    late Response response;
 
     final fitbitUrl = FitbitAuthAPIURL.isTokenValid();
 
     //Get the response
     try {
       response = await dio.post(
-        fitbitUrl.url,
+        fitbitUrl.url!,
         data: fitbitUrl.data,
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
@@ -83,7 +85,7 @@ class FitbitConnector {
         ),
       );
     } on DioError catch (e) {
-      if (e.response.statusCode == 401) {
+      if (e.response!.statusCode == 401) {
         return false;
       }
     }
@@ -98,17 +100,17 @@ class FitbitConnector {
 
   /// Method that implements the OAuth 2.0 protocol and gets (and retain)
   /// in the [SharedPreferences] the access and refresh tokens from Fitbit APIs.
-  static Future<String> authorize(
-      {BuildContext context,
-      String clientID,
-      String clientSecret,
-      String redirectUri,
-      String callbackUrlScheme}) async {
+  static Future<String?> authorize(
+      {BuildContext? context,
+      String? clientID,
+      String? clientSecret,
+      required String redirectUri,
+      required String callbackUrlScheme}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
 
-    String userID;
+    String? userID;
 
     // Generate the fitbit url
     final fitbitAuthorizeFormUrl = FitbitAuthAPIURL.authorizeForm(
@@ -117,7 +119,7 @@ class FitbitConnector {
     // Perform authentication
     try {
       final result = await FlutterWebAuth.authenticate(
-          url: fitbitAuthorizeFormUrl.url,
+          url: fitbitAuthorizeFormUrl.url!,
           callbackUrlScheme: callbackUrlScheme);
       //Get the auth code
       final code = Uri.parse(result).queryParameters['code'];
@@ -131,7 +133,7 @@ class FitbitConnector {
           clientSecret: clientSecret);
 
       response = await dio.post(
-        fitbitAuthorizeUrl.url,
+        fitbitAuthorizeUrl.url!,
         data: fitbitAuthorizeUrl.data,
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
@@ -148,7 +150,7 @@ class FitbitConnector {
       // Save authorization tokens
       final accessToken = response.data['access_token'] as String;
       final refreshToken = response.data['refresh_token'] as String;
-      userID = response.data['user_id'] as String;
+      userID = response.data['user_id'] as String?;
 
       GetIt.instance<SharedPreferences>()
           .setString('fitbitAccessToken', accessToken);
@@ -164,7 +166,7 @@ class FitbitConnector {
   /// Method that revokes the current access, refreshes tokens and
   /// deletes them from the [SharedPreferences].
   static Future<void> unauthorize(
-      {String clientID, String clientSecret}) async {
+      {String? clientID, String? clientSecret}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -178,7 +180,7 @@ class FitbitConnector {
     // Post revoke query to Fitbit API
     try {
       response = await dio.post(
-        fitbitUrl.url,
+        fitbitUrl.url!,
         data: fitbitUrl.data,
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
