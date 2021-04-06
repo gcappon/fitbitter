@@ -1,3 +1,7 @@
+## [1.0.0-dev.5] - 2021/04/06
+
+Now compatible with null safety.
+
 ## [1.0.0-dev.4] - 2021/01/15
 
 Formatted according to `flutter format .`.
