@@ -83,23 +83,18 @@ abstract class FitbitDataManager {
       case 400:
         throw FitbitBadRequestException(
             message: e.response!.data['errors'][0]['message']);
-        break;
       case 401:
         throw FitbitUnauthorizedException(
             message: e.response!.data['errors'][0]['message']);
-        break;
       case 403:
         throw FitbitForbiddenException(
             message: e.response!.data['errors'][0]['message']);
-        break;
       case 404:
         throw FitbitNotFoundException(
             message: e.response!.data['errors'][0]['message']);
-        break;
       case 429:
         throw FitbitRateLimitExceededException(
             message: e.response!.data['errors'][0]['message']);
-        break;
     } // switch
   } // manageError
 

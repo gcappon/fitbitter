@@ -55,7 +55,11 @@ class Style {
         // Others
         scaffoldBackgroundColor: white,
         cardColor: white,
-        textSelectionColor: lightBlue,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: darkBlue,
+          selectionColor: lightBlue,
+          selectionHandleColor: Colors.blue,
+        ),
         errorColor: red,
 
         // This makes the visual density adapt to the platform that you run

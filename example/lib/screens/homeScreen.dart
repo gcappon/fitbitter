@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   final snackBar = SnackBar(
                                       content: Text(
                                           'Yesterday you walked ${stepsData[0].value} steps!'));
-                                  Scaffold.of(context).showSnackBar(snackBar);
+                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 }),
                           ],
                         );
