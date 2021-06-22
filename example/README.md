@@ -39,5 +39,17 @@ static const String fitbitRedirectUri = 'XXX';
 static const String fitbitCallbackScheme = 'XXX';
 ```
 from 'XXX' to 'example://fitbit/auth' and 'example', respectively.
+* (To run the example on Android) Go to android/app/src/main/AndroidManifest.xml, locate the following snippet of code
+```xml
+<activity android:name="com.linusu.flutter_web_auth.CallbackActivity" >
+      <intent-filter android:label="flutter_web_auth">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="YOUR_CALLBACK_URL_SCHEME_HERE" />
+      </intent-filter>
+    </activity>
+```
+and change ```YOUR_CALLBACK_SCHEME``` with your callback scheme (in this example ```example```)
 * Run the application with `flutter run`. Enjoy!
   
