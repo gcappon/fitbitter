@@ -1,6 +1,8 @@
 ## [1.0.0] - 2021/04/11
 
-Release 1.0.0. Added docs at https://gcappon.github.com/fitbitter/
+Release 1.0.0. 
+Added docs at https://gcappon.github.com/fitbitter/
+Updated dependencies. 
 
 ## [1.0.0-dev.5] - 2021/04/06
 

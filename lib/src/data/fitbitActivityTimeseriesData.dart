@@ -26,7 +26,8 @@ class FitbitActivityTimeseriesData implements FitbitData {
   });
 
   /// Generates a [FitbitActivityTimeseriesData] obtained from a json.
-  factory FitbitActivityTimeseriesData.fromJson({required Map<String, dynamic> json}) {
+  factory FitbitActivityTimeseriesData.fromJson(
+      {required Map<String, dynamic> json}) {
     return FitbitActivityTimeseriesData(
       encodedId: json['encodedId'],
       dateOfMonitoring:

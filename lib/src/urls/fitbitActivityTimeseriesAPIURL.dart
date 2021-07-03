@@ -10,7 +10,8 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   String? resource;
 
   /// Default [FitbitActivityTimeseriesAPIURL] constructor.
-  FitbitActivityTimeseriesAPIURL({String? url, String? userID, String? resource}) {
+  FitbitActivityTimeseriesAPIURL(
+      {String? url, String? userID, String? resource}) {
     this.url = url;
     this.userID = userID;
     this.resource = resource;
@@ -31,7 +32,10 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   /// Generates a [FitbitActivityTimeseriesAPIURL] to get [FitbitActivityTimeseriesData] of a specific date range
   /// between [startDate] and [endDate] of a given user [userID].
   factory FitbitActivityTimeseriesAPIURL.dateRangeWithResource(
-      {String? userID, required DateTime startDate, required DateTime endDate, String? resource}) {
+      {String? userID,
+      required DateTime startDate,
+      required DateTime endDate,
+      String? resource}) {
     String startDateStr = Formats.onlyDayDateFormatTicks.format(startDate);
     String endDateStr = Formats.onlyDayDateFormatTicks.format(endDate);
     return FitbitActivityTimeseriesAPIURL(

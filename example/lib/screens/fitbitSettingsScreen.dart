@@ -30,7 +30,7 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
 
     return StreamProvider<FitbitAccount?>(
       initialData: null,
-      catchError: (_,err) => null,
+      catchError: (_, err) => null,
       create: (context) =>
           GetIt.instance<MyDatabase>().fitbitAccountsDao.watchFitbitAccount(),
       child: Scaffold(
@@ -80,15 +80,15 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
         child: Padding(
           padding:
               const EdgeInsets.only(top: 25, bottom: 8, left: 20, right: 20),
-          child:
-              Consumer<FitbitAccount?>(builder: (context, fitbitAccount, child) {
+          child: Consumer<FitbitAccount?>(
+              builder: (context, fitbitAccount, child) {
             return fitbitAccount == null
                 ? Text(
                     "Tap the button below to authorize ${Strings.appName} to connect to Fitbit services.")
                 : _buildFitbitAccountInformation(context, fitbitAccount);
           } // builder
-                  //Text(Strings.hello),
-                  ),
+              //Text(Strings.hello),
+              ),
         ),
       ),
     );
@@ -132,6 +132,23 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
               clientSecret: Strings.fitbitClientSecret,
               redirectUri: Strings.fitbitRedirectUri,
               callbackUrlScheme: Strings.fitbitCallbackScheme);
+
+          var fitbitActivityTimeseriesDataManager =
+              FitbitActivityTimeseriesDataManager(
+            clientID: Strings.fitbitClientID,
+            clientSecret: Strings.fitbitClientSecret,
+            type: "calories",
+          );
+
+          var rawData = await fitbitActivityTimeseriesDataManager.fetch(
+            FitbitActivityTimeseriesAPIURL.dateRangeWithResource(
+              userID: id,
+              startDate: DateTime.now().subtract(Duration(days: 300)),
+              endDate: DateTime.now().subtract(Duration(days: 298)),
+              resource: "calories",
+            ),
+          ) as List<FitbitActivityTimeseriesData>;
+
           // fetch user data
           FitbitAccountDataManager fitbitAccountDataManager =
               FitbitAccountDataManager(
@@ -139,7 +156,8 @@ class _FitbitSettingsScreenState extends State<FitbitSettingsScreen> {
                   clientSecret: Strings.fitbitClientSecret);
           final fitbitAccountDatas = await fitbitAccountDataManager
               .fetch(FitbitUserAPIURL.withUserID(userID: id));
-          FitbitAccountData fitbitAccountData = fitbitAccountDatas[0] as FitbitAccountData;
+          FitbitAccountData fitbitAccountData =
+              fitbitAccountDatas[0] as FitbitAccountData;
 
           // insert user data within the database
           await GetIt.instance<MyDatabase>()

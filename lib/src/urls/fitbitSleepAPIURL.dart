@@ -15,7 +15,8 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
 
   /// Generates a [FitbitSleepAPIURL] to get [FitbitSleepData] of a specific day [date]
   /// and a given user [userID].
-  factory FitbitSleepAPIURL.withUserIDAndDay({String? userID, required DateTime date}) {
+  factory FitbitSleepAPIURL.withUserIDAndDay(
+      {String? userID, required DateTime date}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(date);
     return FitbitSleepAPIURL(
       url: '${_getBaseURL(userID)}/date/$dateStr.json',
@@ -26,7 +27,9 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
   /// Generates a [FitbitSleepAPIURL] to get [FitbitSleepData] of a specific date range
   /// between [startDate] and [endDate] of a given user [userID].
   factory FitbitSleepAPIURL.withUserIDAndDateRange(
-      {String? userID, required DateTime startDate, required DateTime endDate}) {
+      {String? userID,
+      required DateTime startDate,
+      required DateTime endDate}) {
     String startDateStr = Formats.onlyDayDateFormatTicks.format(startDate);
     String endDateStr = Formats.onlyDayDateFormatTicks.format(endDate);
     return FitbitSleepAPIURL(

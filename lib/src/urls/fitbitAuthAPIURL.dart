@@ -16,7 +16,10 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
 
   /// Default [FitbitAuthAPIURL] constructor.
   FitbitAuthAPIURL(
-      {String? url, String? userID, String? data, String? authorizationHeader}) {
+      {String? url,
+      String? userID,
+      String? data,
+      String? authorizationHeader}) {
     // super fields
     this.url = url;
     this.userID = userID;
@@ -87,7 +90,8 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
 
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to revoke the access and refresh tokens.
-  factory FitbitAuthAPIURL.unauthorize({String? clientID, String? clientSecret}) {
+  factory FitbitAuthAPIURL.unauthorize(
+      {String? clientID, String? clientSecret}) {
     // Generate the authorization header
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     final String authorizationHeader =

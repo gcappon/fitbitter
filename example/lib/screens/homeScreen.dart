@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       initialData: null,
       create: (context) =>
           GetIt.instance<MyDatabase>().fitbitAccountsDao.watchFitbitAccount(),
-      catchError: (_,err) => null,
+      catchError: (_, err) => null,
       child: Scaffold(
         appBar: buildAppBar(context),
         drawer:
@@ -74,7 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   final snackBar = SnackBar(
                                       content: Text(
                                           'Yesterday you walked ${stepsData[0].value} steps!'));
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 }),
                           ],
                         );
