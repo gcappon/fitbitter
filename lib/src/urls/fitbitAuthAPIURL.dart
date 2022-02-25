@@ -31,7 +31,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to refresh the access token.
   factory FitbitAuthAPIURL.refreshToken(
-      {String? userID, String? clientID, String? clientSecret}) {
+      {String? userID, String? clientID, String? clientSecret, required String fitbitRefreshToken}) {
     // Generate the authorization header
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     final String authorizationHeader =
@@ -41,7 +41,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
       url: '${_getBaseURL()}/token',
       userID: userID,
       data:
-          'client_id=$clientID&grant_type=refresh_token&refresh_token=${FitbitConnector.storage.read(key: 'fitbitAccessToken')}',
+          'client_id=$clientID&grant_type=refresh_token&refresh_token=$fitbitRefreshToken',
       authorizationHeader: 'Basic $authorizationHeader',
     );
   } // FitbitAuthAPIURL.refreshToken
@@ -90,7 +90,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to revoke the access and refresh tokens.
   factory FitbitAuthAPIURL.unauthorize(
-      {String? clientID, String? clientSecret}) {
+      {String? clientID, String? clientSecret, required String fitbitAccessToken}) {
     // Generate the authorization header
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     final String authorizationHeader =
@@ -100,21 +100,21 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
       userID: null,
       url: '${_getBaseURL()}/revoke',
       data:
-          'token=${FitbitConnector.storage.read(key: 'fitbitAccessToken')}',
+          'token=$fitbitAccessToken',
       authorizationHeader: 'Basic $authorizationHeader',
     );
   } // FitbitAuthAPIURL.unauthorize
 
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to get the validity of the access and refresh tokens.
-  factory FitbitAuthAPIURL.isTokenValid() {
+  factory FitbitAuthAPIURL.isTokenValid({required String fitbitAccessToken}) {
     return FitbitAuthAPIURL(
       userID: null,
       url: 'https://api.fitbit.com/1.1/oauth2/introspect',
       data:
-          'token=${FitbitConnector.storage.read(key: 'fitbitAccessToken')}',
+          'token=$fitbitAccessToken',
       authorizationHeader:
-          'Bearer ${FitbitConnector.storage.read(key: 'fitbitAccessToken')}',
+          'Bearer $fitbitAccessToken',
     );
   } // FitbitAuthAPIURL.isTokenValid
 

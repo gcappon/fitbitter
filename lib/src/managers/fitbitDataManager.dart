@@ -39,6 +39,7 @@ abstract class FitbitDataManager {
     Dio dio = Dio();
     late Response response;
 
+    final fitbitAccessToken = await FitbitConnector.storage.read(key: 'fitbitAccessToken');
     try {
       // get the fitbit profile data
       response = await dio.get(
@@ -47,7 +48,7 @@ abstract class FitbitDataManager {
           contentType: Headers.formUrlEncodedContentType,
           headers: {
             'Authorization':
-                'Bearer ${FitbitConnector.storage.read(key: 'fitbitAccessToken')}',
+                'Bearer ${fitbitAccessToken}',
           },
         ),
       );

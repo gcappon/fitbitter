@@ -37,9 +37,15 @@ class FitbitConnector {
     Dio dio = Dio();
     Response response;
 
+    //Get access token 
+    final fitbitRefreshToken = await FitbitConnector.storage.read(key: 'fitbitRefreshToken');
+    if(fitbitRefreshToken == null){
+      return;
+    }//if
+
     // Generate the fitbit url
     final fitbitUrl = FitbitAuthAPIURL.refreshToken(
-        userID: userID, clientID: clientID, clientSecret: clientSecret);
+        userID: userID, clientID: clientID, clientSecret: clientSecret, fitbitRefreshToken: fitbitRefreshToken);
 
     // Post refresh query to Fitbit API
     response = await dio.post(
@@ -60,8 +66,8 @@ class FitbitConnector {
     // Overwrite the tokens into the shared preferences
     final accessToken = response.data['access_token'] as String;
     final refreshToken = response.data['refresh_token'] as String;
-    FitbitConnector.storage.write(key: 'fitbitAccessToken', value: accessToken);
-    FitbitConnector.storage.write(key: 'fitbitRefreshToken', value: refreshToken);
+    await FitbitConnector.storage.write(key: 'fitbitAccessToken', value: accessToken);
+    await FitbitConnector.storage.write(key: 'fitbitRefreshToken', value: refreshToken);
     //GetIt.instance<SharedPreferences>()
     //    .setString('fitbitAccessToken', accessToken);
     //GetIt.instance<SharedPreferences>()
@@ -75,7 +81,13 @@ class FitbitConnector {
     Dio dio = Dio();
     late Response response;
 
-    final fitbitUrl = FitbitAuthAPIURL.isTokenValid();
+    //Get access token 
+    final fitbitAccessToken = await FitbitConnector.storage.read(key: 'fitbitAccessToken');
+    if(fitbitAccessToken == null){
+      return false;
+    }//if
+
+    final fitbitUrl = FitbitAuthAPIURL.isTokenValid(fitbitAccessToken: fitbitAccessToken);
 
     //Get the response
     try {
@@ -157,8 +169,8 @@ class FitbitConnector {
       final refreshToken = response.data['refresh_token'] as String;
       userID = response.data['user_id'] as String?;
 
-      FitbitConnector.storage.write(key: 'fitbitAccessToken', value: accessToken);
-      FitbitConnector.storage.write(key: 'fitbitRefreshToken', value: refreshToken);
+      await FitbitConnector.storage.write(key: 'fitbitAccessToken', value: accessToken);
+      await FitbitConnector.storage.write(key: 'fitbitRefreshToken', value: refreshToken);
       //GetIt.instance<SharedPreferences>()
       //    .setString('fitbitAccessToken', accessToken);
       //GetIt.instance<SharedPreferences>()
@@ -180,9 +192,15 @@ class FitbitConnector {
 
     //String userID;
 
+    //Get access token 
+    final fitbitAccessToken = await FitbitConnector.storage.read(key: 'fitbitAccessToken');
+    if(fitbitAccessToken == null){
+      return;
+    }//if
+
     // Generate the fitbit url
     final fitbitUrl = FitbitAuthAPIURL.unauthorize(
-        clientSecret: clientSecret, clientID: clientID);
+        clientSecret: clientSecret, clientID: clientID, fitbitAccessToken: fitbitAccessToken);
 
     // Post revoke query to Fitbit API
     try {
@@ -203,8 +221,8 @@ class FitbitConnector {
 
       // Remove the tokens from shared preferences
       // Overwrite the tokens into the shared preferences
-      FitbitConnector.storage.delete(key: 'fitbitAccessToken');
-      FitbitConnector.storage.delete(key: 'fitbitRefreshToken');
+      await FitbitConnector.storage.delete(key: 'fitbitAccessToken');
+      await FitbitConnector.storage.delete(key: 'fitbitRefreshToken');
 
       //GetIt.instance<SharedPreferences>().remove('fitbitAccessToken');
       //GetIt.instance<SharedPreferences>().remove('fitbitRefreshToken');
