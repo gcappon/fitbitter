@@ -1,11 +1,8 @@
-## [1.1.0] - 2021/04/11
+## [1.1.1] - 2022/02/25
 
-Release 1.1.0. 
-Fixed issue #1 (see https://github.com/gcappon/fitbitter/issues/1).
-Now tokens are stored using `flutter_secure_storage` instead of `get_it` and `shared_preferences`.
+Formatted according to `flutter format .`.
 
-
-## [1.0.0] - 2021/04/11
+## [1.0.0] - 2022/02/25
 
 Release 1.0.0. 
 Added docs at https://gcappon.github.com/fitbitter/

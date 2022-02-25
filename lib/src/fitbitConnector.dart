@@ -17,7 +17,6 @@ import 'package:fitbitter/src/urls/fitbitAuthAPIURL.dart';
 /// (see [FitbitConnector.isTokenValid] for more details).
 
 class FitbitConnector {
-
   /// The secure storage where to store the Fitbit tokens
   static final storage = const FlutterSecureStorage();
 
@@ -37,15 +36,19 @@ class FitbitConnector {
     Dio dio = Dio();
     Response response;
 
-    //Get access token 
-    final fitbitRefreshToken = await FitbitConnector.storage.read(key: 'fitbitRefreshToken');
-    if(fitbitRefreshToken == null){
+    //Get access token
+    final fitbitRefreshToken =
+        await FitbitConnector.storage.read(key: 'fitbitRefreshToken');
+    if (fitbitRefreshToken == null) {
       return;
-    }//if
+    } //if
 
     // Generate the fitbit url
     final fitbitUrl = FitbitAuthAPIURL.refreshToken(
-        userID: userID, clientID: clientID, clientSecret: clientSecret, fitbitRefreshToken: fitbitRefreshToken);
+        userID: userID,
+        clientID: clientID,
+        clientSecret: clientSecret,
+        fitbitRefreshToken: fitbitRefreshToken);
 
     // Post refresh query to Fitbit API
     response = await dio.post(
@@ -66,8 +69,10 @@ class FitbitConnector {
     // Overwrite the tokens into the shared preferences
     final accessToken = response.data['access_token'] as String;
     final refreshToken = response.data['refresh_token'] as String;
-    await FitbitConnector.storage.write(key: 'fitbitAccessToken', value: accessToken);
-    await FitbitConnector.storage.write(key: 'fitbitRefreshToken', value: refreshToken);
+    await FitbitConnector.storage
+        .write(key: 'fitbitAccessToken', value: accessToken);
+    await FitbitConnector.storage
+        .write(key: 'fitbitRefreshToken', value: refreshToken);
     //GetIt.instance<SharedPreferences>()
     //    .setString('fitbitAccessToken', accessToken);
     //GetIt.instance<SharedPreferences>()
@@ -81,13 +86,15 @@ class FitbitConnector {
     Dio dio = Dio();
     late Response response;
 
-    //Get access token 
-    final fitbitAccessToken = await FitbitConnector.storage.read(key: 'fitbitAccessToken');
-    if(fitbitAccessToken == null){
+    //Get access token
+    final fitbitAccessToken =
+        await FitbitConnector.storage.read(key: 'fitbitAccessToken');
+    if (fitbitAccessToken == null) {
       return false;
-    }//if
+    } //if
 
-    final fitbitUrl = FitbitAuthAPIURL.isTokenValid(fitbitAccessToken: fitbitAccessToken);
+    final fitbitUrl =
+        FitbitAuthAPIURL.isTokenValid(fitbitAccessToken: fitbitAccessToken);
 
     //Get the response
     try {
@@ -169,8 +176,10 @@ class FitbitConnector {
       final refreshToken = response.data['refresh_token'] as String;
       userID = response.data['user_id'] as String?;
 
-      await FitbitConnector.storage.write(key: 'fitbitAccessToken', value: accessToken);
-      await FitbitConnector.storage.write(key: 'fitbitRefreshToken', value: refreshToken);
+      await FitbitConnector.storage
+          .write(key: 'fitbitAccessToken', value: accessToken);
+      await FitbitConnector.storage
+          .write(key: 'fitbitRefreshToken', value: refreshToken);
       //GetIt.instance<SharedPreferences>()
       //    .setString('fitbitAccessToken', accessToken);
       //GetIt.instance<SharedPreferences>()
@@ -192,15 +201,18 @@ class FitbitConnector {
 
     //String userID;
 
-    //Get access token 
-    final fitbitAccessToken = await FitbitConnector.storage.read(key: 'fitbitAccessToken');
-    if(fitbitAccessToken == null){
+    //Get access token
+    final fitbitAccessToken =
+        await FitbitConnector.storage.read(key: 'fitbitAccessToken');
+    if (fitbitAccessToken == null) {
       return;
-    }//if
+    } //if
 
     // Generate the fitbit url
     final fitbitUrl = FitbitAuthAPIURL.unauthorize(
-        clientSecret: clientSecret, clientID: clientID, fitbitAccessToken: fitbitAccessToken);
+        clientSecret: clientSecret,
+        clientID: clientID,
+        fitbitAccessToken: fitbitAccessToken);
 
     // Post revoke query to Fitbit API
     try {

@@ -31,7 +31,10 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to refresh the access token.
   factory FitbitAuthAPIURL.refreshToken(
-      {String? userID, String? clientID, String? clientSecret, required String fitbitRefreshToken}) {
+      {String? userID,
+      String? clientID,
+      String? clientSecret,
+      required String fitbitRefreshToken}) {
     // Generate the authorization header
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     final String authorizationHeader =
@@ -90,7 +93,9 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to revoke the access and refresh tokens.
   factory FitbitAuthAPIURL.unauthorize(
-      {String? clientID, String? clientSecret, required String fitbitAccessToken}) {
+      {String? clientID,
+      String? clientSecret,
+      required String fitbitAccessToken}) {
     // Generate the authorization header
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     final String authorizationHeader =
@@ -99,8 +104,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
     return FitbitAuthAPIURL(
       userID: null,
       url: '${_getBaseURL()}/revoke',
-      data:
-          'token=$fitbitAccessToken',
+      data: 'token=$fitbitAccessToken',
       authorizationHeader: 'Basic $authorizationHeader',
     );
   } // FitbitAuthAPIURL.unauthorize
@@ -111,10 +115,8 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
     return FitbitAuthAPIURL(
       userID: null,
       url: 'https://api.fitbit.com/1.1/oauth2/introspect',
-      data:
-          'token=$fitbitAccessToken',
-      authorizationHeader:
-          'Bearer $fitbitAccessToken',
+      data: 'token=$fitbitAccessToken',
+      authorizationHeader: 'Bearer $fitbitAccessToken',
     );
   } // FitbitAuthAPIURL.isTokenValid
 

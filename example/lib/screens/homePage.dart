@@ -59,8 +59,9 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 await FitbitConnector.unauthorize(
-                    clientID: Strings.fitbitClientID,
-                    clientSecret: Strings.fitbitClientSecret,);
+                  clientID: Strings.fitbitClientID,
+                  clientSecret: Strings.fitbitClientSecret,
+                );
               },
               child: Text('Tap to unauthorize'),
             ),
