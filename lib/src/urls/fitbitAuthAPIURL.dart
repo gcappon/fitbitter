@@ -1,7 +1,6 @@
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+import 'package:fitbitter/src/fitbitConnector.dart';
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 /// [FitbitAuthAPIURL] is a class that expresses multiple factory
@@ -42,7 +41,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
       url: '${_getBaseURL()}/token',
       userID: userID,
       data:
-          'client_id=$clientID&grant_type=refresh_token&refresh_token=${GetIt.instance<SharedPreferences>().getString('fitbitRefreshToken')}',
+          'client_id=$clientID&grant_type=refresh_token&refresh_token=${FitbitConnector.storage.read(key: 'fitbitAccessToken')}',
       authorizationHeader: 'Basic $authorizationHeader',
     );
   } // FitbitAuthAPIURL.refreshToken
@@ -101,7 +100,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
       userID: null,
       url: '${_getBaseURL()}/revoke',
       data:
-          'token=${GetIt.instance<SharedPreferences>().getString('fitbitRefreshToken')}',
+          'token=${FitbitConnector.storage.read(key: 'fitbitAccessToken')}',
       authorizationHeader: 'Basic $authorizationHeader',
     );
   } // FitbitAuthAPIURL.unauthorize
@@ -113,9 +112,9 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
       userID: null,
       url: 'https://api.fitbit.com/1.1/oauth2/introspect',
       data:
-          'token=${GetIt.instance<SharedPreferences>().getString("fitbitAccessToken")}',
+          'token=${FitbitConnector.storage.read(key: 'fitbitAccessToken')}',
       authorizationHeader:
-          'Bearer ${GetIt.instance<SharedPreferences>().getString("fitbitAccessToken")}',
+          'Bearer ${FitbitConnector.storage.read(key: 'fitbitAccessToken')}',
     );
   } // FitbitAuthAPIURL.isTokenValid
 

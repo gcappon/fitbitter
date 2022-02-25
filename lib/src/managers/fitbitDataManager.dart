@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
@@ -49,7 +47,7 @@ abstract class FitbitDataManager {
           contentType: Headers.formUrlEncodedContentType,
           headers: {
             'Authorization':
-                'Bearer ${GetIt.instance<SharedPreferences>().getString("fitbitAccessToken")}',
+                'Bearer ${FitbitConnector.storage.read(key: 'fitbitAccessToken')}',
           },
         ),
       );

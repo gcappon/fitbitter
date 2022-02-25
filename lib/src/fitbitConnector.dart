@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
-import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fitbitter/src/urls/fitbitAuthAPIURL.dart';
 
@@ -18,6 +17,10 @@ import 'package:fitbitter/src/urls/fitbitAuthAPIURL.dart';
 /// (see [FitbitConnector.isTokenValid] for more details).
 
 class FitbitConnector {
+
+  /// The secure storage where to store the Fitbit tokens
+  static final storage = const FlutterSecureStorage();
+
   /// [FitbitConnector] Singleton instance.
   static final FitbitConnector _instance = FitbitConnector._internal();
 
@@ -57,10 +60,12 @@ class FitbitConnector {
     // Overwrite the tokens into the shared preferences
     final accessToken = response.data['access_token'] as String;
     final refreshToken = response.data['refresh_token'] as String;
-    GetIt.instance<SharedPreferences>()
-        .setString('fitbitAccessToken', accessToken);
-    GetIt.instance<SharedPreferences>()
-        .setString('fitbitRefreshToken', refreshToken);
+    FitbitConnector.storage.write(key: 'fitbitAccessToken', value: accessToken);
+    FitbitConnector.storage.write(key: 'fitbitRefreshToken', value: refreshToken);
+    //GetIt.instance<SharedPreferences>()
+    //    .setString('fitbitAccessToken', accessToken);
+    //GetIt.instance<SharedPreferences>()
+    //    .setString('fitbitRefreshToken', refreshToken);
   } // refreshToken
 
   /// Method that checks if the current token is still valid to be used
@@ -152,10 +157,12 @@ class FitbitConnector {
       final refreshToken = response.data['refresh_token'] as String;
       userID = response.data['user_id'] as String?;
 
-      GetIt.instance<SharedPreferences>()
-          .setString('fitbitAccessToken', accessToken);
-      GetIt.instance<SharedPreferences>()
-          .setString('fitbitRefreshToken', refreshToken);
+      FitbitConnector.storage.write(key: 'fitbitAccessToken', value: accessToken);
+      FitbitConnector.storage.write(key: 'fitbitRefreshToken', value: refreshToken);
+      //GetIt.instance<SharedPreferences>()
+      //    .setString('fitbitAccessToken', accessToken);
+      //GetIt.instance<SharedPreferences>()
+      //    .setString('fitbitRefreshToken', refreshToken);
     } catch (e) {
       print(e);
     } // catch
@@ -195,8 +202,12 @@ class FitbitConnector {
       logger.i('$response');
 
       // Remove the tokens from shared preferences
-      GetIt.instance<SharedPreferences>().remove('fitbitAccessToken');
-      GetIt.instance<SharedPreferences>().remove('fitbitRefreshToken');
+      // Overwrite the tokens into the shared preferences
+      FitbitConnector.storage.delete(key: 'fitbitAccessToken');
+      FitbitConnector.storage.delete(key: 'fitbitRefreshToken');
+
+      //GetIt.instance<SharedPreferences>().remove('fitbitAccessToken');
+      //GetIt.instance<SharedPreferences>().remove('fitbitRefreshToken');
     } catch (e) {
       print(e);
     } // catch
