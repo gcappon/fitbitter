@@ -210,7 +210,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.1.0"
   fixnum:
     dependency: transitive
     description:
@@ -276,7 +276,7 @@ packages:
       name: flutter_web_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.4.1"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
