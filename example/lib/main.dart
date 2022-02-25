@@ -1,53 +1,21 @@
 import 'package:flutter/material.dart';
+import 'screens/homePage.dart';
 
-import 'package:fitbitter_example/utils/utils.dart';
-import 'package:fitbitter_example/screens/screens.dart';
-import 'package:fitbitter_example/database/database.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await setupSingletons();
+void main() {
   runApp(MyApp());
-}
-
-Future setupSingletons() async {
-  GetIt locator = GetIt.instance;
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  locator.registerSingleton<SharedPreferences>(prefs);
-
-  var db = MyDatabase();
-  locator.registerSingleton<MyDatabase>(db);
-} // setupSingletons
+} //main
 
 class MyApp extends StatelessWidget {
+  MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: Strings.appName,
-      debugShowCheckedModeBanner: false,
-      initialRoute: Strings.homeScreenRouteName,
-      routes: {
-        Strings.homeScreenRouteName: (context) => HomeScreen(),
-        Strings.fitbitSettingsScreenRouteName: (context) =>
-            FitbitSettingsScreen(),
-      },
-      onGenerateRoute: (settings) {
-        if (settings.name == HomeScreen.routeName) {
-          return MaterialPageRoute(builder: (context) {
-            return HomeScreen();
-          });
-        } else if (settings.name == FitbitSettingsScreen.routeName) {
-          return MaterialPageRoute(builder: (context) {
-            return FitbitSettingsScreen();
-          });
-        } else {
-          return null;
-        }
-      },
-      theme: Style.themeData,
-      //home: HomeScreen(),
+        //This specifies the app entrypoint
+        initialRoute: HomePage.route,
+        //This maps names to the set of routes within the app
+        routes: {
+          HomePage.route: (context) => HomePage(),
+        },
     );
-  }
-}
+  } //build
+}//MyApp
