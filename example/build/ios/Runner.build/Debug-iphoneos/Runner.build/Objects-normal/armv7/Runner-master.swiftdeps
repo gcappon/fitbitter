@@ -1,5 +1,0 @@
-version: "Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
-options: "7ddb663c5d80006f359ba28bb23bf598"
-build_time: [1625297623, 527384000]
-inputs:
-  "/Users/cappe/Repos/fitbitter/example/ios/Runner/AppDelegate.swift": [1597322020, 0]
