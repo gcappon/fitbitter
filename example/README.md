@@ -51,5 +51,33 @@ from 'XXX' to 'example://fitbit/auth' and 'example', respectively.
     </activity>
 ```
 and change ```YOUR_CALLBACK_SCHEME``` with your callback scheme (in this example ```example```)
+
+* (To run the example on Android) Increase the minimum Android SDK version. Open `android/app/build.gradle`, locate this snippet of code:
+```
+...
+defaultConfig {
+        applicationId "your.app.id"
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+...
+```
+and change ```minSdkVersion``` to 18 or above, e.g.,:
+```
+...
+defaultConfig {
+        applicationId "your.app.id"
+        minSdkVersion 18
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+...
+```
+
+* Requirement: Web Browser. Fitbitter uses `flutter_web_auth` to let you authenticate to Fitbit. In order to let it work correcty please be sure that your emulator or your physical device is using Chrome, Opera, or Firefox as default web browser. 
+
 * Run the application with `flutter run`. Enjoy!
   
