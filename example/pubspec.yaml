@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.17.1 <3.0.0"
 
 dependencies:
   flutter:
@@ -25,27 +25,13 @@ dependencies:
   provider: ^5.0.0
   # -----
 
-  # ----- GETIT
-  #get_it: ^6.0.0
-  # -----
-
-  # ----- MOOR (for databases)
-  moor: ^4.2.1 # use the latest version
-  sqlite3_flutter_libs: # Also use the latest version.
-  path_provider:
-  path:
-  # -----
+  flutter_lints: ^2.0.0
 
   cupertino_icons: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
-  # ----- MOOR 
-  moor_generator: # use the latest version
-  build_runner: 
-  # ----- 
 
 # The following section is specific to Flutter.
 flutter:

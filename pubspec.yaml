@@ -15,7 +15,7 @@ dependencies:
   dio: ^4.0.0 #better web browser
   logger: ^1.0.0
   intl: ^0.17.0
-  flutter_secure_storage: ^5.0.2
+  flutter_secure_storage: ^6.0.0
 
 dev_dependencies:
   flutter_test:
