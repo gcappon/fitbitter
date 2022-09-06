@@ -17,15 +17,19 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitActivityTimeseriesData].
 class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
   /// The type of activity timeseries data.
-  String? type;
+  late String type;
 
   /// Default [FitbitActivityTimeseriesDataManager] constructor.
   FitbitActivityTimeseriesDataManager(
-      {String? clientID, String? clientSecret, String? type}) {
-    this.clientID = clientID;
-    this.clientSecret = clientSecret;
+      {required String type,
+      required String clientID,
+      required String clientSecret})
+      : super(
+          clientID: clientID,
+          clientSecret: clientSecret,
+        ) {
     this.type = type;
-  } // FitbitActivityTimeseriesDataManager
+  }
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
@@ -41,21 +45,21 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
     logger.i('$response');
 
     //Extract data and return them
-    List<FitbitData> ret =
-        _extractFitbitActivityTimeseriesData(response, fitbitUrl.userID);
+    List<FitbitData> ret = _extractFitbitActivityTimeseriesData(
+        response, fitbitUrl.fitbitCredentials!.userID);
     return ret;
   } // fetch
 
   /// A private method that extracts [FitbitActivityTimeseriesData] from the given response.
   List<FitbitActivityTimeseriesData> _extractFitbitActivityTimeseriesData(
-      dynamic response, String? userId) {
+      dynamic response, String? userID) {
     final data = response[_getDataField()];
     List<FitbitActivityTimeseriesData> atDatapoints =
         List<FitbitActivityTimeseriesData>.empty(growable: true);
 
     for (var record = 0; record < data.length; record++) {
       atDatapoints.add(FitbitActivityTimeseriesData(
-        encodedId: userId,
+        userID: userID,
         dateOfMonitoring:
             Formats.onlyDayDateFormatTicks.parse(data[record]['dateTime']),
         type: this.type,
@@ -82,7 +86,7 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
     ];
 
     if (validTypes.contains(type))
-      return 'activities-' + type!;
+      return 'activities-' + type;
     else {
       throw FitbitUnaexistentFitbitResourceException(
           message: 'The specified resource is not existent.');

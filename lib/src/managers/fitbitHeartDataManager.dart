@@ -5,14 +5,15 @@ import 'package:fitbitter/src/utils/formats.dart';
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';
-import 'package:fitbitter/src/data/fitbitHeartData.dart';
+import 'package:fitbitter/src/data/fitbitHeartRateData.dart';
 
 import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 
 /// [FitbitHeartDataManager] is a class the manages the requests related to
-/// [FitbitHeartData].
+/// [FitbitHeartRateData].
 class FitbitHeartDataManager extends FitbitDataManager {
-  FitbitHeartDataManager({String? clientID, String? clientSecret})
+  FitbitHeartDataManager(
+      {required String clientID, required String clientSecret})
       : super(
           clientID: clientID,
           clientSecret: clientSecret,
@@ -28,20 +29,21 @@ class FitbitHeartDataManager extends FitbitDataManager {
     logger.i('$response');
 
     //Extract data and return them
-    List<FitbitData> ret = _extractFitbitHeartData(response, fitbitUrl.userID);
+    List<FitbitData> ret =
+        _extractFitbitHeartData(response, fitbitUrl.fitbitCredentials!.userID);
     return ret;
   } // fetch
 
-  /// A private method that extracts [FitbitHeartData] from the given response.
-  List<FitbitHeartData> _extractFitbitHeartData(
+  /// A private method that extracts [FitbitHeartRateData] from the given response.
+  List<FitbitHeartRateData> _extractFitbitHeartData(
       dynamic response, String? userId) {
     final data = response['activities-heart'];
-    List<FitbitHeartData> heartDataPoints =
-        List<FitbitHeartData>.empty(growable: true);
+    List<FitbitHeartRateData> heartDataPoints =
+        List<FitbitHeartRateData>.empty(growable: true);
 
     for (var record = 0; record < data.length; record++) {
-      heartDataPoints.add(FitbitHeartData(
-        encodedId: userId,
+      heartDataPoints.add(FitbitHeartRateData(
+        userID: userId,
         dateOfMonitoring:
             Formats.onlyDayDateFormatTicks.parse(data[record]['dateTime']),
         caloriesOutOfRange: data[record]['value']['heartRateZones'][0]
@@ -70,4 +72,4 @@ class FitbitHeartDataManager extends FitbitDataManager {
     return heartDataPoints;
   } // _extractFitbitHeartData
 
-} // FitbitAccountDataManager
+} // FitbitHeartDataManager

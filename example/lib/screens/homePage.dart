@@ -22,48 +22,36 @@ class HomePage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () async {
-                // Authorize the app
-                String? userId = await FitbitConnector.authorize(
-                    context: context,
-                    clientID: Strings.fitbitClientID,
-                    clientSecret: Strings.fitbitClientSecret,
-                    redirectUri: Strings.fitbitRedirectUri,
-                    callbackUrlScheme: Strings.fitbitCallbackScheme);
-                print(userId);
+                // Authorize the app and get the Fitbit credentials
+                FitbitCredentials? fitbitCredentials =
+                    await FitbitConnector.authorize(
+                        clientID: Strings.fitbitClientID,
+                        clientSecret: Strings.fitbitClientSecret,
+                        redirectUri: Strings.fitbitRedirectUri,
+                        callbackUrlScheme: Strings.fitbitCallbackScheme);
+                print(fitbitCredentials);
 
-                //Instantiate a proper data manager
-                FitbitActivityTimeseriesDataManager
-                    fitbitActivityTimeseriesDataManager =
-                    FitbitActivityTimeseriesDataManager(
+                //Instantiate a proper data manager (for example, for SpO2 data)
+                FitbitSpO2DataManager fitbitSpO2DataManager =
+                    FitbitSpO2DataManager(
                   clientID: Strings.fitbitClientID,
                   clientSecret: Strings.fitbitClientSecret,
-                  type: 'steps',
                 );
 
-                //Fetch data
-                final stepsData = await fitbitActivityTimeseriesDataManager
-                    .fetch(FitbitActivityTimeseriesAPIURL.dayWithResource(
+                //Fetch yesterday's data
+                final spO2Data =
+                    await fitbitSpO2DataManager.fetch(FitbitSpO2APIURL.day(
                   date: DateTime.now().subtract(Duration(days: 1)),
-                  userID: userId,
-                  resource: fitbitActivityTimeseriesDataManager.type,
-                )) as List<FitbitActivityTimeseriesData>;
-
+                  fitbitCredentials: fitbitCredentials!,
+                )) as List<FitbitSpO2Data>;
+                print(spO2Data);
                 // Use them as you want
                 final snackBar = SnackBar(
                     content: Text(
-                        'Yesterday you walked ${stepsData[0].value} steps!'));
+                        'Yesterday your SpO2 was ${spO2Data[0].avgValue}% on average!'));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
-              child: Text('Tap to authorize'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await FitbitConnector.unauthorize(
-                  clientID: Strings.fitbitClientID,
-                  clientSecret: Strings.fitbitClientSecret,
-                );
-              },
-              child: Text('Tap to unauthorize'),
+              child: Text('Tap to authorize and fetch data'),
             ),
           ],
         ),

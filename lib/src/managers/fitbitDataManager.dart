@@ -19,13 +19,13 @@ import 'package:fitbitter/src/fitbitConnector.dart';
 /// [FitbitData].
 abstract class FitbitDataManager {
   /// The client id.
-  String? clientID;
+  String clientID;
 
   /// The client secret id.
-  String? clientSecret;
+  String clientSecret;
 
   /// Default constructor
-  FitbitDataManager({this.clientID, this.clientSecret});
+  FitbitDataManager({required this.clientID, required this.clientSecret});
 
   /// Method that fetches data from the Fitbit API.
   Future<List<FitbitData>> fetch(FitbitAPIURL url);
@@ -39,16 +39,15 @@ abstract class FitbitDataManager {
     Dio dio = Dio();
     late Response response;
 
-    final fitbitAccessToken =
-        await FitbitConnector.storage.read(key: 'fitbitAccessToken');
     try {
       // get the fitbit profile data
       response = await dio.get(
-        fitbitUrl.url!,
+        fitbitUrl.url,
         options: Options(
-          contentType: Headers.formUrlEncodedContentType,
+          contentType: Headers.jsonContentType,
           headers: {
-            'Authorization': 'Bearer $fitbitAccessToken',
+            'Authorization':
+                'Bearer ${fitbitUrl.fitbitCredentials!.fitbitAccessToken}',
           },
         ),
       );
@@ -66,9 +65,10 @@ abstract class FitbitDataManager {
   /// Method that check the validity of the current access token.
   Future<void> _checkAccessToken(FitbitAPIURL fitbitUrl) async {
     //check if the access token is stil valid, if not refresh it
-    if (!await (FitbitConnector.isTokenValid())) {
+    if (!await (FitbitConnector.isTokenValid(
+        fitbitCredentials: fitbitUrl.fitbitCredentials!))) {
       await FitbitConnector.refreshToken(
-          userID: fitbitUrl.userID,
+          fitbitCredentials: fitbitUrl.fitbitCredentials!,
           clientID: clientID,
           clientSecret: clientSecret);
     } // if

@@ -6,7 +6,7 @@ import 'package:fitbitter/src/data/fitbitData.dart';
 /// user's physical activity data.
 class FitbitActivityData implements FitbitData {
   /// The user encoded id.
-  String? encodedId;
+  String? userID;
 
   /// The activity type id.
   String? activityId;
@@ -43,7 +43,7 @@ class FitbitActivityData implements FitbitData {
 
   /// Default [FitbitActivityData] constructor.
   FitbitActivityData({
-    this.encodedId,
+    this.userID,
     this.activityId,
     this.activityParentId,
     this.calories,
@@ -60,7 +60,7 @@ class FitbitActivityData implements FitbitData {
   /// Generates a [FitbitActivityData] obtained from a json.
   factory FitbitActivityData.fromJson({required Map<String, dynamic> json}) {
     return FitbitActivityData(
-      encodedId: json['encodedId'],
+      userID: json['userID'],
       activityId: json['activityId'],
       activityParentId: json['activityParentId'],
       calories: json['calories'],
@@ -79,7 +79,7 @@ class FitbitActivityData implements FitbitData {
   @override
   String toString() {
     return (StringBuffer('FitbitActivityData(')
-          ..write('encodedId: $encodedId, ')
+          ..write('userID: $userID, ')
           ..write('activityId: $activityId, ')
           ..write('activityParentId: $activityParentId, ')
           ..write('calories: $calories, ')
@@ -98,7 +98,7 @@ class FitbitActivityData implements FitbitData {
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
-      'encodedId': encodedId,
+      'userID': userID,
       'activityId': activityId,
       'activityParentId': activityParentId,
       'calories': calories,

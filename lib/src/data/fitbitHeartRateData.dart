@@ -2,11 +2,11 @@ import 'package:fitbitter/src/utils/formats.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';
 
-/// [FitbitHeartData] is a class implementing the data model of the
+/// [FitbitHeartRateData] is a class implementing the data model of the
 /// user heart activity data.
-class FitbitHeartData implements FitbitData {
+class FitbitHeartRateData implements FitbitData {
   /// The user encoded id.
-  String? encodedId;
+  String? userID;
 
   /// The date of monitoring of the data.
   DateTime? dateOfMonitoring;
@@ -50,9 +50,9 @@ class FitbitHeartData implements FitbitData {
   /// The resting heart rate during the [dateOfMonitoring].
   int? restingHeartRate;
 
-  /// Default [FitbitHeartData] constructor.
-  FitbitHeartData({
-    this.encodedId,
+  /// Default [FitbitHeartRateData] constructor.
+  FitbitHeartRateData({
+    this.userID,
     this.dateOfMonitoring,
     this.caloriesOutOfRange,
     this.minimumOutOfRange,
@@ -69,10 +69,10 @@ class FitbitHeartData implements FitbitData {
     this.restingHeartRate,
   });
 
-  /// Generates a [FitbitHeartData] obtained from a json.
-  factory FitbitHeartData.fromJson({required Map<String, dynamic> json}) {
-    return FitbitHeartData(
-      encodedId: json['encodedId'],
+  /// Generates a [FitbitHeartRateData] obtained from a json.
+  factory FitbitHeartRateData.fromJson({required Map<String, dynamic> json}) {
+    return FitbitHeartRateData(
+      userID: json['userID'],
       dateOfMonitoring:
           Formats.onlyDayDateFormatTicks.parse(json['dateOfMonitoring']),
       caloriesOutOfRange: json['caloriesOutOfRange'],
@@ -93,8 +93,8 @@ class FitbitHeartData implements FitbitData {
 
   @override
   String toString() {
-    return (StringBuffer('FitbitHeartData(')
-          ..write('encodedId: $encodedId, ')
+    return (StringBuffer('FitbitHeartRateData(')
+          ..write('userID: $userID, ')
           ..write('dateOfMonitoring: $dateOfMonitoring, ')
           ..write('caloriesOutOfRange: $caloriesOutOfRange, ')
           ..write('minimumOutOfRange: $minimumOutOfRange, ')
@@ -116,7 +116,7 @@ class FitbitHeartData implements FitbitData {
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
-      'encodedId': encodedId,
+      'userID': userID,
       'dateOfMonitoring': dateOfMonitoring,
       'caloriesOutOfRange': caloriesOutOfRange,
       'minimumOutOfRange': minimumOutOfRange,
@@ -134,4 +134,4 @@ class FitbitHeartData implements FitbitData {
     };
   } // toJson
 
-} // FitbitHeartData
+} // FitbitHeartRateData

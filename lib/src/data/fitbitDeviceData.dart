@@ -6,7 +6,7 @@ import 'package:fitbitter/src/data/fitbitData.dart';
 /// user devices data.
 class FitbitDeviceData implements FitbitData {
   /// The user encoded id.
-  String? encodedId;
+  String? userID;
 
   /// The device id.
   String? deviceId;
@@ -25,7 +25,7 @@ class FitbitDeviceData implements FitbitData {
 
   /// Default [FitbitDeviceData] constructor.
   FitbitDeviceData({
-    this.encodedId,
+    this.userID,
     this.batteryLevel,
     this.deviceId,
     this.deviceVersion,
@@ -36,7 +36,7 @@ class FitbitDeviceData implements FitbitData {
   /// Generates a [FitbitDeviceData] obtained from a json.
   factory FitbitDeviceData.fromJson({required Map<String, dynamic> json}) {
     return FitbitDeviceData(
-      encodedId: json['encodedId'],
+      userID: json['userID'],
       batteryLevel: json['batteryLevel'],
       deviceId: json['deviceId'],
       deviceVersion: json['deviceVersion'],
@@ -48,7 +48,7 @@ class FitbitDeviceData implements FitbitData {
   @override
   String toString() {
     return (StringBuffer('FitbitDeviceData(')
-          ..write('encodedId: $encodedId, ')
+          ..write('userID: $userID, ')
           ..write('deviceId: $deviceId, ')
           ..write('deviceVersion: $deviceVersion, ')
           ..write('batteryLevel: $batteryLevel, ')
@@ -61,7 +61,7 @@ class FitbitDeviceData implements FitbitData {
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
-      'encodedId': encodedId,
+      'userID': userID,
       'deviceId': deviceId,
       'deviceVersion': deviceVersion,
       'batteryLevel': batteryLevel,

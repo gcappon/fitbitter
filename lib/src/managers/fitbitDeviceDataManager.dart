@@ -12,10 +12,12 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitDeviceData].
 class FitbitDeviceDataManager extends FitbitDataManager {
   /// Default constructor
-  FitbitDeviceDataManager({String? clientID, String? clientSecret}) {
-    this.clientID = clientID;
-    this.clientSecret = clientSecret;
-  } // FitbitDeviceDataManager
+  FitbitDeviceDataManager(
+      {required String clientID, required String clientSecret})
+      : super(
+          clientID: clientID,
+          clientSecret: clientSecret,
+        );
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
@@ -27,7 +29,8 @@ class FitbitDeviceDataManager extends FitbitDataManager {
     logger.i('$response');
 
     //Extract data and return them
-    List<FitbitData> ret = _extractFitbitDeviceData(response, fitbitUrl.userID);
+    List<FitbitData> ret =
+        _extractFitbitDeviceData(response, fitbitUrl.fitbitCredentials!.userID);
     return ret;
   } // fetch
 
@@ -40,7 +43,7 @@ class FitbitDeviceDataManager extends FitbitDataManager {
 
     for (var record = 0; record < data.length; record++) {
       deviceDatapoints.add(FitbitDeviceData(
-        encodedId: userID,
+        userID: userID,
         batteryLevel: data[record]['battery'],
         deviceId: data[record]['id'],
         deviceVersion: data[record]['deviceVersion'],

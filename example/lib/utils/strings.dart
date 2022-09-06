@@ -20,7 +20,7 @@ class Strings {
   static const String fitbitRedirectUri = 'XXX';
 
   /// Callback scheme
-  static const String fitbitCallbackScheme = 'XXX';
+  static const String fitbitCallbackScheme = 'example';
 
   // Placeholders
   static const String hello = "Hello, World!";

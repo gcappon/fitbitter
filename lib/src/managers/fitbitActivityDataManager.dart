@@ -11,10 +11,12 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitActivityData].
 class FitbitActivityDataManager extends FitbitDataManager {
   /// Default [FitbitActivityDataManager] constructor.
-  FitbitActivityDataManager({String? clientID, String? clientSecret}) {
-    this.clientID = clientID;
-    this.clientSecret = clientSecret;
-  } // FitbitActivityDataManager
+  FitbitActivityDataManager(
+      {required String clientID, required String clientSecret})
+      : super(
+          clientID: clientID,
+          clientSecret: clientSecret,
+        );
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
@@ -26,8 +28,8 @@ class FitbitActivityDataManager extends FitbitDataManager {
     logger.i('$response');
 
     //Extract data and return them
-    List<FitbitData> ret =
-        _extractFitbitActivityData(response, fitbitUrl.userID);
+    List<FitbitData> ret = _extractFitbitActivityData(
+        response, fitbitUrl.fitbitCredentials!.userID);
     return ret;
   } // fetch
 
@@ -39,7 +41,7 @@ class FitbitActivityDataManager extends FitbitDataManager {
 
     for (var record = 0; record < data.length; record++) {
       activityDatapoints.add(FitbitActivityData(
-          encodedId: userID,
+          userID: userID,
           activityId: data[record]['activityId'].toString(),
           activityParentId: data[record]['activityParentId'].toString(),
           calories: data[record]['calories'].toDouble(),

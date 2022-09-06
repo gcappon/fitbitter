@@ -2,37 +2,31 @@ import 'package:fitbitter/src/utils/formats.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';
 
-/// [FitbitActivityTimeseriesData] is a class implementing the data model of the
-/// physical activity timeseries data.
-class FitbitActivityTimeseriesData implements FitbitData {
+/// [FitbitHeartRateIntradayData] is a class implementing the data model of the
+/// heart rate intraday data.
+class FitbitHeartRateIntradayData implements FitbitData {
   /// The user encoded id.
   String? userID;
 
   /// The date of monitoring of the data.
   DateTime? dateOfMonitoring;
 
-  /// The type of the activity timeseries data.
-  String? type;
-
   /// The value of the data.
   double? value;
 
-  /// Default [FitbitActivityTimeseriesData] constructor.
-  FitbitActivityTimeseriesData({
+  /// Default [FitbitHeartRateIntradayData] constructor.
+  FitbitHeartRateIntradayData({
     this.userID,
     this.dateOfMonitoring,
-    this.type,
     this.value,
   });
 
-  /// Generates a [FitbitActivityTimeseriesData] obtained from a json.
-  factory FitbitActivityTimeseriesData.fromJson(
+  /// Generates a [FitbitHeartRateIntradayData] obtained from a json.
+  factory FitbitHeartRateIntradayData.fromJson(
       {required Map<String, dynamic> json}) {
-    return FitbitActivityTimeseriesData(
+    return FitbitHeartRateIntradayData(
       userID: json['userID'],
-      dateOfMonitoring:
-          Formats.onlyDayDateFormatTicks.parse(json['dateOfMonitoring']),
-      type: json['type'],
+      dateOfMonitoring: Formats.onlyDayDateFormatTicks.parse(json['dateTime']),
       value: json['value'],
     );
   } // fromJson
@@ -41,21 +35,19 @@ class FitbitActivityTimeseriesData implements FitbitData {
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
       'userID': userID,
-      'dateOfMonitoring': dateOfMonitoring,
-      'type': type,
+      'dateTime': dateOfMonitoring,
       'value': value,
     };
   } // toJson
 
   @override
   String toString() {
-    return (StringBuffer('FitbitActivityTimeseriesData(')
+    return (StringBuffer('FitbitHeartRateIntradayData(')
           ..write('userID: $userID, ')
           ..write('dateOfMonitoring: $dateOfMonitoring, ')
-          ..write('type: $type, ')
           ..write('value: $value, ')
           ..write(')'))
         .toString();
   } // toString
 
-} // FitbitActivityTimeseriesData
+} // FitbitHeartRateIntradayData

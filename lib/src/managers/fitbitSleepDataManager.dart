@@ -10,8 +10,12 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitSleepDataManager] is a class the manages the requests related to
 /// [FitbitSleepData].
 class FitbitSleepDataManager extends FitbitDataManager {
-  FitbitSleepDataManager({String? clientID, String? clientSecret})
-      : super(clientID: clientID, clientSecret: clientSecret);
+  FitbitSleepDataManager(
+      {required String clientID, required String clientSecret})
+      : super(
+          clientID: clientID,
+          clientSecret: clientSecret,
+        );
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
@@ -24,7 +28,7 @@ class FitbitSleepDataManager extends FitbitDataManager {
 
     //Extract data and return them
     List<FitbitSleepData> sleepDataPoints =
-        _extractFitbitSleepData(response, fitbitUrl.userID);
+        _extractFitbitSleepData(response, fitbitUrl.fitbitCredentials!.userID);
     return sleepDataPoints;
   } // fetch
 
@@ -53,7 +57,7 @@ class FitbitSleepDataManager extends FitbitDataManager {
         final int seconds = data[d]["seconds"];
         for (var e = 0; e < (seconds ~/ 30); e++) {
           daySleepDataPoints.add(FitbitSleepData(
-            encodedId: userId,
+            userID: userId,
             entryDateTime: entryDateTime.add(
               Duration(seconds: 30 * e),
             ),
@@ -69,7 +73,7 @@ class FitbitSleepDataManager extends FitbitDataManager {
         final int seconds = shortData[sd]["seconds"];
         for (var e = 0; e < (seconds ~/ 30); e++) {
           FitbitSleepData newSDP = FitbitSleepData(
-            encodedId: userId,
+            userID: userId,
             entryDateTime: entryDateTime.add(
               Duration(seconds: 30 * e),
             ),
@@ -82,7 +86,7 @@ class FitbitSleepDataManager extends FitbitDataManager {
               30;
 
           daySleepDataPoints[idx] = FitbitSleepData(
-            encodedId: userId,
+            userID: userId,
             entryDateTime: entryDateTime.add(
               Duration(seconds: 30 * e),
             ),

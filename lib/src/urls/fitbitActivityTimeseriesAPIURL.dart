@@ -1,110 +1,130 @@
+import 'package:fitbitter/src/fitbitConnector.dart';
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 import 'package:fitbitter/src/utils/formats.dart';
+
+import 'package:fitbitter/src/data/fitbitActivityTimeseriesData.dart';
 
 /// [FitbitActivityTimeseriesAPIURL] is a class that expresses multiple factory
 /// constructors to be used to generate Fitbit Web APIs urls to fetch
 /// [FitbitActivityTimeseriesData].
 class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   /// The type of the activity timeseries.
-  String? resource;
+  final String resource;
 
   /// Default [FitbitActivityTimeseriesAPIURL] constructor.
   FitbitActivityTimeseriesAPIURL(
-      {String? url, String? userID, String? resource}) {
-    this.url = url;
-    this.userID = userID;
-    this.resource = resource;
-  } // FitbitActivityTimeseriesAPIURL
+      {required FitbitCredentials? fitbitCredentials,
+      required String url,
+      required this.resource})
+      : super(fitbitCredentials: fitbitCredentials, url: url);
 
   /// Generates a [FitbitActivityTimeseriesAPIURL] to get [FitbitActivityTimeseriesData] of a given [resource] of a
-  /// specific day [date] and user [userID].
+  /// specific day [date].
   factory FitbitActivityTimeseriesAPIURL.dayWithResource(
-      {String? userID, required DateTime date, String? resource}) {
+      {required FitbitCredentials fitbitCredentials,
+      required DateTime date,
+      required String resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(date);
     return FitbitActivityTimeseriesAPIURL(
-      url: '${_getBaseURL(userID)}/$resource/date/$dateStr/1d.json',
+      url:
+          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/1d.json',
       resource: resource,
-      userID: userID,
+      fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitActivityTimeseriesAPIURL.dayWithUserID
+  } // FitbitActivityTimeseriesAPIURL.day
 
   /// Generates a [FitbitActivityTimeseriesAPIURL] to get [FitbitActivityTimeseriesData] of a specific date range
-  /// between [startDate] and [endDate] of a given user [userID].
+  /// between [startDate] and [endDate].
   factory FitbitActivityTimeseriesAPIURL.dateRangeWithResource(
-      {String? userID,
+      {required FitbitCredentials fitbitCredentials,
       required DateTime startDate,
       required DateTime endDate,
-      String? resource}) {
+      required String resource}) {
     String startDateStr = Formats.onlyDayDateFormatTicks.format(startDate);
     String endDateStr = Formats.onlyDayDateFormatTicks.format(endDate);
     return FitbitActivityTimeseriesAPIURL(
       url:
-          '${_getBaseURL(userID)}/$resource/date/$startDateStr/$endDateStr.json',
+          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$startDateStr/$endDateStr.json',
       resource: resource,
-      userID: userID,
+      fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitActivityTimeseriesAPIURL.dateRangeWithUserID
+  } // FitbitActivityTimeseriesAPIURL.dateRange
 
   /// Generates a [FitbitActivityTimeseriesAPIURL] to get [FitbitActivityTimeseriesData] of a specific week
   /// ending in [baseDate].
   factory FitbitActivityTimeseriesAPIURL.weekWithResource(
-      {String? userID, required DateTime baseDate, String? resource}) {
+      {required FitbitCredentials fitbitCredentials,
+      required DateTime baseDate,
+      required String resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitActivityTimeseriesAPIURL(
-      url: '${_getBaseURL(userID)}/$resource/date/$dateStr/1w.json',
+      url:
+          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/1w.json',
       resource: resource,
-      userID: userID,
+      fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitActivityTimeseriesAPIURL.weekWithUserID
+  } // FitbitActivityTimeseriesAPIURL.week
 
   /// Generates a [FitbitActivityTimeseriesAPIURL] to get [FitbitActivityTimeseriesData] of a specific month
   /// ending in [baseDate].
   factory FitbitActivityTimeseriesAPIURL.monthWithResource(
-      {String? userID, required DateTime baseDate, String? resource}) {
+      {required FitbitCredentials fitbitCredentials,
+      required DateTime baseDate,
+      required String resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitActivityTimeseriesAPIURL(
-      url: '${_getBaseURL(userID)}/$resource/date/$dateStr/1m.json',
+      url:
+          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/1m.json',
       resource: resource,
-      userID: userID,
+      fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitActivityTimeseriesAPIURL.monthWithUserID
+  } // FitbitActivityTimeseriesAPIURL.month
 
   /// Generates a [FitbitActivityTimeseriesAPIURL] to get [FitbitActivityTimeseriesData] of a specific 3 months range
   /// ending in [baseDate].
   factory FitbitActivityTimeseriesAPIURL.threeMonthsWithResource(
-      {String? userID, required DateTime baseDate, String? resource}) {
+      {required FitbitCredentials fitbitCredentials,
+      required DateTime baseDate,
+      required String resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitActivityTimeseriesAPIURL(
-      url: '${_getBaseURL(userID)}/$resource/date/$dateStr/3m.json',
+      url:
+          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/3m.json',
       resource: resource,
-      userID: userID,
+      fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitActivityTimeseriesAPIURL.threeMonthsWithUserID
+  } // FitbitActivityTimeseriesAPIURL.threeMonths
 
   /// Generates a [FitbitActivityTimeseriesAPIURL] to get [FitbitActivityTimeseriesData] of a specific 6 months range
   /// ending in [baseDate].
   factory FitbitActivityTimeseriesAPIURL.sixMonthsWithResource(
-      {String? userID, required DateTime baseDate, String? resource}) {
+      {required FitbitCredentials fitbitCredentials,
+      required DateTime baseDate,
+      required String resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitActivityTimeseriesAPIURL(
-      url: '${_getBaseURL(userID)}/$resource/date/$dateStr/6m.json',
+      url:
+          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/6m.json',
       resource: resource,
-      userID: userID,
+      fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitActivityTimeseriesAPIURL.sixMonthsWithUserID
+  } // FitbitActivityTimeseriesAPIURL.sixMonths
 
   /// Generates a [FitbitActivityTimeseriesAPIURL] to get [FitbitActivityTimeseriesData] of a specific year
   /// ending in [baseDate].
   factory FitbitActivityTimeseriesAPIURL.yearWithResource(
-      {String? userID, required DateTime baseDate, String? resource}) {
+      {required FitbitCredentials fitbitCredentials,
+      required DateTime baseDate,
+      required String resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitActivityTimeseriesAPIURL(
-      url: '${_getBaseURL(userID)}/$resource/date/$dateStr/1y.json',
+      url:
+          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/1y.json',
       resource: resource,
-      userID: userID,
+      fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitActivityTimeseriesAPIURL.yearMonthsWithUserID
+  } // FitbitActivityTimeseriesAPIURL.yearMonths
 
   /// A private method that generates the base url of a [FitbitActivityTimeseriesAPIURL].
   static String _getBaseURL(String? userID) {

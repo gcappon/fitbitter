@@ -13,4 +13,7 @@ class Formats {
 
   /// The [DateFormat] 'KK:mm'.
   static final onlyTimeNoSeconds = new DateFormat('KK:mm');
+
+  /// The [DateFormat] 'HH:mm'.
+  static final onlyTimeNoSecondsAMPM = new DateFormat('HH:mm');
 } //Formats

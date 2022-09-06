@@ -6,7 +6,7 @@ import 'package:fitbitter/src/data/fitbitData.dart';
 /// user account data.
 class FitbitAccountData implements FitbitData {
   /// The Fitbit user id.
-  String? encodedId;
+  String? userID;
 
   /// The user's age.
   int? age;
@@ -144,7 +144,7 @@ class FitbitAccountData implements FitbitData {
 
   /// Default [FitbitAccountData] constructor.
   FitbitAccountData({
-    this.encodedId,
+    this.userID,
     this.age,
     this.ambassador,
     this.autoStrideEnabled,
@@ -194,7 +194,7 @@ class FitbitAccountData implements FitbitData {
   /// Generates a [FitbitAccountData] obtained from a json.
   factory FitbitAccountData.fromJson({required Map<String, dynamic> json}) {
     return FitbitAccountData(
-      encodedId: json['encodedId'],
+      userID: json['userID'],
       age: json['age'],
       ambassador: json['ambassador'],
       autoStrideEnabled: json['autoStrideEnabled'],
@@ -244,7 +244,7 @@ class FitbitAccountData implements FitbitData {
   @override
   String toString() {
     return (StringBuffer('FitbitAccountData(')
-          ..write('encodedId: $encodedId, ')
+          ..write('userID: $userID, ')
           ..write('age: $age, ')
           ..write('ambassador: $ambassador, ')
           ..write('autoStrideEnabled: $autoStrideEnabled, ')
@@ -296,7 +296,7 @@ class FitbitAccountData implements FitbitData {
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
-      'encodedId': encodedId,
+      'userID': userID,
       'age': age,
       'ambassador': ambassador,
       'autoStrideEnabled': autoStrideEnabled,

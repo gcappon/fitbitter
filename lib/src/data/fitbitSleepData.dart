@@ -6,7 +6,7 @@ import 'package:fitbitter/src/data/fitbitData.dart';
 /// user sleep data.
 class FitbitSleepData implements FitbitData {
   /// The user encoded id.
-  String? encodedId;
+  String? userID;
 
   /// The date of when the sleep session begun.
   DateTime? dateOfSleep;
@@ -19,7 +19,7 @@ class FitbitSleepData implements FitbitData {
 
   /// Default [FitbitSleepData] constructor.
   FitbitSleepData({
-    this.encodedId,
+    this.userID,
     this.dateOfSleep,
     this.entryDateTime,
     this.level,
@@ -28,7 +28,7 @@ class FitbitSleepData implements FitbitData {
   /// Generates a [FitbitSleepData] obtained from a json.
   factory FitbitSleepData.fromJson({required Map<String, dynamic> json}) {
     return FitbitSleepData(
-      encodedId: json['encodedId'],
+      userID: json['userID'],
       dateOfSleep: Formats.onlyDayDateFormatTicks.parse(json['dateOfSleep']),
       entryDateTime: DateTime.parse(json['entryDateTime']),
       level: json['level'],
@@ -38,7 +38,7 @@ class FitbitSleepData implements FitbitData {
   @override
   String toString() {
     return (StringBuffer('FitbitSleepData(')
-          ..write('encodedId: $encodedId, ')
+          ..write('userID: $userID, ')
           ..write('dateOfSleep: $dateOfSleep, ')
           ..write('entryDateTime: $entryDateTime, ')
           ..write('level: $level, ')
@@ -49,7 +49,7 @@ class FitbitSleepData implements FitbitData {
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
-      'encodedId': encodedId,
+      'userID': userID,
       'dateOfSleep': dateOfSleep,
       'entryDateTime': entryDateTime,
       'level': level,
