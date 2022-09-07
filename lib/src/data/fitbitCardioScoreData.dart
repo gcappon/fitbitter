@@ -14,15 +14,11 @@ class FitbitCardioScoreData implements FitbitData {
   /// The value of the data.
   double? value;
 
-  // The type of skin temeperature log created.
-  String? logType;
-
   /// Default [FitbitCardioScoreData] constructor.
   FitbitCardioScoreData({
     this.userID,
     this.dateOfMonitoring,
     this.value,
-    this.logType,
   });
 
   /// Generates a [FitbitCardioScoreData] obtained from a json.
@@ -31,7 +27,6 @@ class FitbitCardioScoreData implements FitbitData {
       userID: json['userID'],
       dateOfMonitoring: Formats.onlyDayDateFormatTicks.parse(json['dateTime']),
       value: json['value']['vo2Max'],
-      logType: json['logType'],
     );
   } // fromJson
 
@@ -43,7 +38,6 @@ class FitbitCardioScoreData implements FitbitData {
       'value': <String, dynamic>{
         'vo2Max': value,
       },
-      'logType': logType,
     };
   } // toJson
 
@@ -53,7 +47,6 @@ class FitbitCardioScoreData implements FitbitData {
           ..write('userID: $userID, ')
           ..write('dateOfMonitoring: $dateOfMonitoring, ')
           ..write('value: $value, ')
-          ..write('logType: $logType')
           ..write(')'))
         .toString();
   } // toString

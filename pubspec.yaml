@@ -1,6 +1,6 @@
 name: fitbitter
 description: A Flutter package to make your life easier when dealing with Fitbit APIs.
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/gcappon/fitbitter
 
 environment:

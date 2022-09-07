@@ -81,7 +81,6 @@ class FitbitConnector {
     final fitbitUrl = FitbitAuthAPIURL.refreshToken(
         clientID: clientID,
         clientSecret: clientSecret,
-        fitbitRefreshToken: fitbitCredentials.fitbitRefreshToken,
         fitbitCredentials: fitbitCredentials);
 
     // Post refresh query to Fitbit API

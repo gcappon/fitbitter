@@ -10,10 +10,14 @@ class FitbitAccountAPIURL extends FitbitAPIURL {
   /// Default [FitbitAccountAPIURL] constructor.
   FitbitAccountAPIURL(
       {required FitbitCredentials? fitbitCredentials, required String url})
-      : super(url: url, fitbitCredentials: fitbitCredentials) {
-    this.url = '${_getBaseURL()}.json';
-    this.fitbitCredentials = fitbitCredentials;
-  }
+      : super(url: url, fitbitCredentials: fitbitCredentials);
+
+  /// Return a [FitbitAccountAPIURL] from the given [fitbitCredentials].
+  factory FitbitAccountAPIURL.withCredentials(
+      {required FitbitCredentials fitbitCredentials}) {
+    final url = '${_getBaseURL()}.json';
+    return FitbitAccountAPIURL(fitbitCredentials: fitbitCredentials, url: url);
+  } // FitbitAccountAPIURL.withCredentials
 
   /// A private method that generates the base url of a [FitbitAccountAPIURL].
   static String _getBaseURL() {

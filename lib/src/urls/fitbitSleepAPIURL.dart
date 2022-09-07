@@ -25,7 +25,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
       url: '${_getBaseURL(fitbitCredentials.userID)}/date/$dateStr.json',
       fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitSleepAPIURL. AndDay
+  } // FitbitSleepAPIURL.day
 
   /// Generates a [FitbitSleepAPIURL] to get [FitbitSleepData] of a specific date range
   /// between [startDate] and [endDate].
@@ -40,7 +40,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
           '${_getBaseURL(fitbitCredentials.userID)}/date/$startDateStr/$endDateStr.json',
       fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitSleepAPIURL. AndDateRange
+  } // FitbitSleepAPIURL.dateRange
 
   /// Generates a [FitbitSleepAPIURL] to get the [FitbitSleepData] list.
   /// before a given day [beforeDate]. Maximum [limit] sleep logs are returned.
@@ -55,7 +55,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
           '${_getBaseURL(fitbitCredentials.userID)}/list.json?beforeDate=$beforeDateStr&sort=desc&offset=0&limit=$limit',
       fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitSleepAPIURL.list AndBeforeDate
+  } // FitbitSleepAPIURL.listAndBeforeDate
 
   /// Generates a [FitbitSleepAPIURL] to get the [FitbitSleepData] list.
   /// after a given day [afterDate]. Maximum [limit] sleep logs are returned.
@@ -70,7 +70,7 @@ class FitbitSleepAPIURL extends FitbitAPIURL {
           '${_getBaseURL(fitbitCredentials.userID)}/list.json?beforeDate=$afterDateStr&sort=asc&offset=0&limit=$limit',
       fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitSleepAPIURL.list AndAfterDate
+  } // FitbitSleepAPIURL.listAndAfterDate
 
   /// A private method that generates the base url of a [FitbitSleepAPIURL].
   static String _getBaseURL(String? userID) {

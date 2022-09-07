@@ -26,11 +26,11 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
 
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to refresh the access token.
-  factory FitbitAuthAPIURL.refreshToken(
-      {required FitbitCredentials fitbitCredentials,
-      required String clientID,
-      required String clientSecret,
-      required String fitbitRefreshToken}) {
+  factory FitbitAuthAPIURL.refreshToken({
+    required FitbitCredentials fitbitCredentials,
+    required String clientID,
+    required String clientSecret,
+  }) {
     // Generate the authorization header
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     final String authorizationHeader =
@@ -40,7 +40,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
       url: '${_getBaseURL()}/token',
       fitbitCredentials: fitbitCredentials,
       data:
-          'client_id=$clientID&grant_type=refresh_token&refresh_token=$fitbitRefreshToken',
+          'client_id=$clientID&grant_type=refresh_token&refresh_token=${fitbitCredentials.fitbitRefreshToken}',
       authorizationHeader: 'Basic $authorizationHeader',
     );
   } // FitbitAuthAPIURL.refreshToken

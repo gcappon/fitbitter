@@ -47,7 +47,6 @@ class FitbitCardioScoreDataManager extends FitbitDataManager {
         dateOfMonitoring:
             Formats.onlyDayDateFormatTicks.parse(record['dateTime']),
         value: record['value']['vo2Max'].toDouble(),
-        logType: record['logType'],
       ));
     } // for entry
 

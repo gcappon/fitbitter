@@ -11,10 +11,14 @@ class FitbitDeviceAPIURL extends FitbitAPIURL {
   /// Default [FitbitDeviceAPIURL] constructor.
   FitbitDeviceAPIURL(
       {required FitbitCredentials? fitbitCredentials, required String url})
-      : super(url: url, fitbitCredentials: fitbitCredentials) {
-    this.url = '${_getBaseURL(fitbitCredentials!.userID)}.json';
-    this.fitbitCredentials = fitbitCredentials;
-  }
+      : super(url: url, fitbitCredentials: fitbitCredentials);
+
+  /// Return a [FitbitDeviceAPIURL] from the given [fitbitCredentials].
+  factory FitbitDeviceAPIURL.withCredentials(
+      {required FitbitCredentials fitbitCredentials}) {
+    final url = '${_getBaseURL(fitbitCredentials.userID)}.json';
+    return FitbitDeviceAPIURL(fitbitCredentials: fitbitCredentials, url: url);
+  } // FitbitDeviceAPIURL.withCredentials
 
   /// A private method that generates the base url of a [FitbitDeviceAPIURL].
   static String _getBaseURL(String? userID) {

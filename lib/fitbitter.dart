@@ -36,7 +36,7 @@ export 'package:fitbitter/src/managers/fitbitActivityTimeseriesDataManager.dart'
 export 'package:fitbitter/src/managers/fitbitBreathingRateDataManager.dart';
 export 'package:fitbitter/src/managers/fitbitCardioScoreDataManager.dart';
 export 'package:fitbitter/src/managers/fitbitDeviceDataManager.dart';
-export 'package:fitbitter/src/managers/fitbitHeartDataManager.dart';
+export 'package:fitbitter/src/managers/fitbitHeartRateDataManager.dart';
 export 'package:fitbitter/src/managers/fitbitHeartRateIntradayDataManager.dart';
 export 'package:fitbitter/src/managers/fitbitHeartRateVariabilityDataManager.dart';
 export 'package:fitbitter/src/managers/fitbitSleepDataManager.dart';
