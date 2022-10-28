@@ -16,4 +16,7 @@ class Formats {
 
   /// The [DateFormat] 'HH:mm'.
   static final onlyTimeNoSecondsAMPM = new DateFormat('HH:mm');
+
+    /// The [DateFormat] 'HH:mm:ss'.
+  static final onlyTimeWithSeconds = new DateFormat('HH:mm:ss');
 } //Formats

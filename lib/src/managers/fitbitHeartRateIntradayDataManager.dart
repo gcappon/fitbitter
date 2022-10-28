@@ -44,11 +44,11 @@ class FitbitHeartRateIntradayDataManager extends FitbitDataManager {
         List<FitbitHeartRateIntradayData>.empty(growable: true);
 
     for (var record in data) {
-      final time = Formats.onlyTimeNoSecondsAMPM.parse(record['time']);
+      final time = Formats.onlyTimeWithSeconds.parse(record['time']);
       heartDataPoints.add(FitbitHeartRateIntradayData(
         userID: userId,
         dateOfMonitoring: dateOfMonitoring
-            .add(Duration(hours: time.hour, minutes: time.minute)),
+            .add(Duration(hours: time.hour, minutes: time.minute, seconds: time.second)),
         value: record['value'].toDouble(),
       ));
     } // for entry

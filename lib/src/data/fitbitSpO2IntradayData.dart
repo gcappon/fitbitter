@@ -1,5 +1,3 @@
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/data/fitbitData.dart';
 
 /// [FitbitSpO2IntradayData] is a class implementing the data model of the
@@ -16,16 +14,6 @@ class FitbitSpO2IntradayData implements FitbitData {
 
   /// Default [FitbitSpO2IntradayData] constructor.
   FitbitSpO2IntradayData({this.userID, this.dateOfMonitoring, this.value});
-
-  /// Generates a [FitbitSpO2IntradayData] obtained from a json.
-  factory FitbitSpO2IntradayData.fromJson(
-      {required Map<String, dynamic> json}) {
-    return FitbitSpO2IntradayData(
-      userID: json['userID'],
-      dateOfMonitoring: Formats.onlyDayDateFormatTicks.parse(json['dateTime']),
-      value: json['value'],
-    );
-  } // fromJson
 
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {

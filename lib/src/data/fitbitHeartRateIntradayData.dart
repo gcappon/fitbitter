@@ -1,5 +1,3 @@
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/data/fitbitData.dart';
 
 /// [FitbitHeartRateIntradayData] is a class implementing the data model of the
@@ -20,16 +18,6 @@ class FitbitHeartRateIntradayData implements FitbitData {
     this.dateOfMonitoring,
     this.value,
   });
-
-  /// Generates a [FitbitHeartRateIntradayData] obtained from a json.
-  factory FitbitHeartRateIntradayData.fromJson(
-      {required Map<String, dynamic> json}) {
-    return FitbitHeartRateIntradayData(
-      userID: json['userID'],
-      dateOfMonitoring: Formats.onlyDayDateFormatTicks.parse(json['dateTime']),
-      value: json['value'],
-    );
-  } // fromJson
 
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {

@@ -1,5 +1,3 @@
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/data/fitbitData.dart';
 
 /// [FitbitSpO2Data] is a class implementing the data model of the
@@ -28,17 +26,6 @@ class FitbitSpO2Data implements FitbitData {
     this.minValue,
     this.maxValue,
   });
-
-  /// Generates a [FitbitSpO2Data] obtained from a json.
-  factory FitbitSpO2Data.fromJson({required Map<String, dynamic> json}) {
-    return FitbitSpO2Data(
-      userID: json['userID'],
-      dateOfMonitoring: Formats.onlyDayDateFormatTicks.parse(json['dateTime']),
-      avgValue: json['value']['avg'],
-      minValue: json['value']['min'],
-      maxValue: json['value']['max'],
-    );
-  } // fromJson
 
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {

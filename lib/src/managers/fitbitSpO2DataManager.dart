@@ -41,26 +41,28 @@ class FitbitSpO2DataManager extends FitbitDataManager {
     List<FitbitSpO2Data> spO2DataPoints =
         List<FitbitSpO2Data>.empty(growable: true);
 
-    if (data is Iterable<dynamic>) {
-      for (var record in data) {
+    if (data.isNotEmpty) {
+      if (data is Iterable<dynamic>) {
+        for (var record in data) {
+          spO2DataPoints.add(FitbitSpO2Data(
+            userID: userId,
+            dateOfMonitoring:
+                Formats.onlyDayDateFormatTicks.parse(record['dateTime']),
+            avgValue: record['value']['avg'].toDouble(),
+            minValue: record['value']['min'].toDouble(),
+            maxValue: record['value']['max'].toDouble(),
+          ));
+        } // for entry
+      } else {
         spO2DataPoints.add(FitbitSpO2Data(
           userID: userId,
           dateOfMonitoring:
-              Formats.onlyDayDateFormatTicks.parse(record['dateTime']),
-          avgValue: record['value']['avg'].toDouble(),
-          minValue: record['value']['min'].toDouble(),
-          maxValue: record['value']['max'].toDouble(),
+              Formats.onlyDayDateFormatTicks.parse(data['dateTime']),
+          avgValue: data['value']['avg'].toDouble(),
+          minValue: data['value']['min'].toDouble(),
+          maxValue: data['value']['max'].toDouble(),
         ));
-      } // for entry
-    } else {
-      spO2DataPoints.add(FitbitSpO2Data(
-        userID: userId,
-        dateOfMonitoring:
-            Formats.onlyDayDateFormatTicks.parse(data['dateTime']),
-        avgValue: data['value']['avg'].toDouble(),
-        minValue: data['value']['min'].toDouble(),
-        maxValue: data['value']['max'].toDouble(),
-      ));
+      }
     }
     return spO2DataPoints;
   } // _extractFitbitSpO2Data
