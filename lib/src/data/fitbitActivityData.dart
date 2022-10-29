@@ -1,5 +1,3 @@
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/data/fitbitData.dart';
 
 /// [FitbitActivityData] is a class implementing the data model of the
@@ -64,15 +62,14 @@ class FitbitActivityData implements FitbitData {
       activityId: json['activityId'],
       activityParentId: json['activityParentId'],
       calories: json['calories'],
-      dateOfMonitoring:
-          Formats.onlyDayDateFormatTicks.parse(json['dateOfMonitoring']),
+      dateOfMonitoring: DateTime.parse(json['dateOfMonitoring']),
       description: json['description'],
       distance: json['distance'],
       duration: json['duration'],
       isFavorite: json['isFavorite'],
       logId: json['logId'],
       name: json['name'],
-      startTime: Formats.onlyTimeNoSeconds.parse(json['startTime']),
+      startTime: DateTime.parse(json['startTime']),
     );
   } // fromJson
 

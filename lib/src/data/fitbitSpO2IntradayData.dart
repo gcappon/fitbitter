@@ -15,6 +15,16 @@ class FitbitSpO2IntradayData implements FitbitData {
   /// Default [FitbitSpO2IntradayData] constructor.
   FitbitSpO2IntradayData({this.userID, this.dateOfMonitoring, this.value});
 
+  /// Generates a [FitbitSpO2IntradayData] obtained from a json.
+  factory FitbitSpO2IntradayData.fromJson(
+      {required Map<String, dynamic> json}) {
+    return FitbitSpO2IntradayData(
+      userID: json['userID'],
+      dateOfMonitoring: DateTime.parse(json['minute']),
+      value: json['value'],
+    );
+  } // fromJson
+
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{

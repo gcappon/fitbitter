@@ -1,5 +1,3 @@
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/data/fitbitData.dart';
 
 /// [FitbitSleepData] is a class implementing the data model of the
@@ -24,16 +22,6 @@ class FitbitSleepData implements FitbitData {
     this.entryDateTime,
     this.level,
   });
-
-  /// Generates a [FitbitSleepData] obtained from a json.
-  factory FitbitSleepData.fromJson({required Map<String, dynamic> json}) {
-    return FitbitSleepData(
-      userID: json['userID'],
-      dateOfSleep: Formats.onlyDayDateFormatTicks.parse(json['dateOfSleep']),
-      entryDateTime: DateTime.parse(json['entryDateTime']),
-      level: json['level'],
-    );
-  } // fromJson
 
   @override
   String toString() {

@@ -1,5 +1,3 @@
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/data/fitbitData.dart';
 
 /// [FitbitCardioScoreData] is a class implementing the data model of the
@@ -25,7 +23,7 @@ class FitbitCardioScoreData implements FitbitData {
   factory FitbitCardioScoreData.fromJson({required Map<String, dynamic> json}) {
     return FitbitCardioScoreData(
       userID: json['userID'],
-      dateOfMonitoring: Formats.onlyDayDateFormatTicks.parse(json['dateTime']),
+      dateOfMonitoring: DateTime.parse(json['dateTime']),
       value: json['value']['vo2Max'],
     );
   } // fromJson

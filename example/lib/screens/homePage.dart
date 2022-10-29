@@ -32,19 +32,26 @@ class HomePage extends StatelessWidget {
                 print(fitbitCredentials);
 
                 //Instantiate a proper data manager (for example, for SpO2 data)
-                FitbitSpO2IntradayDataManager fitbitSpO2IntradayDataManager =
-                    FitbitSpO2IntradayDataManager(
+                FitbitSpO2DataManager fitbitSpO2DataManager =
+                    FitbitSpO2DataManager(
                   clientID: Strings.fitbitClientID,
                   clientSecret: Strings.fitbitClientSecret,
                 );
-      //Fetch yesterday's data
-                FitbitSpO2IntradayAPIURL fitbitSpO2IntradayAPIURL = FitbitSpO2IntradayAPIURL.day(
-                                    date: DateTime.now(),
-                                    fitbitCredentials: fitbitCredentials!,
-                                  );
-                List<FitbitSpO2IntradayData> fitbitSpO2IntradayData = await fitbitSpO2IntradayDataManager.fetch(fitbitSpO2IntradayAPIURL) as List<FitbitSpO2IntradayData>;
-                print(fitbitSpO2IntradayData);
-               
+
+                //Fetch yesterday's data
+                final spO2Data =
+                    await fitbitSpO2DataManager.fetch(FitbitSpO2APIURL.day(
+                  date: DateTime.now().subtract(Duration(days: 1)),
+                  fitbitCredentials: fitbitCredentials!,
+                )) as List<FitbitSpO2Data>;
+                print(spO2Data);
+                // Use them as you want
+                if (spO2Data.isNotEmpty) {
+                  final snackBar = SnackBar(
+                      content: Text(
+                          'Yesterday your SpO2 was ${spO2Data[0].avgValue}% on average!'));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
               },
               child: Text('Tap to authorize and fetch data'),
             ),

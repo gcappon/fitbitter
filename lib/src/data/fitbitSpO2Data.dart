@@ -27,6 +27,17 @@ class FitbitSpO2Data implements FitbitData {
     this.maxValue,
   });
 
+  /// Generates a [FitbitSpO2Data] obtained from a json.
+  factory FitbitSpO2Data.fromJson({required Map<String, dynamic> json}) {
+    return FitbitSpO2Data(
+      userID: json['userID'],
+      dateOfMonitoring: DateTime.parse(json['dateTime']),
+      avgValue: json['value']['avg'],
+      minValue: json['value']['min'],
+      maxValue: json['value']['max'],
+    );
+  } // fromJson
+
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{

@@ -1,7 +1,5 @@
 import 'package:logger/logger.dart';
 
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';
@@ -44,10 +42,12 @@ class FitbitSpO2DataManager extends FitbitDataManager {
     if (data.isNotEmpty) {
       if (data is Iterable<dynamic>) {
         for (var record in data) {
+          print(record);
+          print(FitbitSpO2Data.fromJson(json: record));
+          print(DateTime.parse(record['dateTime']));
           spO2DataPoints.add(FitbitSpO2Data(
             userID: userId,
-            dateOfMonitoring:
-                Formats.onlyDayDateFormatTicks.parse(record['dateTime']),
+            dateOfMonitoring: DateTime.parse(record['dateTime']),
             avgValue: record['value']['avg'].toDouble(),
             minValue: record['value']['min'].toDouble(),
             maxValue: record['value']['max'].toDouble(),
@@ -56,8 +56,7 @@ class FitbitSpO2DataManager extends FitbitDataManager {
       } else {
         spO2DataPoints.add(FitbitSpO2Data(
           userID: userId,
-          dateOfMonitoring:
-              Formats.onlyDayDateFormatTicks.parse(data['dateTime']),
+          dateOfMonitoring: DateTime.parse(data['dateTime']),
           avgValue: data['value']['avg'].toDouble(),
           minValue: data['value']['min'].toDouble(),
           maxValue: data['value']['max'].toDouble(),
