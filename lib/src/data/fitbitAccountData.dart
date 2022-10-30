@@ -302,7 +302,7 @@ class FitbitAccountData implements FitbitData {
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
-      'userID': userID,
+      'encodedId': userID,
       'age': age,
       'ambassador': ambassador,
       'autoStrideEnabled': autoStrideEnabled,
@@ -314,6 +314,7 @@ class FitbitAccountData implements FitbitData {
       'dateOfBirth': dateOfBirth,
       'displayName': displayName,
       'displayNameSetting': displayNameSetting,
+      'features': {'exerciseGoal': features},
       'firstName': firstName,
       'foodsLocale': foodsLocale,
       'fullName': fullName,
