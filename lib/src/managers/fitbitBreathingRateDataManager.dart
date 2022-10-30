@@ -39,13 +39,15 @@ class FitbitBreathingRateDataManager extends FitbitDataManager {
     List<FitbitBreathingRateData> brDataPoints =
         List<FitbitBreathingRateData>.empty(growable: true);
 
-    for (var record in data) {
-      brDataPoints.add(FitbitBreathingRateData(
-        userID: userId,
-        dateOfMonitoring: DateTime.parse(record['dateTime']),
-        value: record['value']['breathingRate'].toDouble(),
-      ));
-    } // for entry
+    if (data.isNotEmpty) {
+      for (var record in data) {
+        brDataPoints.add(FitbitBreathingRateData(
+          userID: userId,
+          dateOfMonitoring: DateTime.parse(record['dateTime']),
+          value: record['value']['breathingRate'].toDouble(),
+        ));
+      } // for entry
+    }
 
     return brDataPoints;
   } // _extractFitbitBreathingRateData
