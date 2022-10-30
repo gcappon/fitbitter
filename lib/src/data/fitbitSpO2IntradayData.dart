@@ -20,7 +20,7 @@ class FitbitSpO2IntradayData implements FitbitData {
       {required Map<String, dynamic> json}) {
     return FitbitSpO2IntradayData(
       userID: json['userID'],
-      dateOfMonitoring: DateTime.parse(json['minute']),
+      dateOfMonitoring: DateTime.parse(json['dateTime']),
       value: json['value'],
     );
   } // fromJson

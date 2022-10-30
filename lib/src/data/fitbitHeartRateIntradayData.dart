@@ -19,6 +19,16 @@ class FitbitHeartRateIntradayData implements FitbitData {
     this.value,
   });
 
+  /// Generates a [FitbitHeartRateIntradayData] obtained from a json.
+  factory FitbitHeartRateIntradayData.fromJson(
+      {required Map<String, dynamic> json}) {
+    return FitbitHeartRateIntradayData(
+      userID: json['userID'],
+      dateOfMonitoring: DateTime.parse(json['dateTime']),
+      value: json['value'],
+    );
+  } // fromJson
+
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{

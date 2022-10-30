@@ -23,6 +23,16 @@ class FitbitSleepData implements FitbitData {
     this.level,
   });
 
+  /// Generates a [FitbitSleepData] obtained from a json.
+  factory FitbitSleepData.fromJson({required Map<String, dynamic> json}) {
+    return FitbitSleepData(
+      userID: json['userID'],
+      dateOfSleep: DateTime.parse(json['dateOfSleep']),
+      entryDateTime: DateTime.parse(json['entryDateTime']),
+      level: json['level'],
+    );
+  } // fromJson
+
   @override
   String toString() {
     return (StringBuffer('FitbitSleepData(')
