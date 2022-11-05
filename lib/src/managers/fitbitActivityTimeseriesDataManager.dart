@@ -4,8 +4,6 @@ import 'package:fitbitter/src/urls/fitbitActivityTimeseriesAPIURL.dart';
 
 import 'package:fitbitter/src/errors/fitbitUnexistentFitbitResourceException.dart';
 
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';
@@ -60,8 +58,7 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
     for (var record = 0; record < data.length; record++) {
       atDatapoints.add(FitbitActivityTimeseriesData(
         userID: userID,
-        dateOfMonitoring:
-            Formats.onlyDayDateFormatTicks.parse(data[record]['dateTime']),
+        dateOfMonitoring: DateTime.parse(data[record]['dateTime']),
         type: this.type,
         value: double.parse(data[record]['value']),
       ));

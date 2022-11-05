@@ -1,7 +1,5 @@
 import 'package:logger/logger.dart';
 
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';
@@ -41,15 +39,16 @@ class FitbitTemperatureSkinDataManager extends FitbitDataManager {
     List<FitbitTemperatureSkinData> tempSkinDataPoints =
         List<FitbitTemperatureSkinData>.empty(growable: true);
 
-    for (var record in data) {
-      tempSkinDataPoints.add(FitbitTemperatureSkinData(
-        userID: userId,
-        dateOfMonitoring:
-            Formats.onlyDayDateFormatTicks.parse(record['dateTime']),
-        value: record['value']['nightlyRelative'].toDouble(),
-        logType: record['logType'],
-      ));
-    } // for entry
+    if (data.isNotEmpty) {
+      for (var record in data) {
+        tempSkinDataPoints.add(FitbitTemperatureSkinData(
+          userID: userId,
+          dateOfMonitoring: DateTime.parse(record['dateTime']),
+          value: record['value']['nightlyRelative'].toDouble(),
+          logType: record['logType'],
+        ));
+      } // for entry
+    }
 
     return tempSkinDataPoints;
   } // _extractFitbitTemperatureSkinData

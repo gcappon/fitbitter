@@ -1,7 +1,5 @@
 import 'package:logger/logger.dart';
 
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';
@@ -41,14 +39,15 @@ class FitbitBreathingRateDataManager extends FitbitDataManager {
     List<FitbitBreathingRateData> brDataPoints =
         List<FitbitBreathingRateData>.empty(growable: true);
 
-    for (var record in data) {
-      brDataPoints.add(FitbitBreathingRateData(
-        userID: userId,
-        dateOfMonitoring:
-            Formats.onlyDayDateFormatTicks.parse(record['dateTime']),
-        value: record['value']['breathingRate'].toDouble(),
-      ));
-    } // for entry
+    if (data.isNotEmpty) {
+      for (var record in data) {
+        brDataPoints.add(FitbitBreathingRateData(
+          userID: userId,
+          dateOfMonitoring: DateTime.parse(record['dateTime']),
+          value: record['value']['breathingRate'].toDouble(),
+        ));
+      } // for entry
+    }
 
     return brDataPoints;
   } // _extractFitbitBreathingRateData

@@ -1,4 +1,3 @@
-import 'package:fitbitter/src/utils/formats.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';
 
@@ -74,7 +73,7 @@ class FitbitHeartRateData implements FitbitData {
     return FitbitHeartRateData(
       userID: json['userID'],
       dateOfMonitoring:
-          Formats.onlyDayDateFormatTicks.parse(json['dateOfMonitoring']),
+          DateTime.parse(json['dateOfMonitoring']),
       caloriesOutOfRange: json['caloriesOutOfRange'],
       minimumOutOfRange: json['minimumOutOfRange'],
       minutesOutOfRange: json['minutesOutOfRange'],

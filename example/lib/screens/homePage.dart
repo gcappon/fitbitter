@@ -46,10 +46,12 @@ class HomePage extends StatelessWidget {
                 )) as List<FitbitSpO2Data>;
                 print(spO2Data);
                 // Use them as you want
-                final snackBar = SnackBar(
-                    content: Text(
-                        'Yesterday your SpO2 was ${spO2Data[0].avgValue}% on average!'));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                if (spO2Data.isNotEmpty) {
+                  final snackBar = SnackBar(
+                      content: Text(
+                          'Yesterday your SpO2 was ${spO2Data[0].avgValue}% on average!'));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
               },
               child: Text('Tap to authorize and fetch data'),
             ),

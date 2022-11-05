@@ -1,7 +1,5 @@
 import 'package:logger/logger.dart';
 
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';
@@ -40,22 +38,22 @@ class FitbitSpO2IntradayDataManager extends FitbitDataManager {
     final data = response['minutes'];
     List<FitbitSpO2IntradayData> spO2IntradayDataPoints =
         List<FitbitSpO2IntradayData>.empty(growable: true);
-
-    if (data is Iterable<dynamic>) {
-      for (var record in data) {
+    if (data.isNotEmpty) {
+      if (data is Iterable<dynamic>) {
+        for (var record in data) {
+          spO2IntradayDataPoints.add(FitbitSpO2IntradayData(
+            userID: userId,
+            dateOfMonitoring: DateTime.parse(record['minute']),
+            value: record['value'].toDouble(),
+          ));
+        } // for entry
+      } else {
         spO2IntradayDataPoints.add(FitbitSpO2IntradayData(
           userID: userId,
-          dateOfMonitoring:
-              Formats.onlyDayDateFormatTicks.parse(record['minute']),
-          value: record['value'].toDouble(),
+          dateOfMonitoring: DateTime.parse(data['minute']),
+          value: data['value'].toDouble(),
         ));
-      } // for entry
-    } else {
-      spO2IntradayDataPoints.add(FitbitSpO2IntradayData(
-        userID: userId,
-        dateOfMonitoring: Formats.onlyDayDateFormatTicks.parse(data['minute']),
-        value: data['value'].toDouble(),
-      ));
+      }
     }
     return spO2IntradayDataPoints;
   } // _extractFitbitSpO2IntradayData

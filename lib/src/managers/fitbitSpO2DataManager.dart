@@ -1,7 +1,5 @@
 import 'package:logger/logger.dart';
 
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';
@@ -41,26 +39,29 @@ class FitbitSpO2DataManager extends FitbitDataManager {
     List<FitbitSpO2Data> spO2DataPoints =
         List<FitbitSpO2Data>.empty(growable: true);
 
-    if (data is Iterable<dynamic>) {
-      for (var record in data) {
+    if (data.isNotEmpty) {
+      if (data is Iterable<dynamic>) {
+        for (var record in data) {
+          print(record);
+          print(FitbitSpO2Data.fromJson(json: record));
+          print(DateTime.parse(record['dateTime']));
+          spO2DataPoints.add(FitbitSpO2Data(
+            userID: userId,
+            dateOfMonitoring: DateTime.parse(record['dateTime']),
+            avgValue: record['value']['avg'].toDouble(),
+            minValue: record['value']['min'].toDouble(),
+            maxValue: record['value']['max'].toDouble(),
+          ));
+        } // for entry
+      } else {
         spO2DataPoints.add(FitbitSpO2Data(
           userID: userId,
-          dateOfMonitoring:
-              Formats.onlyDayDateFormatTicks.parse(record['dateTime']),
-          avgValue: record['value']['avg'].toDouble(),
-          minValue: record['value']['min'].toDouble(),
-          maxValue: record['value']['max'].toDouble(),
+          dateOfMonitoring: DateTime.parse(data['dateTime']),
+          avgValue: data['value']['avg'].toDouble(),
+          minValue: data['value']['min'].toDouble(),
+          maxValue: data['value']['max'].toDouble(),
         ));
-      } // for entry
-    } else {
-      spO2DataPoints.add(FitbitSpO2Data(
-        userID: userId,
-        dateOfMonitoring:
-            Formats.onlyDayDateFormatTicks.parse(data['dateTime']),
-        avgValue: data['value']['avg'].toDouble(),
-        minValue: data['value']['min'].toDouble(),
-        maxValue: data['value']['max'].toDouble(),
-      ));
+      }
     }
     return spO2DataPoints;
   } // _extractFitbitSpO2Data

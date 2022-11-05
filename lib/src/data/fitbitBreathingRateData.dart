@@ -1,5 +1,3 @@
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/data/fitbitData.dart';
 
 /// [FitbitBreathingRateData] is a class implementing the data model of the
@@ -26,7 +24,7 @@ class FitbitBreathingRateData implements FitbitData {
       {required Map<String, dynamic> json}) {
     return FitbitBreathingRateData(
       userID: json['userID'],
-      dateOfMonitoring: Formats.onlyDayDateFormatTicks.parse(json['dateTime']),
+      dateOfMonitoring: DateTime.parse(json['dateTime']),
       value: json['value'],
     );
   } // fromJson

@@ -37,21 +37,23 @@ class FitbitHeartRateIntradayDataManager extends FitbitDataManager {
   /// A private method that extracts [FitbitHeartData] from the given response.
   List<FitbitHeartRateIntradayData> _extractFitbitHeartRateIntradayData(
       dynamic response, String? userId) {
-    final dateOfMonitoring = Formats.onlyDayDateFormatTicks
-        .parse(response['activities-heart'][0]['dateTime']);
+    final dateOfMonitoring =
+        DateTime.parse(response['activities-heart'][0]['dateTime']);
     final data = response['activities-heart-intraday']['dataset'];
     List<FitbitHeartRateIntradayData> heartDataPoints =
         List<FitbitHeartRateIntradayData>.empty(growable: true);
 
-    for (var record in data) {
-      final time = Formats.onlyTimeNoSecondsAMPM.parse(record['time']);
-      heartDataPoints.add(FitbitHeartRateIntradayData(
-        userID: userId,
-        dateOfMonitoring: dateOfMonitoring
-            .add(Duration(hours: time.hour, minutes: time.minute)),
-        value: record['value'].toDouble(),
-      ));
-    } // for entry
+    if (data.isNotEmpty) {
+      for (var record in data) {
+        final time = Formats.onlyTimeWithSeconds.parse(record['time']);
+        heartDataPoints.add(FitbitHeartRateIntradayData(
+          userID: userId,
+          dateOfMonitoring: dateOfMonitoring.add(Duration(
+              hours: time.hour, minutes: time.minute, seconds: time.second)),
+          value: record['value'].toDouble(),
+        ));
+      } // for entry
+    }
 
     return heartDataPoints;
   } // _extractFitbitHeartRateIntradayData
