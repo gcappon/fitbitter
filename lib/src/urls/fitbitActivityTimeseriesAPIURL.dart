@@ -10,13 +10,13 @@ import 'package:fitbitter/src/data/fitbitActivityTimeseriesData.dart';
 /// [FitbitActivityTimeseriesData].
 class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   /// The type of the activity timeseries.
-  final String resource;
+  final String resourceString;
 
   /// Default [FitbitActivityTimeseriesAPIURL] constructor.
   FitbitActivityTimeseriesAPIURL(
       {required FitbitCredentials? fitbitCredentials,
       required String url,
-      required this.resource})
+      required this.resourceString})
       : super(fitbitCredentials: fitbitCredentials, url: url);
 
   /// Generates a [FitbitActivityTimeseriesAPIURL] to get [FitbitActivityTimeseriesData] of a given [resource] of a
@@ -24,12 +24,12 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   factory FitbitActivityTimeseriesAPIURL.dayWithResource(
       {required FitbitCredentials fitbitCredentials,
       required DateTime date,
-      required String resource}) {
+      required Resource resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(date);
     return FitbitActivityTimeseriesAPIURL(
       url:
-          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/1d.json',
-      resource: resource,
+          '${_getBaseURL(fitbitCredentials.userID)}/${resourceToString[resource]}/date/$dateStr/1d.json',
+      resourceString: resourceToString[resource]!,
       fitbitCredentials: fitbitCredentials,
     );
   } // FitbitActivityTimeseriesAPIURL.day
@@ -40,13 +40,13 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
       {required FitbitCredentials fitbitCredentials,
       required DateTime startDate,
       required DateTime endDate,
-      required String resource}) {
+      required Resource resource}) {
     String startDateStr = Formats.onlyDayDateFormatTicks.format(startDate);
     String endDateStr = Formats.onlyDayDateFormatTicks.format(endDate);
     return FitbitActivityTimeseriesAPIURL(
       url:
-          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$startDateStr/$endDateStr.json',
-      resource: resource,
+          '${_getBaseURL(fitbitCredentials.userID)}/${resourceToString[resource]}/date/$startDateStr/$endDateStr.json',
+      resourceString: resourceToString[resource]!,
       fitbitCredentials: fitbitCredentials,
     );
   } // FitbitActivityTimeseriesAPIURL.dateRange
@@ -56,12 +56,12 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   factory FitbitActivityTimeseriesAPIURL.weekWithResource(
       {required FitbitCredentials fitbitCredentials,
       required DateTime baseDate,
-      required String resource}) {
+      required Resource resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitActivityTimeseriesAPIURL(
       url:
-          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/1w.json',
-      resource: resource,
+          '${_getBaseURL(fitbitCredentials.userID)}/${resourceToString[resource]}/date/$dateStr/1w.json',
+      resourceString: resourceToString[resource]!,
       fitbitCredentials: fitbitCredentials,
     );
   } // FitbitActivityTimeseriesAPIURL.week
@@ -71,12 +71,12 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   factory FitbitActivityTimeseriesAPIURL.monthWithResource(
       {required FitbitCredentials fitbitCredentials,
       required DateTime baseDate,
-      required String resource}) {
+      required Resource resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitActivityTimeseriesAPIURL(
       url:
-          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/1m.json',
-      resource: resource,
+          '${_getBaseURL(fitbitCredentials.userID)}/${resourceToString[resource]}/date/$dateStr/1m.json',
+      resourceString: resourceToString[resource]!,
       fitbitCredentials: fitbitCredentials,
     );
   } // FitbitActivityTimeseriesAPIURL.month
@@ -86,12 +86,12 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   factory FitbitActivityTimeseriesAPIURL.threeMonthsWithResource(
       {required FitbitCredentials fitbitCredentials,
       required DateTime baseDate,
-      required String resource}) {
+      required Resource resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitActivityTimeseriesAPIURL(
       url:
-          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/3m.json',
-      resource: resource,
+          '${_getBaseURL(fitbitCredentials.userID)}/${resourceToString[resource]}/date/$dateStr/3m.json',
+      resourceString: resourceToString[resource]!,
       fitbitCredentials: fitbitCredentials,
     );
   } // FitbitActivityTimeseriesAPIURL.threeMonths
@@ -101,12 +101,12 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   factory FitbitActivityTimeseriesAPIURL.sixMonthsWithResource(
       {required FitbitCredentials fitbitCredentials,
       required DateTime baseDate,
-      required String resource}) {
+      required Resource resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitActivityTimeseriesAPIURL(
       url:
-          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/6m.json',
-      resource: resource,
+          '${_getBaseURL(fitbitCredentials.userID)}/${resourceToString[resource]}/date/$dateStr/6m.json',
+      resourceString: resourceToString[resource]!,
       fitbitCredentials: fitbitCredentials,
     );
   } // FitbitActivityTimeseriesAPIURL.sixMonths
@@ -116,12 +116,12 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   factory FitbitActivityTimeseriesAPIURL.yearWithResource(
       {required FitbitCredentials fitbitCredentials,
       required DateTime baseDate,
-      required String resource}) {
+      required Resource resource}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitActivityTimeseriesAPIURL(
       url:
-          '${_getBaseURL(fitbitCredentials.userID)}/$resource/date/$dateStr/1y.json',
-      resource: resource,
+          '${_getBaseURL(fitbitCredentials.userID)}/${resourceToString[resource]}/date/$dateStr/1y.json',
+      resourceString: resourceToString[resource]!,
       fitbitCredentials: fitbitCredentials,
     );
   } // FitbitActivityTimeseriesAPIURL.yearMonths
@@ -132,3 +132,38 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   } // _getBaseURL
 
 } // FitbitActivityTimeseriesAPIURL
+
+/// enumeration for the resource options that you can specify in the [FitbitActivityTimeseriesAPIURL]
+enum Resource {
+  /// The number of calories burned during the day for periods of time when the user was active above sedentary level. This value is calculated minute by minute for minutes that fall within this criteria. This includes activity burned calories and BMR.
+  activityCalories,
+
+  /// The top level time series for calories burned inclusive of BMR, tracked activity, and manually logged activities.
+  calories,
+
+  /// Value includes only BMR calories.
+  caloriesBMR,
+  distance,
+  elevation,
+  floors,
+  minutesSedentary,
+  minutesLightlyActive,
+  minutesFairlyActive,
+  minutesVeryActive,
+  steps,
+}
+
+/// Map that converts each element of [Resource] to the corresponding [String] to specify resource in [FitbitActivityTimeseriesAPIURL]
+Map<Resource, String> resourceToString = {
+  Resource.activityCalories: 'activityCalories',
+  Resource.calories: 'calories',
+  Resource.caloriesBMR: 'caloriesBMR',
+  Resource.distance: 'distance',
+  Resource.elevation: 'elevation',
+  Resource.floors: 'floors',
+  Resource.minutesSedentary: 'minutesSedentary',
+  Resource.minutesLightlyActive: 'minutesLightlyActive',
+  Resource.minutesFairlyActive: 'minutesFairlyActive',
+  Resource.minutesVeryActive: 'minutesVeryActive',
+  Resource.steps: 'steps',
+};

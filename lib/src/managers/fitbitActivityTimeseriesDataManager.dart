@@ -2,7 +2,6 @@ import 'package:logger/logger.dart';
 
 import 'package:fitbitter/src/urls/fitbitActivityTimeseriesAPIURL.dart';
 
-import 'package:fitbitter/src/errors/fitbitUnexistentFitbitResourceException.dart';
 
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
@@ -14,26 +13,19 @@ import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 /// [FitbitActivityTimeseriesDataManager] is a class the manages the requests related to
 /// [FitbitActivityTimeseriesData].
 class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
-  /// The type of activity timeseries data.
-  late String type;
-
   /// Default [FitbitActivityTimeseriesDataManager] constructor.
   FitbitActivityTimeseriesDataManager(
-      {required String type,
-      required String clientID,
-      required String clientSecret})
+      {required String clientID, required String clientSecret})
       : super(
           clientID: clientID,
           clientSecret: clientSecret,
-        ) {
-    this.type = type;
-  }
+        );
 
   @override
   Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
-    //Set the resource type
     final fitbitSpecificUrl = fitbitUrl as FitbitActivityTimeseriesAPIURL;
-    type = fitbitSpecificUrl.resource;
+    final String type = fitbitSpecificUrl
+        .resourceString; //Getting the resource (as String) type directly from the [FitbitActivityTimeseriesAPIURL]
 
     // Get the response
     final response = await getResponse(fitbitUrl);
@@ -44,14 +36,14 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
 
     //Extract data and return them
     List<FitbitData> ret = _extractFitbitActivityTimeseriesData(
-        response, fitbitUrl.fitbitCredentials!.userID);
+        response, fitbitUrl.fitbitCredentials!.userID, type);
     return ret;
   } // fetch
 
   /// A private method that extracts [FitbitActivityTimeseriesData] from the given response.
   List<FitbitActivityTimeseriesData> _extractFitbitActivityTimeseriesData(
-      dynamic response, String? userID) {
-    final data = response[_getDataField()];
+      dynamic response, String? userID, String type) {
+    final data = response['activities-$type'];
     List<FitbitActivityTimeseriesData> atDatapoints =
         List<FitbitActivityTimeseriesData>.empty(growable: true);
 
@@ -59,35 +51,10 @@ class FitbitActivityTimeseriesDataManager extends FitbitDataManager {
       atDatapoints.add(FitbitActivityTimeseriesData(
         userID: userID,
         dateOfMonitoring: DateTime.parse(data[record]['dateTime']),
-        type: this.type,
+        type: type,
         value: double.parse(data[record]['value']),
       ));
     } // for entry
     return atDatapoints;
   } // _extractFitbitActivityTimeseriesData
-
-  /// A private method that returns the data field name of the response.
-  String _getDataField() {
-    final validTypes = [
-      'activityCalories',
-      'calories',
-      'caloriesBMR',
-      'distance',
-      'floors',
-      'elevation',
-      'minutesSedentary',
-      'minutesLightlyActive',
-      'minutesFairlyActive',
-      'minutesVeryActive',
-      'steps'
-    ];
-
-    if (validTypes.contains(type))
-      return 'activities-' + type;
-    else {
-      throw FitbitUnaexistentFitbitResourceException(
-          message: 'The specified resource is not existent.');
-    } // else
-  } // _getDataField
-
 } // FitbitActivityTimeseriesDataManager
