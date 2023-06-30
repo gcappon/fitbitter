@@ -1,3 +1,7 @@
+## [2.0.2] - 2023/06/30
+
+Updates dependencies. 
+
 ## [2.0.1] - 2022/09/06
 
 Fixed some typos.
