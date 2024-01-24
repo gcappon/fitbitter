@@ -2,7 +2,6 @@ import 'package:logger/logger.dart';
 
 import 'package:fitbitter/src/urls/fitbitActivityTimeseriesAPIURL.dart';
 
-
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 import 'package:fitbitter/src/data/fitbitData.dart';

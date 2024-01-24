@@ -43,5 +43,4 @@ class FitbitSpO2IntradayData implements FitbitData {
           ..write(')'))
         .toString();
   } // toString
-
 } // FitbitSpO2IntradayData

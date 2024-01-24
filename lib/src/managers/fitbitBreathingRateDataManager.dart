@@ -51,5 +51,4 @@ class FitbitBreathingRateDataManager extends FitbitDataManager {
 
     return brDataPoints;
   } // _extractFitbitBreathingRateData
-
 } // FitbitBreathingRateDataManager

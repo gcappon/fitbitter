@@ -59,5 +59,4 @@ class FitbitActivityDataManager extends FitbitDataManager {
     } // for entry
     return activityDatapoints;
   } // _extractFitbitActivityData
-
 } // FitbitActivityDataManager

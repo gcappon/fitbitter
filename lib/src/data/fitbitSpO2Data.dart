@@ -62,5 +62,4 @@ class FitbitSpO2Data implements FitbitData {
           ..write(')'))
         .toString();
   } // toString
-
 } // FitbitSpO2Data

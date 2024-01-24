@@ -53,5 +53,4 @@ class FitbitDeviceDataManager extends FitbitDataManager {
     } // for entry
     return deviceDatapoints;
   } // _extractFitbitDeviceData
-
 } // FitbitDeviceDataManager

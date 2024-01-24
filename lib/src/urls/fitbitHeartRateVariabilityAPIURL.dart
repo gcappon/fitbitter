@@ -46,5 +46,4 @@ class FitbitHeartRateVariabilityAPIURL extends FitbitAPIURL {
   static String _getBaseURL(String? userID) {
     return 'https://api.fitbit.com/1/user/$userID/hrv';
   } // _getBaseURL
-
 } // FitbitHeartRateVariabilityAPIURL

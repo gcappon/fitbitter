@@ -47,5 +47,4 @@ class FitbitHeartRateIntradayData implements FitbitData {
           ..write(')'))
         .toString();
   } // toString
-
 } // FitbitHeartRateIntradayData

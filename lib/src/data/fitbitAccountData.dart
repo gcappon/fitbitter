@@ -346,5 +346,4 @@ class FitbitAccountData implements FitbitData {
       'weightUnit': weightUnit,
     };
   } // toJson
-
 } // FitbitAccountData

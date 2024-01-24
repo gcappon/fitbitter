@@ -46,5 +46,4 @@ class FitbitSpO2APIURL extends FitbitAPIURL {
   static String _getBaseURL(String? userID) {
     return 'https://api.fitbit.com/1/user/$userID/spo2';
   } // _getBaseURL
-
 } // FitbitSpO2APIURL

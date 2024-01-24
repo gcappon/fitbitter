@@ -130,7 +130,6 @@ class FitbitActivityTimeseriesAPIURL extends FitbitAPIURL {
   static String _getBaseURL(String? userID) {
     return 'https://api.fitbit.com/1/user/$userID/activities';
   } // _getBaseURL
-
 } // FitbitActivityTimeseriesAPIURL
 
 /// enumeration for the resource options that you can specify in the [FitbitActivityTimeseriesAPIURL]

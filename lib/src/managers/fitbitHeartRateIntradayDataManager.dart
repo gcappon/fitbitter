@@ -57,5 +57,4 @@ class FitbitHeartRateIntradayDataManager extends FitbitDataManager {
 
     return heartDataPoints;
   } // _extractFitbitHeartRateIntradayData
-
 } // FitbitHeartRateIntradayDataManager

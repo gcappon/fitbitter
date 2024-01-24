@@ -1,3 +1,45 @@
+## [2.0.4] - 2024/01/24
+
+Solves #19: Now, when using the method FitbitConnector.authorize, it is possible to specify a specific authorization scope (defined in https://dev.fitbit.com/build/reference/web-api/developer-guide/application-design/#Scopes) and token expiration time (defined in https://dev.fitbit.com/build/reference/web-api/authorization/authorize/).
+The new constructor is defined as:
+```dart
+static Future<FitbitCredentials?> authorize(
+      {required String clientID,
+      required String clientSecret,
+      required String redirectUri,
+      required String callbackUrlScheme,
+      List<FitbitAuthScope> scopeList = const [FitbitAuthScope.ACTIVITY, FitbitAuthScope.CARDIO_FITNESS, FitbitAuthScope.HEART_RATE, FitbitAuthScope.LOCATION, FitbitAuthScope.NUTRITION, FitbitAuthScope.OXYGEN_SATURATION, FitbitAuthScope.PROFILE, FitbitAuthScope.RESPIRATORY_RATE, FitbitAuthScope.SETTINGS, FitbitAuthScope.SLEEP, FitbitAuthScope.SOCIAL, FitbitAuthScope.TEMPERATURE],
+      int expiresIn = 28800  
+        }) async {...}
+```
+
+Current available scopes are defined by the enumerator `FitbitAuthScope`:
+```dart
+enum FitbitAuthScope{
+  ACTIVITY, // for `activity` scope
+  CARDIO_FITNESS, // for `cardio_fitness` scope
+  HEART_RATE, // for `heartrate` scope
+  LOCATION, // for `location` scope
+  NUTRITION, // for `nutrition` scope
+  PROFILE, // for `profile` scope
+  SETTINGS, // for `settings` scope
+  SLEEP, // for `sleep` scope
+  SOCIAL, // for `social` scope
+  WEIGHT, // for `weight` scope
+  OXYGEN_SATURATION, // for `oxygen_saturation` scope
+  RESPIRATORY_RATE, // for `respiratory_rate` scope
+  TEMPERATURE // for `temperature` scope
+}
+```
+
+Available token expiration lifetimes are: 3600 (1 hour), 28800 (8 hours), 86400 (1 day), 604800 (1 week), 2592000 (30 days), or 31536000 (1 year).
+
+Updates dependencies. 
+
+## [2.0.3] - 2024/01/03
+
+Updates dependencies. 
+
 ## [2.0.2] - 2023/06/30
 
 Updates dependencies. 

@@ -58,5 +58,4 @@ class FitbitTemperatureSkinData implements FitbitData {
           ..write(')'))
         .toString();
   } // toString
-
 } // FitbitTemperatureSkinData

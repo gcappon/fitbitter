@@ -109,5 +109,4 @@ class FitbitActivityData implements FitbitData {
       'startTime': startTime,
     };
   } // toJson
-
 } // FitbitActivityData

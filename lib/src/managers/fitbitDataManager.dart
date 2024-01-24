@@ -96,5 +96,4 @@ abstract class FitbitDataManager {
             message: e.response!.data['errors'][0]['message']);
     } // switch
   } // manageError
-
 } // FitbitDataManager

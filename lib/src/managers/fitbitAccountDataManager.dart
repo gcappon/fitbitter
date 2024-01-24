@@ -32,5 +32,4 @@ class FitbitAccountDataManager extends FitbitDataManager {
     ret.add(FitbitAccountData.fromJson(json: response['user']));
     return ret;
   } // fetch
-
 } // FitbitAccountDataManager

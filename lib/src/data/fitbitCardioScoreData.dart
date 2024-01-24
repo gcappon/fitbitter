@@ -48,5 +48,4 @@ class FitbitCardioScoreData implements FitbitData {
           ..write(')'))
         .toString();
   } // toString
-
 } // FitbitCardioScoreData

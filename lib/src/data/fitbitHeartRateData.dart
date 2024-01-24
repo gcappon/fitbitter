@@ -1,4 +1,3 @@
-
 import 'package:fitbitter/src/data/fitbitData.dart';
 
 /// [FitbitHeartRateData] is a class implementing the data model of the
@@ -72,8 +71,7 @@ class FitbitHeartRateData implements FitbitData {
   factory FitbitHeartRateData.fromJson({required Map<String, dynamic> json}) {
     return FitbitHeartRateData(
       userID: json['userID'],
-      dateOfMonitoring:
-          DateTime.parse(json['dateOfMonitoring']),
+      dateOfMonitoring: DateTime.parse(json['dateOfMonitoring']),
       caloriesOutOfRange: json['caloriesOutOfRange'],
       minimumOutOfRange: json['minimumOutOfRange'],
       minutesOutOfRange: json['minutesOutOfRange'],
@@ -132,5 +130,4 @@ class FitbitHeartRateData implements FitbitData {
       'restingHeartRate': restingHeartRate,
     };
   } // toJson
-
 } // FitbitHeartRateData

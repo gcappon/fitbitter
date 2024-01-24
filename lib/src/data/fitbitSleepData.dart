@@ -53,5 +53,4 @@ class FitbitSleepData implements FitbitData {
       'level': level,
     };
   } // toJson
-
 } // FitbitSleepData
