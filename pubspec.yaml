@@ -4,17 +4,17 @@ version: 2.0.4
 homepage: https://github.com/gcappon/fitbitter
 
 environment:
-  sdk: '>=2.18.0 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
   #flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  flutter_web_auth: ^0.5.0 #used to implement oauth 2.0
-  dio: ^5.4.0 #better web browser
-  logger: ^2.0.2+1
-  intl: ^0.19.0
+  flutter_web_auth: ^0.6.0 #used to implement oauth 2.0
+  dio: ^5.7.0 #better web browser
+  logger: ^2.5.0
+  intl: ^0.20.1
 
 dev_dependencies:
   flutter_test:

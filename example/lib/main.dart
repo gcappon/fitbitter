@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'screens/homePage.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 } //main
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       initialRoute: HomePage.route,
       //This maps names to the set of routes within the app
       routes: {
-        HomePage.route: (context) => HomePage(),
+        HomePage.route: (context) => const HomePage(),
       },
     );
   } //build

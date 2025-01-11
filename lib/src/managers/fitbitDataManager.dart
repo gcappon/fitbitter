@@ -51,7 +51,7 @@ abstract class FitbitDataManager {
           },
         ),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       FitbitDataManager.manageError(e);
     } // try - catch
 
@@ -75,7 +75,7 @@ abstract class FitbitDataManager {
   } //_checkAccessToken
 
   /// Method that manages errors that could return from the Fitbit API.
-  static void manageError(DioError e) {
+  static void manageError(DioException e) {
     switch (e.response!.statusCode) {
       case 200:
         break;
