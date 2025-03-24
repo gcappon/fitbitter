@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_web_auth: ^0.6.0 #used to implement oauth 2.0
+  flutter_web_auth_2: ^4.1.0
   dio: ^5.7.0 #better web browser
   logger: ^2.5.0
   intl: ^0.20.1
