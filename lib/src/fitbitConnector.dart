@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:logger/logger.dart';
 
 import 'package:fitbitter/src/urls/fitbitAuthAPIURL.dart';
@@ -149,9 +149,21 @@ class FitbitConnector {
       required String clientSecret,
       required String redirectUri,
       required String callbackUrlScheme,
-      List<FitbitAuthScope> scopeList = const [FitbitAuthScope.ACTIVITY, FitbitAuthScope.CARDIO_FITNESS, FitbitAuthScope.HEART_RATE, FitbitAuthScope.LOCATION, FitbitAuthScope.NUTRITION, FitbitAuthScope.OXYGEN_SATURATION, FitbitAuthScope.PROFILE, FitbitAuthScope.RESPIRATORY_RATE, FitbitAuthScope.SETTINGS, FitbitAuthScope.SLEEP, FitbitAuthScope.SOCIAL, FitbitAuthScope.TEMPERATURE],
-      int expiresIn = 28800  
-        }) async {
+      List<FitbitAuthScope> scopeList = const [
+        FitbitAuthScope.ACTIVITY,
+        FitbitAuthScope.CARDIO_FITNESS,
+        FitbitAuthScope.HEART_RATE,
+        FitbitAuthScope.LOCATION,
+        FitbitAuthScope.NUTRITION,
+        FitbitAuthScope.OXYGEN_SATURATION,
+        FitbitAuthScope.PROFILE,
+        FitbitAuthScope.RESPIRATORY_RATE,
+        FitbitAuthScope.SETTINGS,
+        FitbitAuthScope.SLEEP,
+        FitbitAuthScope.SOCIAL,
+        FitbitAuthScope.TEMPERATURE
+      ],
+      int expiresIn = 28800}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
     Response response;
@@ -160,11 +172,14 @@ class FitbitConnector {
 
     // Generate the fitbit url
     final fitbitAuthorizeFormUrl = FitbitAuthAPIURL.authorizeForm(
-        redirectUri: redirectUri, clientID: clientID, scopeList: scopeList, expiresIn: expiresIn);
+        redirectUri: redirectUri,
+        clientID: clientID,
+        scopeList: scopeList,
+        expiresIn: expiresIn);
 
     // Perform authentication
     try {
-      final result = await FlutterWebAuth.authenticate(
+      final result = await FlutterWebAuth2.authenticate(
           url: fitbitAuthorizeFormUrl.url,
           callbackUrlScheme: callbackUrlScheme);
       //Get the auth code
