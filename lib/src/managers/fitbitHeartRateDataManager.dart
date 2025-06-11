@@ -38,7 +38,9 @@ class FitbitHeartDataManager extends FitbitDataManager {
     for (var record = 0; record < data.length; record++) {
       heartDataPoints.add(FitbitHeartRateData(
         userID: userId,
-        dateOfMonitoring: DateTime.parse(data[record]['dateTime']),
+        dateOfMonitoring: data[record]['dateTime'] is DateTime
+            ? data[record]['dateTime']
+            : DateTime.parse(data[record]['dateTime']),
         caloriesOutOfRange: data[record]['value']['heartRateZones'][0]['caloriesOut']?.toDouble(),
         minimumOutOfRange: data[record]['value']['heartRateZones'][0]['min'],
         minutesOutOfRange: data[record]['value']['heartRateZones'][0]['minutes'],
