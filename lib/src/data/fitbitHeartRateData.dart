@@ -71,7 +71,9 @@ class FitbitHeartRateData implements FitbitData {
   factory FitbitHeartRateData.fromJson({required Map<String, dynamic> json}) {
     return FitbitHeartRateData(
       userID: json['userID'],
-      dateOfMonitoring: DateTime.parse(json['dateOfMonitoring']),
+      dateOfMonitoring: json['dateOfMonitoring'] is String
+          ? DateTime.parse(json['dateOfMonitoring'])
+          : json['dateOfMonitoring'],
       caloriesOutOfRange: json['caloriesOutOfRange'],
       minimumOutOfRange: json['minimumOutOfRange'],
       minutesOutOfRange: json['minutesOutOfRange'],
