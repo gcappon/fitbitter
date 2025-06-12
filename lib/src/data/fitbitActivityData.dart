@@ -62,14 +62,17 @@ class FitbitActivityData implements FitbitData {
       activityId: json['activityId'],
       activityParentId: json['activityParentId'],
       calories: json['calories'],
-      dateOfMonitoring: DateTime.parse(json['dateOfMonitoring']),
+      dateOfMonitoring: json['dateOfMonitoring'] is String
+          ? DateTime.parse(json['dateOfMonitoring'])
+          : json['dateOfMonitoring'],
       description: json['description'],
       distance: json['distance'],
       duration: json['duration'],
       isFavorite: json['isFavorite'],
       logId: json['logId'],
       name: json['name'],
-      startTime: DateTime.parse(json['startTime']),
+      startTime:
+          json['startTime'] is String ? DateTime.parse(json['startTime']) : json['startTime'],
     );
   } // fromJson
 
