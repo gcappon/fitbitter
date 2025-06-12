@@ -116,7 +116,7 @@ class FitbitHeartRateData implements FitbitData {
   Map<String, dynamic> toJson<T extends FitbitData>() {
     return <String, dynamic>{
       'userID': userID,
-      'dateOfMonitoring': dateOfMonitoring,
+      'dateOfMonitoring': dateOfMonitoring?.toIso8601String(),
       'caloriesOutOfRange': caloriesOutOfRange,
       'minimumOutOfRange': minimumOutOfRange,
       'minutesOutOfRange': minutesOutOfRange,
