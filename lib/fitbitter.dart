@@ -7,6 +7,7 @@ export 'package:fitbitter/src/fitbitConnector.dart';
 export 'package:fitbitter/src/data/fitbitData.dart';
 export 'package:fitbitter/src/data/fitbitActivityData.dart';
 export 'package:fitbitter/src/data/fitbitHeartRateData.dart';
+export 'package:fitbitter/src/data/fitbitActivityLogData.dart';
 
 //Errors
 export 'package:fitbitter/src/errors/fitbitException.dart';
@@ -20,9 +21,11 @@ export 'package:fitbitter/src/errors/fitbitUnauthorizedException.dart';
 export 'package:fitbitter/src/managers/fitbitDataManager.dart';
 export 'package:fitbitter/src/managers/fitbitActivityDataManager.dart';
 export 'package:fitbitter/src/managers/fitbitHeartRateDataManager.dart';
+export 'package:fitbitter/src/managers/fitbitActivityLogDataManager.dart';
 
 //URLs
 export 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 export 'package:fitbitter/src/urls/fitbitActivityAPIURL.dart';
 export 'package:fitbitter/src/urls/fitbitAuthAPIURL.dart';
 export 'package:fitbitter/src/urls/fitbitHeartAPIURL.dart';
+export 'package:fitbitter/src/urls/fitbitActivityLogAPIURL.dart';
