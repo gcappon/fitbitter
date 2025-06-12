@@ -19,14 +19,13 @@ class FitbitActivityLogAPIURL extends FitbitAPIURL {
   factory FitbitActivityLogAPIURL.dateRange({
     required FitbitCredentials fitbitCredentials,
     required DateTime startDate,
-    required DateTime endDate,
     int limit = 20,
     int offset = 0,
-    String sort = 'desc',
+    String sort = 'asc',
   }) {
-    final beforeDateStr = Formats.onlyDayDateFormatTicks.format(endDate);
+    final startDateStr = Formats.onlyDayDateFormatTicks.format(startDate);
     final url = '${_getBaseURL(fitbitCredentials.userID)}'
-        '/list.json?beforeDate=$beforeDateStr&sort=$sort&offset=$offset&limit=$limit';
+        '/list.json?afterDate=$startDateStr&sort=$sort&offset=$offset&limit=$limit';
     return FitbitActivityLogAPIURL(
       url: url,
       fitbitCredentials: fitbitCredentials,
