@@ -6,6 +6,7 @@ import 'package:fitbitter/src/data/fitbitActivityLogData.dart';
 /// [FitbitActivityLogAPIURL] is a class that expresses multiple factory
 /// constructors to be used to generate Fitbit Web APIs urls to fetch
 /// [FitbitActivityLogData].
+///
 class FitbitActivityLogAPIURL extends FitbitAPIURL {
   /// Default [FitbitActivityLogAPIURL] constructor.
   FitbitActivityLogAPIURL({
