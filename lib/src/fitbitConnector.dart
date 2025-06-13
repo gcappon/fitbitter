@@ -30,13 +30,9 @@ class FitbitCredentials {
   FitbitCredentials copyWith(
       {String? userID, String? fitbitAccessToken, String? fitbitRefreshToken}) {
     String u = userID == null ? this.userID : userID;
-    String fa =
-        fitbitAccessToken == null ? this.fitbitAccessToken : fitbitAccessToken;
-    String fr = fitbitRefreshToken == null
-        ? this.fitbitRefreshToken
-        : fitbitRefreshToken;
-    return FitbitCredentials(
-        userID: u, fitbitAccessToken: fa, fitbitRefreshToken: fr);
+    String fa = fitbitAccessToken == null ? this.fitbitAccessToken : fitbitAccessToken;
+    String fr = fitbitRefreshToken == null ? this.fitbitRefreshToken : fitbitRefreshToken;
+    return FitbitCredentials(userID: u, fitbitAccessToken: fa, fitbitRefreshToken: fr);
   } //copyWith
 
   @override
@@ -79,9 +75,7 @@ class FitbitConnector {
 
     // Generate the fitbit url
     final fitbitUrl = FitbitAuthAPIURL.refreshToken(
-        clientID: clientID,
-        clientSecret: clientSecret,
-        fitbitCredentials: fitbitCredentials);
+        clientID: clientID, clientSecret: clientSecret, fitbitCredentials: fitbitCredentials);
 
     // Post refresh query to Fitbit API
     response = await dio.post(
@@ -108,14 +102,13 @@ class FitbitConnector {
 
   /// Method that checks if the current token is still valid to be used
   /// by the Fitbit APIs OAuth or it is expired.
-  static FutureOr<bool> isTokenValid(
-      {required FitbitCredentials fitbitCredentials}) async {
+  static FutureOr<bool> isTokenValid({required FitbitCredentials fitbitCredentials}) async {
     // Instantiate Dio and its Response
     Dio dio = Dio();
-    late Response response;
+    Response? response;
 
-    final fitbitUrl = FitbitAuthAPIURL.isTokenValid(
-        fitbitAccessToken: fitbitCredentials.fitbitAccessToken);
+    final fitbitUrl =
+        FitbitAuthAPIURL.isTokenValid(fitbitAccessToken: fitbitCredentials.fitbitAccessToken);
 
     //Get the response
     try {
@@ -140,7 +133,7 @@ class FitbitConnector {
     logger.i('$response');
 
     // get token status and return it
-    return response.data['active'] as bool;
+    return (response?.data['active'] as bool?) ?? false;
   } // isTokenValid
 
   /// Method that implements the OAuth 2.0 protocol and gets the access and refresh tokens from Fitbit APIs.
@@ -172,25 +165,18 @@ class FitbitConnector {
 
     // Generate the fitbit url
     final fitbitAuthorizeFormUrl = FitbitAuthAPIURL.authorizeForm(
-        redirectUri: redirectUri,
-        clientID: clientID,
-        scopeList: scopeList,
-        expiresIn: expiresIn);
+        redirectUri: redirectUri, clientID: clientID, scopeList: scopeList, expiresIn: expiresIn);
 
     // Perform authentication
     try {
       final result = await FlutterWebAuth2.authenticate(
-          url: fitbitAuthorizeFormUrl.url,
-          callbackUrlScheme: callbackUrlScheme);
+          url: fitbitAuthorizeFormUrl.url, callbackUrlScheme: callbackUrlScheme);
       //Get the auth code
       final code = Uri.parse(result).queryParameters['code'];
 
       // Generate the fitbit url
       final fitbitAuthorizeUrl = FitbitAuthAPIURL.authorize(
-          redirectUri: redirectUri,
-          code: code,
-          clientID: clientID,
-          clientSecret: clientSecret);
+          redirectUri: redirectUri, code: code, clientID: clientID, clientSecret: clientSecret);
 
       response = await dio.post(
         fitbitAuthorizeUrl.url,
@@ -214,9 +200,7 @@ class FitbitConnector {
       final userID = response.data['user_id'] as String;
 
       fitbitCredentials = FitbitCredentials(
-          userID: userID,
-          fitbitAccessToken: accessToken,
-          fitbitRefreshToken: refreshToken);
+          userID: userID, fitbitAccessToken: accessToken, fitbitRefreshToken: refreshToken);
     } catch (e) {
       print(e);
     } // catch
