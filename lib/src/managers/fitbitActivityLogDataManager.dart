@@ -1,7 +1,5 @@
-import 'package:fitbitter/src/data/fitbitActivityLogData.dart';
-import 'package:fitbitter/src/data/fitbitData.dart';
-import 'package:fitbitter/src/managers/fitbitDataManager.dart';
-import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
+import 'package:fitbitter/fitbitter.dart';
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 /// [FitbitActivityLogDataManager] manages requests for [FitbitActivityLogData].
@@ -14,9 +12,12 @@ class FitbitActivityLogDataManager extends FitbitDataManager {
         );
 
   @override
-  Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
+  Future<List<FitbitData>> fetch(
+    FitbitAPIURL fitbitUrl, {
+    required ValueSetter<FitbitCredentials> onRefresh,
+  }) async {
     // Fetch API response
-    final response = await getResponse(fitbitUrl);
+    final response = await getResponse(fitbitUrl: fitbitUrl, onRefresh: onRefresh);
 
     // Logging
     final logger = Logger();
