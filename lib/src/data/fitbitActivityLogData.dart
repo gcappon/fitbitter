@@ -2,30 +2,32 @@ import 'fitbitData.dart';
 
 class FitbitActivityLogData implements FitbitData {
   FitbitActivityLogData({
-    this.logId,
-    this.activityTypeId,
-    this.activityName,
-    this.calories,
-    this.steps,
-    this.duration,
-    this.activeDuration,
-    this.activityLevel,
-    this.source,
-    this.logType,
-    this.manualValuesSpecified,
-    this.intervalWorkoutData,
-    this.heartRateZones,
-    this.activeZoneMinutes,
-    this.inProgress,
-    this.caloriesLink,
-    this.lastModified,
-    this.startTime,
-    this.originalStartTime,
-    this.originalDuration,
-    this.elevationGain,
-    this.hasActiveZoneMinutes,
+    required this.userId,
+    required this.logId,
+    required this.activityTypeId,
+    required this.activityName,
+    required this.calories,
+    required this.steps,
+    required this.duration,
+    required this.activeDuration,
+    required this.activityLevel,
+    required this.source,
+    required this.logType,
+    required this.manualValuesSpecified,
+    required this.intervalWorkoutData,
+    required this.heartRateZones,
+    required this.activeZoneMinutes,
+    required this.inProgress,
+    required this.caloriesLink,
+    required this.lastModified,
+    required this.startTime,
+    required this.originalStartTime,
+    required this.originalDuration,
+    required this.elevationGain,
+    required this.hasActiveZoneMinutes,
   });
 
+  final String userId;
   final String? logId;
   final int? activityTypeId;
   final String? activityName;
@@ -49,8 +51,9 @@ class FitbitActivityLogData implements FitbitData {
   final double? elevationGain;
   final bool? hasActiveZoneMinutes;
 
-  factory FitbitActivityLogData.fromJson(Map<String, dynamic> json) {
+  factory FitbitActivityLogData.fromJson(Map<String, dynamic> json, {required String userId}) {
     return FitbitActivityLogData(
+      userId: json['userId'] as String,
       logId: json['logId']?.toString(),
       activityTypeId: json['activityTypeId'],
       activityName: json['activityName'],
