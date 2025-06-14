@@ -4,105 +4,76 @@ class FitbitActivityLogData implements FitbitData {
   FitbitActivityLogData({
     required this.userId,
     required this.logId,
-    required this.activityTypeId,
     required this.activityName,
-    required this.calories,
-    required this.steps,
+    required this.activityTypeId,
     required this.duration,
-    required this.activeDuration,
-    required this.activityLevel,
-    required this.source,
-    required this.logType,
-    required this.manualValuesSpecified,
-    required this.intervalWorkoutData,
-    required this.heartRateZones,
-    required this.activeZoneMinutes,
-    required this.inProgress,
-    required this.caloriesLink,
-    required this.lastModified,
+    required this.originalDuration,
     required this.startTime,
     required this.originalStartTime,
-    required this.originalDuration,
+    required this.steps,
+    required this.calories,
+    required this.activeDuration,
     required this.elevationGain,
-    required this.hasActiveZoneMinutes,
+    required this.logType,
+    required this.tcxLink,
+    required this.caloriesLink,
+    required this.lastModified,
   });
 
   final String userId;
-  final String? logId;
-  final int? activityTypeId;
+  final int? logId;
   final String? activityName;
-  final double? calories;
-  final int? steps;
+  final int? activityTypeId;
   final int? duration;
-  final int? activeDuration;
-  final List<Map<String, dynamic>>? activityLevel;
-  final Map<String, dynamic>? source;
-  final String? logType;
-  final Map<String, dynamic>? manualValuesSpecified;
-  final Map<String, dynamic>? intervalWorkoutData;
-  final List<Map<String, dynamic>>? heartRateZones;
-  final Map<String, dynamic>? activeZoneMinutes;
-  final bool? inProgress;
-  final String? caloriesLink;
-  final DateTime? lastModified;
+  final int? originalDuration;
   final DateTime? startTime;
   final DateTime? originalStartTime;
-  final int? originalDuration;
-  final double? elevationGain;
-  final bool? hasActiveZoneMinutes;
+  final int? steps;
+  final double? calories;
+  final int? activeDuration;
+  final int? elevationGain;
+  final String? logType;
+  final String? tcxLink;
+  final String? caloriesLink;
+  final DateTime? lastModified;
 
-  factory FitbitActivityLogData.fromJson(Map<String, dynamic> json, {required String userId}) {
-    return FitbitActivityLogData(
-      userId: json['userId'] as String,
-      logId: json['logId']?.toString(),
-      activityTypeId: json['activityTypeId'],
-      activityName: json['activityName'],
-      calories: (json['calories'] as num?)?.toDouble(),
-      steps: json['steps'],
-      duration: json['duration'],
-      activeDuration: json['activeDuration'],
-      activityLevel: (json['activityLevel'] as List?)?.cast<Map<String, dynamic>>(),
-      source: json['source'] as Map<String, dynamic>?,
-      logType: json['logType'],
-      manualValuesSpecified: json['manualValuesSpecified'] as Map<String, dynamic>?,
-      intervalWorkoutData: json['intervalWorkoutData'] as Map<String, dynamic>?,
-      heartRateZones: (json['heartRateZones'] as List?)?.cast<Map<String, dynamic>>(),
-      activeZoneMinutes: json['activeZoneMinutes'] as Map<String, dynamic>?,
-      inProgress: json['inProgress'],
-      caloriesLink: json['caloriesLink'],
-      lastModified: DateTime.tryParse(json['lastModified'] ?? ''),
-      startTime: DateTime.tryParse(json['startTime'] ?? ''),
-      originalStartTime: DateTime.tryParse(json['originalStartTime'] ?? ''),
-      originalDuration: json['originalDuration'],
-      elevationGain: (json['elevationGain'] as num?)?.toDouble(),
-      hasActiveZoneMinutes: json['hasActiveZoneMinutes'],
-    );
-  }
+  factory FitbitActivityLogData.fromJson(Map<String, dynamic> json, {required String? userId}) =>
+      FitbitActivityLogData(
+        userId: userId ?? '',
+        logId: json['logId'],
+        activityName: json['activityName'],
+        activityTypeId: json['activityTypeId'],
+        duration: json['duration'],
+        originalDuration: json['originalDuration'],
+        startTime: DateTime.tryParse(json['startTime'] ?? ''),
+        originalStartTime: DateTime.tryParse(json['originalStartTime'] ?? ''),
+        steps: json['steps'],
+        calories: (json['calories'] as num?)?.toDouble(),
+        activeDuration: json['activeDuration'],
+        elevationGain: (json['elevationGain'] as num?)?.toInt(),
+        logType: json['logType'],
+        tcxLink: json['tcxLink'],
+        caloriesLink: json['caloriesLink'],
+        lastModified: DateTime.tryParse(json['lastModified'] ?? ''),
+      );
 
   @override
   Map<String, dynamic> toJson<T extends FitbitData>() => {
         'logId': logId,
-        'activityTypeId': activityTypeId,
         'activityName': activityName,
-        'calories': calories,
-        'steps': steps,
+        'activityTypeId': activityTypeId,
         'duration': duration,
-        'activeDuration': activeDuration,
-        'activityLevel': activityLevel,
-        'source': source,
-        'logType': logType,
-        'manualValuesSpecified': manualValuesSpecified,
-        'intervalWorkoutData': intervalWorkoutData,
-        'heartRateZones': heartRateZones,
-        'activeZoneMinutes': activeZoneMinutes,
-        'inProgress': inProgress,
-        'caloriesLink': caloriesLink,
-        'lastModified': lastModified?.toIso8601String(),
+        'originalDuration': originalDuration,
         'startTime': startTime?.toIso8601String(),
         'originalStartTime': originalStartTime?.toIso8601String(),
-        'originalDuration': originalDuration,
+        'steps': steps,
+        'calories': calories,
+        'activeDuration': activeDuration,
         'elevationGain': elevationGain,
-        'hasActiveZoneMinutes': hasActiveZoneMinutes,
+        'logType': logType,
+        'tcxLink': tcxLink,
+        'caloriesLink': caloriesLink,
+        'lastModified': lastModified?.toIso8601String(),
       };
 
   @override
