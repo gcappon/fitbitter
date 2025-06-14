@@ -1,20 +1,15 @@
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
-
-import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
-
-import 'package:fitbitter/src/errors/fitbitRateLimitExceededException.dart';
-import 'package:fitbitter/src/errors/fitbitUnauthorizedException.dart';
-import 'package:fitbitter/src/errors/fitbitNotFoundException.dart';
+import 'package:fitbitter/src/data/fitbitData.dart';
 import 'package:fitbitter/src/errors/fitbitBadRequestException.dart';
 import 'package:fitbitter/src/errors/fitbitForbiddenException.dart';
-
-import 'package:fitbitter/src/data/fitbitData.dart';
-
+import 'package:fitbitter/src/errors/fitbitNotFoundException.dart';
+import 'package:fitbitter/src/errors/fitbitRateLimitExceededException.dart';
+import 'package:fitbitter/src/errors/fitbitUnauthorizedException.dart';
 import 'package:fitbitter/src/fitbitConnector.dart';
-import 'package:flutter/foundation.dart';
+import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
 /// [FitbitDataManager] is an abstract class the manages the requests related to
 /// [FitbitData].
@@ -31,13 +26,13 @@ abstract class FitbitDataManager {
   /// Method that fetches data from the Fitbit API.
   Future<List<FitbitData>> fetch(
     FitbitAPIURL url, {
-    required ValueSetter<FitbitCredentials> onRefresh,
+    required Future<void> Function(FitbitCredentials) onRefresh,
   });
 
   /// Method the obtains the response from the given [FitbitAPIURL].
   Future<dynamic> getResponse({
     required FitbitAPIURL fitbitUrl,
-    required ValueSetter<FitbitCredentials> onRefresh,
+    required Future<void> Function(FitbitCredentials) onRefresh,
   }) async {
     //Check access token
     await _checkAccessToken(fitbitUrl: fitbitUrl, onRefresh: onRefresh);
@@ -70,7 +65,7 @@ abstract class FitbitDataManager {
   /// Method that check the validity of the current access token.
   Future<void> _checkAccessToken({
     required FitbitAPIURL fitbitUrl,
-    required ValueSetter<FitbitCredentials> onRefresh,
+    required Future<void> Function(FitbitCredentials) onRefresh,
   }) async {
     //check if the access token is stil valid, if not refresh it
     if (!await (FitbitConnector.isTokenValid(fitbitCredentials: fitbitUrl.fitbitCredentials!))) {
@@ -80,7 +75,7 @@ abstract class FitbitDataManager {
         clientSecret: clientSecret,
       );
 
-      onRefresh(refreshedCreds);
+      await onRefresh(refreshedCreds);
     }
   } //_checkAccessToken
 

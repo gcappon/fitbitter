@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('${HomePage.routename} built');
+    debugPrint('${HomePage.routename} built');
     return Scaffold(
       appBar: AppBar(
         title: const Text(HomePage.routename),
@@ -37,15 +37,14 @@ class HomePage extends StatelessWidget {
                 const int expiresIn = 3600;
 
                 // Authorize the app and get the Fitbit credentials
-                FitbitCredentials? fitbitCredentials =
-                    await FitbitConnector.authorize(
-                        clientID: Strings.fitbitClientID,
-                        clientSecret: Strings.fitbitClientSecret,
-                        redirectUri: Strings.fitbitRedirectUri,
-                        callbackUrlScheme: Strings.fitbitCallbackScheme,
-                        scopeList: scopeList,
-                        expiresIn: expiresIn);
-                print(fitbitCredentials);
+                FitbitCredentials? fitbitCredentials = await FitbitConnector.authorize(
+                    clientID: Strings.fitbitClientID,
+                    clientSecret: Strings.fitbitClientSecret,
+                    redirectUri: Strings.fitbitRedirectUri,
+                    callbackUrlScheme: Strings.fitbitCallbackScheme,
+                    scopeList: scopeList,
+                    expiresIn: expiresIn);
+                debugPrint(fitbitCredentials.toString());
               },
               child: const Text('Tap to authorize and fetch data'),
             ),
