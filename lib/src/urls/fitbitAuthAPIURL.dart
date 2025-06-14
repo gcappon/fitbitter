@@ -3,20 +3,9 @@ import 'dart:convert';
 import 'package:fitbitter/src/fitbitConnector.dart';
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
-enum FitbitAuthScope{
+enum FitbitAuthScope {
   ACTIVITY,
-  CARDIO_FITNESS,
   HEART_RATE,
-  LOCATION,
-  NUTRITION,
-  PROFILE,
-  SETTINGS,
-  SLEEP,
-  SOCIAL,
-  WEIGHT,
-  OXYGEN_SATURATION,
-  RESPIRATORY_RATE,
-  TEMPERATURE
 }
 
 /// [FitbitAuthAPIURL] is a class that expresses multiple factory
@@ -30,12 +19,12 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
   late String? authorizationHeader;
 
   /// Default [FitbitAuthAPIURL] constructor.
-  FitbitAuthAPIURL(
-      {required String url,
-      required FitbitCredentials? fitbitCredentials,
-      required String? data,
-      required String? authorizationHeader})
-      : super(fitbitCredentials: fitbitCredentials, url: url) {
+  FitbitAuthAPIURL({
+    required String url,
+    required FitbitCredentials? fitbitCredentials,
+    required String? data,
+    required String? authorizationHeader,
+  }) : super(fitbitCredentials: fitbitCredentials, url: url) {
     this.data = data;
     this.authorizationHeader = authorizationHeader;
   }
@@ -49,8 +38,7 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
   }) {
     // Generate the authorization header
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
-    final String authorizationHeader =
-        stringToBase64.encode("$clientID:$clientSecret");
+    final String authorizationHeader = stringToBase64.encode("$clientID:$clientSecret");
 
     return FitbitAuthAPIURL(
       url: '${_getBaseURL()}/token',
@@ -63,13 +51,12 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
 
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to get to the fitbit authorization form.
-  factory FitbitAuthAPIURL.authorizeForm(
-      {
-        required String redirectUri, 
-        required List<FitbitAuthScope> scopeList,
-        required int expiresIn,
-        String? clientID, 
-      }) {
+  factory FitbitAuthAPIURL.authorizeForm({
+    required String redirectUri,
+    required List<FitbitAuthScope> scopeList,
+    required int expiresIn,
+    String? clientID,
+  }) {
     // Encode the redirectUri
     final String encodedRedirectUri = Uri.encodeFull(redirectUri);
     final String scope = _getScope(scopeList);
@@ -84,18 +71,18 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
 
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to get the access and refresh tokens.
-  factory FitbitAuthAPIURL.authorize(
-      {required String redirectUri,
-      String? code,
-      String? clientID,
-      String? clientSecret}) {
+  factory FitbitAuthAPIURL.authorize({
+    required String redirectUri,
+    String? code,
+    String? clientID,
+    String? clientSecret,
+  }) {
     // Encode the redirectUri
     final String encodedRedirectUri = Uri.encodeFull(redirectUri);
 
     // Generate the authorization header∂
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
-    final String authorizationHeader =
-        stringToBase64.encode("$clientID:$clientSecret");
+    final String authorizationHeader = stringToBase64.encode("$clientID:$clientSecret");
 
     return FitbitAuthAPIURL(
       fitbitCredentials: null,
@@ -108,14 +95,14 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
 
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to revoke the access and refresh tokens.
-  factory FitbitAuthAPIURL.unauthorize(
-      {String? clientID,
-      String? clientSecret,
-      required String fitbitAccessToken}) {
+  factory FitbitAuthAPIURL.unauthorize({
+    String? clientID,
+    String? clientSecret,
+    required String fitbitAccessToken,
+  }) {
     // Generate the authorization header
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
-    final String authorizationHeader =
-        stringToBase64.encode("$clientID:$clientSecret");
+    final String authorizationHeader = stringToBase64.encode("$clientID:$clientSecret");
 
     return FitbitAuthAPIURL(
       fitbitCredentials: null,
@@ -141,47 +128,14 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
     return 'https://api.fitbit.com/oauth2';
   } // _getBaseURL
 
-  static String _getScope(List<FitbitAuthScope> scopeList){
+  static String _getScope(List<FitbitAuthScope> scopeList) {
     String scope = '';
-    if (scopeList.contains(FitbitAuthScope.ACTIVITY)){
+    if (scopeList.contains(FitbitAuthScope.ACTIVITY)) {
       scope += 'activity%20';
     }
-    if (scopeList.contains(FitbitAuthScope.CARDIO_FITNESS)){
-      scope += 'cardio_fitness%20';
-    }
-    if (scopeList.contains(FitbitAuthScope.HEART_RATE)){
+    if (scopeList.contains(FitbitAuthScope.HEART_RATE)) {
       scope += 'heartrate%20';
     }
-    if (scopeList.contains(FitbitAuthScope.LOCATION)){
-      scope += 'location%20';
-    }
-    if (scopeList.contains(FitbitAuthScope.NUTRITION)){
-      scope += 'nutrition%20';
-    }
-    if (scopeList.contains(FitbitAuthScope.PROFILE)){
-      scope += 'profile%20';
-    }
-    if (scopeList.contains(FitbitAuthScope.SETTINGS)){
-      scope += 'settings%20';
-    }
-    if (scopeList.contains(FitbitAuthScope.SLEEP)){
-      scope += 'sleep%20';
-    }
-    if (scopeList.contains(FitbitAuthScope.SOCIAL)){
-      scope += 'social%20';
-    }
-    if (scopeList.contains(FitbitAuthScope.WEIGHT)){
-      scope += 'weight%20';
-    }
-    if (scopeList.contains(FitbitAuthScope.OXYGEN_SATURATION)){
-      scope += 'oxygen_saturation%20';
-    }
-    if (scopeList.contains(FitbitAuthScope.RESPIRATORY_RATE)){
-      scope += 'respiratory_rate%20';
-    }
-    if (scopeList.contains(FitbitAuthScope.TEMPERATURE)){
-      scope += 'temperature%20';
-    }
     return scope;
-  }//_getScope
+  } //_getScope
 } // FitbitAuthAPIURL

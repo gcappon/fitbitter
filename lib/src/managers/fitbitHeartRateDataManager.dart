@@ -1,11 +1,6 @@
+import 'package:fitbitter/fitbitter.dart';
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-
-import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
-
-import 'package:fitbitter/src/data/fitbitData.dart';
-import 'package:fitbitter/src/data/fitbitHeartRateData.dart';
-
-import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 
 /// [FitbitHeartDataManager] is a class the manages the requests related to
 /// [FitbitHeartRateData].
@@ -17,9 +12,12 @@ class FitbitHeartDataManager extends FitbitDataManager {
         );
 
   @override
-  Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
+  Future<List<FitbitData>> fetch(
+    FitbitAPIURL fitbitUrl, {
+    required ValueSetter<FitbitCredentials> onRefresh,
+  }) async {
     // Get the response
-    final response = await getResponse(fitbitUrl);
+    final response = await getResponse(fitbitUrl: fitbitUrl, onRefresh: onRefresh);
 
     // Debugging
     final logger = Logger();

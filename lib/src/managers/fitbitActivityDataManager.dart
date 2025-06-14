@@ -1,11 +1,6 @@
+import 'package:fitbitter/fitbitter.dart';
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-
-import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
-
-import 'package:fitbitter/src/data/fitbitData.dart';
-import 'package:fitbitter/src/data/fitbitActivityData.dart';
-
-import 'package:fitbitter/src/managers/fitbitDataManager.dart';
 
 /// [FitbitActivityDataManager] is a class the manages the requests related to
 /// [FitbitActivityData].
@@ -18,17 +13,22 @@ class FitbitActivityDataManager extends FitbitDataManager {
         );
 
   @override
-  Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
+  Future<List<FitbitData>> fetch(
+    FitbitAPIURL fitbitUrl, {
+    required ValueSetter<FitbitCredentials> onRefresh,
+  }) async {
     // Get the response
-    final response = await getResponse(fitbitUrl);
+    final response = await getResponse(fitbitUrl: fitbitUrl, onRefresh: onRefresh);
 
     // Debugging
     final logger = Logger();
     logger.i('$response');
 
     //Extract data and return them
-    List<FitbitData> ret =
-        _extractFitbitActivityData(response, fitbitUrl.fitbitCredentials!.userID);
+    List<FitbitData> ret = _extractFitbitActivityData(
+      response,
+      fitbitUrl.fitbitCredentials!.userID,
+    );
     return ret;
   } // fetch
 

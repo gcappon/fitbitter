@@ -14,6 +14,7 @@ import 'package:fitbitter/src/errors/fitbitForbiddenException.dart';
 import 'package:fitbitter/src/data/fitbitData.dart';
 
 import 'package:fitbitter/src/fitbitConnector.dart';
+import 'package:flutter/foundation.dart';
 
 /// [FitbitDataManager] is an abstract class the manages the requests related to
 /// [FitbitData].
@@ -28,12 +29,18 @@ abstract class FitbitDataManager {
   FitbitDataManager({required this.clientID, required this.clientSecret});
 
   /// Method that fetches data from the Fitbit API.
-  Future<List<FitbitData>> fetch(FitbitAPIURL url);
+  Future<List<FitbitData>> fetch(
+    FitbitAPIURL url, {
+    required ValueSetter<FitbitCredentials> onRefresh,
+  });
 
   /// Method the obtains the response from the given [FitbitAPIURL].
-  Future<dynamic> getResponse(FitbitAPIURL fitbitUrl) async {
+  Future<dynamic> getResponse({
+    required FitbitAPIURL fitbitUrl,
+    required ValueSetter<FitbitCredentials> onRefresh,
+  }) async {
     //Check access token
-    await _checkAccessToken(fitbitUrl);
+    await _checkAccessToken(fitbitUrl: fitbitUrl, onRefresh: onRefresh);
 
     // Instantiate Dio and its Response
     Dio dio = Dio();
@@ -46,8 +53,7 @@ abstract class FitbitDataManager {
         options: Options(
           contentType: Headers.jsonContentType,
           headers: {
-            'Authorization':
-                'Bearer ${fitbitUrl.fitbitCredentials!.fitbitAccessToken}',
+            'Authorization': 'Bearer ${fitbitUrl.fitbitCredentials!.fitbitAccessToken}',
           },
         ),
       );
@@ -55,23 +61,27 @@ abstract class FitbitDataManager {
       FitbitDataManager.manageError(e);
     } // try - catch
 
-    final decodedResponse =
-        response.data is String ? jsonDecode(response.data) : response.data;
+    final decodedResponse = response.data is String ? jsonDecode(response.data) : response.data;
 
     Future<dynamic> ret = Future.value(decodedResponse);
     return ret;
   } //getResponse
 
   /// Method that check the validity of the current access token.
-  Future<void> _checkAccessToken(FitbitAPIURL fitbitUrl) async {
+  Future<void> _checkAccessToken({
+    required FitbitAPIURL fitbitUrl,
+    required ValueSetter<FitbitCredentials> onRefresh,
+  }) async {
     //check if the access token is stil valid, if not refresh it
-    if (!await (FitbitConnector.isTokenValid(
-        fitbitCredentials: fitbitUrl.fitbitCredentials!))) {
-      await FitbitConnector.refreshToken(
-          fitbitCredentials: fitbitUrl.fitbitCredentials!,
-          clientID: clientID,
-          clientSecret: clientSecret);
-    } // if
+    if (!await (FitbitConnector.isTokenValid(fitbitCredentials: fitbitUrl.fitbitCredentials!))) {
+      final refreshedCreds = await FitbitConnector.refreshToken(
+        fitbitCredentials: fitbitUrl.fitbitCredentials!,
+        clientID: clientID,
+        clientSecret: clientSecret,
+      );
+
+      onRefresh(refreshedCreds);
+    }
   } //_checkAccessToken
 
   /// Method that manages errors that could return from the Fitbit API.
@@ -80,20 +90,15 @@ abstract class FitbitDataManager {
       case 200:
         break;
       case 400:
-        throw FitbitBadRequestException(
-            message: e.response!.data['errors'][0]['message']);
+        throw FitbitBadRequestException(message: e.response!.data['errors'][0]['message']);
       case 401:
-        throw FitbitUnauthorizedException(
-            message: e.response!.data['errors'][0]['message']);
+        throw FitbitUnauthorizedException(message: e.response!.data['errors'][0]['message']);
       case 403:
-        throw FitbitForbiddenException(
-            message: e.response!.data['errors'][0]['message']);
+        throw FitbitForbiddenException(message: e.response!.data['errors'][0]['message']);
       case 404:
-        throw FitbitNotFoundException(
-            message: e.response!.data['errors'][0]['message']);
+        throw FitbitNotFoundException(message: e.response!.data['errors'][0]['message']);
       case 429:
-        throw FitbitRateLimitExceededException(
-            message: e.response!.data['errors'][0]['message']);
+        throw FitbitRateLimitExceededException(message: e.response!.data['errors'][0]['message']);
     } // switch
   } // manageError
 } // FitbitDataManager
