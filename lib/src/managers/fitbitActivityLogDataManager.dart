@@ -29,7 +29,7 @@ class FitbitActivityLogDataManager extends FitbitDataManager {
   List<FitbitActivityLogData> _extractFitbitActivityLogData(dynamic response, String? userID) {
     final data = response['activities'] as List<dynamic>;
     return data.map((record) {
-      return FitbitActivityLogData.fromJson(record as Map<String, dynamic>);
+      return FitbitActivityLogData.fromJson(record as Map<String, dynamic>, userId: userID ?? '');
     }).toList();
   }
-} // FitbitActivityLogDataManager
+}
