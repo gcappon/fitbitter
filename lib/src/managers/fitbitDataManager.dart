@@ -81,19 +81,34 @@ abstract class FitbitDataManager {
 
   /// Method that manages errors that could return from the Fitbit API.
   static void manageError(DioException e) {
+    final statusCode = e.response?.statusCode;
+    final data = e.response?.data;
+    final message = _extractMessage(data);
+
     switch (e.response!.statusCode) {
-      case 200:
-        break;
       case 400:
-        throw FitbitBadRequestException(message: e.response!.data['errors'][0]['message']);
+        throw FitbitBadRequestException(message: message);
       case 401:
-        throw FitbitUnauthorizedException(message: e.response!.data['errors'][0]['message']);
+        throw FitbitUnauthorizedException(message: message);
       case 403:
-        throw FitbitForbiddenException(message: e.response!.data['errors'][0]['message']);
+        throw FitbitForbiddenException(message: message);
       case 404:
-        throw FitbitNotFoundException(message: e.response!.data['errors'][0]['message']);
+        throw FitbitNotFoundException(message: message);
       case 429:
-        throw FitbitRateLimitExceededException(message: e.response!.data['errors'][0]['message']);
-    } // switch
-  } // manageError
+        throw FitbitRateLimitExceededException(message: message);
+      default:
+        throw Exception('[Fitbit] Unknown error: $message');
+    }
+  }
+
+  static String _extractMessage(dynamic data) {
+    try {
+      if (data is Map && data['errors'] is List && data['errors'].isNotEmpty) {
+        return data['errors'][0]['message'] ?? 'Unknown error';
+      }
+      return data.toString();
+    } catch (_) {
+      return 'Unknown error';
+    }
+  }
 } // FitbitDataManager
