@@ -1,5 +1,4 @@
 import 'package:fitbitter/fitbitter.dart';
-import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 /// [FitbitHeartDataManager] is a class the manages the requests related to
@@ -14,7 +13,7 @@ class FitbitHeartDataManager extends FitbitDataManager {
   @override
   Future<List<FitbitData>> fetch(
     FitbitAPIURL fitbitUrl, {
-    required ValueSetter<FitbitCredentials> onRefresh,
+    required Future<void> Function(FitbitCredentials) onRefresh,
   }) async {
     // Get the response
     final response = await getResponse(fitbitUrl: fitbitUrl, onRefresh: onRefresh);
