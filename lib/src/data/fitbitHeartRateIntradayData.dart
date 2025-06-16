@@ -17,6 +17,12 @@ class FitbitIntradayHeartRate {
       datasetType: json['datasetType'] ?? 'second',
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'dataset': dataset.map((e) => e.toJson()).toList(),
+        'datasetInterval': datasetInterval,
+        'datasetType': datasetType,
+      };
 }
 
 class FitbitHeartRateSample {
