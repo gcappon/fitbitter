@@ -10,7 +10,7 @@ class FitbitIntradayHeartRateManager extends FitbitDataManager {
     required super.clientSecret,
   });
 
-  Future<List<FitbitHeartRateSample>> fetchData(
+  Future<FitbitIntradayHeartRate> fetchData(
     FitbitAPIURL fitbitUrl, {
     required Future<void> Function(FitbitCredentials) onRefresh,
   }) async {
@@ -22,7 +22,7 @@ class FitbitIntradayHeartRateManager extends FitbitDataManager {
     logger.i('$response');
 
     final data = response.data is String ? jsonDecode(response.data) : response.data;
-    return FitbitIntradayHeartRate.fromJson(data['activities-heart-intraday'] ?? {}).dataset;
+    return FitbitIntradayHeartRate.fromJson(data['activities-heart-intraday'] ?? {});
   }
 
   @override
