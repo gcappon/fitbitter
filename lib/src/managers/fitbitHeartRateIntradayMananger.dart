@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:fitbitter/fitbitter.dart';
-import 'package:fitbitter/src/data/fitbitHeartRateIntradayData.dart';
 import 'package:logger/logger.dart';
 
 class FitbitIntradayHeartRateManager extends FitbitDataManager {
