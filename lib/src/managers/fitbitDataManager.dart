@@ -81,7 +81,6 @@ abstract class FitbitDataManager {
 
   /// Method that manages errors that could return from the Fitbit API.
   static void manageError(DioException e) {
-    final statusCode = e.response?.statusCode;
     final data = e.response?.data;
     final message = _extractMessage(data);
 

@@ -1,18 +1,14 @@
-import 'package:fitbitter/src/fitbitConnector.dart';
-
-import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
-
-import 'package:fitbitter/src/utils/formats.dart';
-
 import 'package:fitbitter/src/data/fitbitHeartRateData.dart';
+import 'package:fitbitter/src/fitbitConnector.dart';
+import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
+import 'package:fitbitter/src/utils/formats.dart';
 
 /// [FitbitHeartRateData] is a class that expresses multiple factory
 /// constructors to be used to generate Fitbit Web APIs urls to fetch
 /// [FitbitHeartRateData].
 class FitbitHeartRateAPIURL extends FitbitAPIURL {
   /// Default [FitbitHeartRateData] constructor.
-  FitbitHeartRateAPIURL(
-      {required FitbitCredentials? fitbitCredentials, required String url})
+  FitbitHeartRateAPIURL({required FitbitCredentials? fitbitCredentials, required String url})
       : super(
           url: url,
           fitbitCredentials: fitbitCredentials,
@@ -37,8 +33,7 @@ class FitbitHeartRateAPIURL extends FitbitAPIURL {
     String startDateStr = Formats.onlyDayDateFormatTicks.format(startDate);
     String endDateStr = Formats.onlyDayDateFormatTicks.format(endDate);
     return FitbitHeartRateAPIURL(
-      url:
-          '${_getBaseURL(fitbitCredentials.userID)}/date/$startDateStr/$endDateStr.json',
+      url: '${_getBaseURL(fitbitCredentials.userID)}/date/$startDateStr/$endDateStr.json',
       fitbitCredentials: fitbitCredentials,
     );
   } // FitbitHeartRateAPIURL.dateRange
@@ -46,8 +41,7 @@ class FitbitHeartRateAPIURL extends FitbitAPIURL {
   /// Generates a [FitbitHeartRateAPIURL] to get [FitbitHeartRateData] of a specific week
   /// ending in [baseDate].
   factory FitbitHeartRateAPIURL.week(
-      {required FitbitCredentials fitbitCredentials,
-      required DateTime baseDate}) {
+      {required FitbitCredentials fitbitCredentials, required DateTime baseDate}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitHeartRateAPIURL(
       url: '${_getBaseURL(fitbitCredentials.userID)}/date/$dateStr/1w.json',
@@ -58,14 +52,32 @@ class FitbitHeartRateAPIURL extends FitbitAPIURL {
   /// Generates a [FitbitHeartRateAPIURL] to get [FitbitHeartRateData] of a specific month
   /// ending in [baseDate].
   factory FitbitHeartRateAPIURL.month(
-      {required FitbitCredentials fitbitCredentials,
-      required DateTime baseDate}) {
+      {required FitbitCredentials fitbitCredentials, required DateTime baseDate}) {
     String dateStr = Formats.onlyDayDateFormatTicks.format(baseDate);
     return FitbitHeartRateAPIURL(
       url: '${_getBaseURL(fitbitCredentials.userID)}/date/$dateStr/1m.json',
       fitbitCredentials: fitbitCredentials,
     );
-  } // FitbitHeartRateAPIURL.month
+  }
+
+  /// ✅ Новий factory: інтервал з точністю до хвилини
+  factory FitbitHeartRateAPIURL.minutesInterval({
+    required FitbitCredentials fitbitCredentials,
+    required DateTime startDate,
+    required DateTime endDate,
+  }) {
+    final dateStr = Formats.onlyDayDateFormatTicks.format(startDate);
+    final startTime = Formats.onlyTimeNoSecondsAMPM.format(startDate);
+    final endTime = Formats.onlyTimeNoSecondsAMPM.format(endDate);
+
+    final url =
+        '${_getBaseURL(fitbitCredentials.userID)}/date/$dateStr/1d/1min/time/$startTime/$endTime.json';
+
+    return FitbitHeartRateAPIURL(
+      url: url,
+      fitbitCredentials: fitbitCredentials,
+    );
+  }
 
   /// A private method that generates the base url of a [FitbitHeartRateAPIURL].
   static String _getBaseURL(String? userID) {
