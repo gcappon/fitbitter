@@ -57,14 +57,11 @@ abstract class FitbitDataManager {
         ),
       );
     } on DioException catch (e) {
-      FitbitDataManager.manageError(e);
-    } // try - catch
+      await manageError(e);
+    }
 
-    final decodedResponse = response.data is String ? jsonDecode(response.data) : response.data;
-
-    Future<dynamic> ret = Future.value(decodedResponse);
-    return ret;
-  } //getResponse
+    return response.data is String ? jsonDecode(response.data) : response.data;
+  }
 
   /// Method that check the validity of the current access token.
   Future<void> _checkAccessToken({required FitbitAPIURL fitbitUrl}) async {
@@ -81,12 +78,13 @@ abstract class FitbitDataManager {
   } //_checkAccessToken
 
   /// Method that manages errors that could return from the Fitbit API.
-  static void manageError(DioException e) {
+  Future<void> manageError(DioException e) async {
     final data = e.response?.data;
     final message = _extractMessage(data);
 
     switch (e.response!.statusCode) {
       case 400:
+        await onResetCredentials();
         throw FitbitBadRequestException(message: message);
       case 401:
         throw FitbitUnauthorizedException(message: message);
