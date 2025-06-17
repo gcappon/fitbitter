@@ -1,4 +1,6 @@
-class FitbitIntradayHeartRate {
+import 'package:fitbitter/fitbitter.dart';
+
+class FitbitIntradayHeartRate implements FitbitData {
   const FitbitIntradayHeartRate({
     required this.dataset,
     required this.datasetInterval,
@@ -18,7 +20,8 @@ class FitbitIntradayHeartRate {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  @override
+  Map<String, dynamic> toJson<T extends FitbitData>() => {
         'dataset': dataset.map((e) => e.toJson()).toList(),
         'datasetInterval': datasetInterval,
         'datasetType': datasetType,
