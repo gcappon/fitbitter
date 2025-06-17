@@ -5,19 +5,17 @@ import 'package:logger/logger.dart';
 /// [FitbitActivityData].
 class FitbitActivityDataManager extends FitbitDataManager {
   /// Default [FitbitActivityDataManager] constructor.
-  FitbitActivityDataManager({required String clientID, required String clientSecret})
-      : super(
-          clientID: clientID,
-          clientSecret: clientSecret,
-        );
+  FitbitActivityDataManager({
+    required super.clientID,
+    required super.clientSecret,
+    required super.onRefreshCredentials,
+    required super.onResetCredentials,
+  });
 
   @override
-  Future<List<FitbitData>> fetch(
-    FitbitAPIURL fitbitUrl, {
-    required Future<void> Function(FitbitCredentials) onRefresh,
-  }) async {
+  Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
     // Get the response
-    final response = await getResponse(fitbitUrl: fitbitUrl, onRefresh: onRefresh);
+    final response = await getResponse(fitbitUrl: fitbitUrl);
 
     // Debugging
     final logger = Logger();

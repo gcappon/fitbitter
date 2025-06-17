@@ -4,19 +4,17 @@ import 'package:logger/logger.dart';
 /// [FitbitHeartDataManager] is a class the manages the requests related to
 /// [FitbitHeartRateData].
 class FitbitHeartDataManager extends FitbitDataManager {
-  FitbitHeartDataManager({required String clientID, required String clientSecret})
-      : super(
-          clientID: clientID,
-          clientSecret: clientSecret,
-        );
+  FitbitHeartDataManager({
+    required super.clientID,
+    required super.clientSecret,
+    required super.onRefreshCredentials,
+    required super.onResetCredentials,
+  });
 
   @override
-  Future<List<FitbitData>> fetch(
-    FitbitAPIURL fitbitUrl, {
-    required Future<void> Function(FitbitCredentials) onRefresh,
-  }) async {
+  Future<List<FitbitData>> fetch(FitbitAPIURL fitbitUrl) async {
     // Get the response
-    final response = await getResponse(fitbitUrl: fitbitUrl, onRefresh: onRefresh);
+    final response = await getResponse(fitbitUrl: fitbitUrl);
 
     // Debugging
     final logger = Logger();

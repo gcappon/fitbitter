@@ -7,14 +7,13 @@ class FitbitIntradayHeartRateManager extends FitbitDataManager {
   FitbitIntradayHeartRateManager({
     required super.clientID,
     required super.clientSecret,
+    required super.onRefreshCredentials,
+    required super.onResetCredentials,
   });
 
-  Future<FitbitData> fetchData(
-    FitbitAPIURL fitbitUrl, {
-    required Future<void> Function(FitbitCredentials) onRefresh,
-  }) async {
+  Future<FitbitData> fetchData(FitbitAPIURL fitbitUrl) async {
     // Get the response
-    final response = await getResponse(fitbitUrl: fitbitUrl, onRefresh: onRefresh);
+    final response = await getResponse(fitbitUrl: fitbitUrl);
 
     // Debugging
     final logger = Logger();
@@ -25,10 +24,5 @@ class FitbitIntradayHeartRateManager extends FitbitDataManager {
   }
 
   @override
-  Future<List<FitbitData>> fetch(
-    FitbitAPIURL url, {
-    required Future<void> Function(FitbitCredentials) onRefresh,
-  }) {
-    throw UnimplementedError();
-  }
+  Future<List<FitbitData>> fetch(FitbitAPIURL url) => throw UnimplementedError();
 }
