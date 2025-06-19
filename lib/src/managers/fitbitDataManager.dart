@@ -39,11 +39,10 @@ abstract class FitbitDataManager {
 
     // Instantiate Dio and its Response
     Dio dio = Dio();
-    late Response response;
 
     try {
       // get the fitbit profile data
-      response = await dio.get(
+      final response = await dio.get(
         fitbitUrl.url,
         options: Options(
           contentType: Headers.jsonContentType,
@@ -52,11 +51,11 @@ abstract class FitbitDataManager {
           },
         ),
       );
-    } on DioException catch (e) {
-      await manageError(e);
-    }
 
-    return response.data is String ? jsonDecode(response.data) : response.data;
+      return response.data is String ? jsonDecode(response.data) : response.data;
+    } on DioException catch (e) {
+      throw manageError(e);
+    }
   }
 
   /// Method that check the validity of the current access token.

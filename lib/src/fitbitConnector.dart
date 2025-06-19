@@ -108,7 +108,7 @@ class FitbitConnector {
       _logger.i('[Fitbit] Token Valid Check: ${response.data}');
       return (response.data['active'] as bool?) ?? false;
     } on DioException catch (e) {
-      return e.response?.statusCode != 401;
+      return ![400, 401].contains(e.response?.statusCode);
     }
   }
 
