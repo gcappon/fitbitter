@@ -134,6 +134,10 @@ class FitbitConnector {
       final result = await FlutterWebAuth2.authenticate(
         url: authFormUrl.url,
         callbackUrlScheme: callbackUrlScheme,
+        options: FlutterWebAuth2Options(
+          preferEphemeral: true,
+          
+        )
       );
 
       final code = Uri.parse(result).queryParameters['code'];
