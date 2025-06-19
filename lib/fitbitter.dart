@@ -13,10 +13,7 @@ export 'package:fitbitter/src/data/fitbitHeartRateIntradayData.dart';
 //Errors
 export 'package:fitbitter/src/errors/fitbitException.dart';
 export 'package:fitbitter/src/errors/fitbitBadRequestException.dart';
-export 'package:fitbitter/src/errors/fitbitForbiddenException.dart';
-export 'package:fitbitter/src/errors/fitbitNotFoundException.dart';
 export 'package:fitbitter/src/errors/fitbitRateLimitExceededException.dart';
-export 'package:fitbitter/src/errors/fitbitUnauthorizedException.dart';
 
 //Managers
 export 'package:fitbitter/src/managers/fitbitDataManager.dart';

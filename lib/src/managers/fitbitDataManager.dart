@@ -3,11 +3,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:fitbitter/src/data/fitbitData.dart';
-import 'package:fitbitter/src/errors/fitbitBadRequestException.dart';
-import 'package:fitbitter/src/errors/fitbitForbiddenException.dart';
-import 'package:fitbitter/src/errors/fitbitNotFoundException.dart';
-import 'package:fitbitter/src/errors/fitbitRateLimitExceededException.dart';
-import 'package:fitbitter/src/errors/fitbitUnauthorizedException.dart';
+import 'package:fitbitter/src/errors/fitbitException.dart';
 import 'package:fitbitter/src/fitbitConnector.dart';
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
@@ -79,24 +75,18 @@ abstract class FitbitDataManager {
 
   /// Method that manages errors that could return from the Fitbit API.
   Future<void> manageError(DioException e) async {
-    final data = e.response?.data;
-    final message = _extractMessage(data);
+    final response = e.response;
+    final message = _extractMessage(response?.data);
 
-    switch (e.response!.statusCode) {
-      case 400:
-        await onResetCredentials();
-        throw FitbitBadRequestException(message: message);
-      case 401:
-        throw FitbitUnauthorizedException(message: message);
-      case 403:
-        throw FitbitForbiddenException(message: message);
-      case 404:
-        throw FitbitNotFoundException(message: message);
-      case 429:
-        throw FitbitRateLimitExceededException(message: message);
-      default:
-        throw Exception('[Fitbit] Unknown error: $message');
+    if (response?.statusCode != 429) {
+      onResetCredentials();
     }
+
+    throw FitbitException(
+      statusCode: response?.statusCode,
+      message: message,
+      type: FitbitExceptionType.fromCode(response?.statusCode),
+    );
   }
 
   static String _extractMessage(dynamic data) {
