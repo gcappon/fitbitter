@@ -1,3 +1,7 @@
+## [2.0.5] - 2025/06/29
+
+Updates dependencies and fixes minor bugs.
+
 ## [2.0.4] - 2024/01/24
 
 Solves #19: Now, when using the method FitbitConnector.authorize, it is possible to specify a specific authorization scope (defined in https://dev.fitbit.com/build/reference/web-api/developer-guide/application-design/#Scopes) and token expiration time (defined in https://dev.fitbit.com/build/reference/web-api/authorization/authorize/).
