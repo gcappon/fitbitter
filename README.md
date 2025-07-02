@@ -26,7 +26,7 @@ Fitbitter uses `flutter_web_auth` to let you authenticate to Fitbit. In Android,
               <category android:name="android.intent.category.DEFAULT" />
               <category android:name="android.intent.category.BROWSABLE" />
               <data
-                android:scheme="redacted"
+                android:scheme=YOUR_CALLBACK_SCHEME
                 android:host="fitbit-auth"/>
             </intent-filter>
         </activity>
