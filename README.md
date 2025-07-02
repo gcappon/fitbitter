@@ -19,15 +19,17 @@ dependencies:
 
 Fitbitter uses `flutter_web_auth` to let you authenticate to Fitbit. In Android, you need to add these lines of code to your `android/app/src/main/AndroidManifest.xml` file:
 ```xml
-<activity android:name="com.linusu.flutter_web_auth.CallbackActivity"
-    android:exported="true">
-      <intent-filter android:label="flutter_web_auth">
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="CALLBACK_SCHEME" />
-      </intent-filter>
-    </activity>
+<activity android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
+          android:exported="true">
+            <intent-filter android:label="flutter_web_auth">
+              <action android:name="android.intent.action.VIEW" />
+              <category android:name="android.intent.category.DEFAULT" />
+              <category android:name="android.intent.category.BROWSABLE" />
+              <data
+                android:scheme="redacted"
+                android:host="fitbit-auth"/>
+            </intent-filter>
+        </activity>
 ```
 and change ```CALLBACK_SCHEME``` with your callback scheme (in the test example below this will be ```example```)
 
