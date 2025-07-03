@@ -17,11 +17,11 @@ dependencies:
 
 ### Step 1a: (for Android only) Modify you manifest
 
-Fitbitter uses `flutter_web_auth` to let you authenticate to Fitbit. In Android, you need to add these lines of code to your `android/app/src/main/AndroidManifest.xml` file:
+Fitbitter uses `flutter_web_auth_2` to let you authenticate to Fitbit. In Android, you need to add these lines of code to your `android/app/src/main/AndroidManifest.xml` file:
 ```xml
-<activity android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
+        <activity android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
           android:exported="true">
-            <intent-filter android:label="flutter_web_auth">
+            <intent-filter android:label="flutter_web_auth_2">
               <action android:name="android.intent.action.VIEW" />
               <category android:name="android.intent.category.DEFAULT" />
               <category android:name="android.intent.category.BROWSABLE" />
@@ -62,11 +62,11 @@ defaultConfig {
 
 ### Step 1c: (for Android only) Requirement: Web Browser
 
-Fitbitter uses `flutter_web_auth` to let you authenticate to Fitbit. In order to let it work correcty please be sure that your emulator or your physical device is using Chrome, Opera, or Firefox as default web browser. 
+Fitbitter uses `flutter_web_auth_2` to let you authenticate to Fitbit. In order to let it work correcty please be sure that your emulator or your physical device is using Chrome, Opera, or Firefox as default web browser. 
 
 ### Step 1d:(for Web only) Requirement: Create an endpoint
 
-Fitbitter uses `flutter_web_auth` to let you authenticate to Fitbit. In order to let it work correcty, as indicated in [https://pub.dev/packages/flutter_web_auth](https://pub.dev/packages/flutter_web_auth), on the Web platform an endpoint needs to be created that captures the callback URL and sends it to the application using the JavaScript `postMessage()` method. In the `./web` folder of the project, create an HTML file with the name e.g. `auth.html` with content:
+Fitbitter uses `flutter_web_auth_2` to let you authenticate to Fitbit. In order to let it work correcty, as indicated in [https://pub.dev/packages/flutter_web_auth_2](https://pub.dev/packages/flutter_web_auth_2), on the Web platform an endpoint needs to be created that captures the callback URL and sends it to the application using the JavaScript `postMessage()` method. In the `./web` folder of the project, create an HTML file with the name e.g. `auth.html` with content:
 ```html
 <!DOCTYPE html>
 <title>Authentication complete</title>
