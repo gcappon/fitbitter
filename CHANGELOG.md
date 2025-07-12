@@ -1,3 +1,7 @@
+## [2.0.6] - 2025/07/12
+
+Updated android example, readme and changelog to reflect using flutter_web_auth_2.
+
 ## [2.0.5] - 2025/06/29
 
 **Breaking change:** Migrated from `flutter_web_auth` to `flutter_web_auth_2`. Android users must update their `AndroidManifest.xml` according to the requirements in the README. For more details, see [issue #36](https://github.com/gcappon/fitbitter/issues/36).
